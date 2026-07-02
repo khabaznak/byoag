@@ -1,0 +1,96 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const helloWorld = `{
+  "byoag_version": "0.1-draft",
+  "task": "Explain BYOAg in your own words.",
+  "constraints": {
+    "max_words": 40,
+    "audience": "curious developer"
+  },
+  "submission": {
+    "method": "POST",
+    "url": "https://example.org/byoag/hello/submissions"
+  }
+}`;
+
+const classroom = `{
+  "activity": "Compare two explanations of a scientific concept.",
+  "resources": ["reading-brief.md", "rubric.json"],
+  "time_limit_minutes": 30,
+  "submission_schema": {
+    "summary": "string",
+    "evidence_used": "array",
+    "questions_remaining": "array"
+  }
+}`;
+
+const adventure = `{
+  "scene": "The user is at a locked observatory door.",
+  "choices": ["inspect keypad", "search desk", "ask for hint"],
+  "continuation": {
+    "submit_to": "https://example.org/adventure/scene/7",
+    "returns": "next_scene_url"
+  }
+}`;
+---
+
+<BaseLayout
+  title="Examples"
+  description="Conceptual BYOAg examples for hello world, classrooms, and interactive adventures."
+>
+  <section class="bg-[#07111f] py-20">
+    <div class="page-shell">
+      <p class="eyebrow">Examples</p>
+      <h1 class="mt-4 max-w-3xl text-5xl font-black leading-tight text-paper">
+        Conceptual flows, not final protocol definitions
+      </h1>
+      <p class="mt-6 max-w-3xl text-lg leading-8 text-paper/72">
+        These examples use valid JSON to sketch possible packages and
+        submissions. They are draft illustrations for discussion.
+      </p>
+    </div>
+  </section>
+
+  <section class="bg-[#0b1626] py-20">
+    <div class="page-shell grid gap-8">
+      <article
+        class="grid gap-6 rounded-lg border border-white/12 bg-white/[0.04] p-6 lg:grid-cols-[0.8fr_1.2fr]"
+      >
+        <div>
+          <h2 class="text-3xl font-bold text-paper">Hello World</h2>
+          <p class="mt-4 leading-7 text-paper/70">
+            The environment asks the agent to help the user explain BYOAg in
+            their own words and submit a concise definition.
+          </p>
+        </div>
+        <pre class="code-block"><code>{helloWorld}</code></pre>
+      </article>
+      <article
+        class="grid gap-6 rounded-lg border border-white/12 bg-white/[0.04] p-6 lg:grid-cols-[0.8fr_1.2fr]"
+      >
+        <div>
+          <h2 class="text-3xl font-bold text-paper">Classroom activity</h2>
+          <p class="mt-4 leading-7 text-paper/70">
+            A student agent retrieves an assignment package. Later, an
+            instructor agent retrieves submissions and a shared evaluation
+            rubric.
+          </p>
+        </div>
+        <pre class="code-block"><code>{classroom}</code></pre>
+      </article>
+      <article
+        class="grid gap-6 rounded-lg border border-white/12 bg-white/[0.04] p-6 lg:grid-cols-[0.8fr_1.2fr]"
+      >
+        <div>
+          <h2 class="text-3xl font-bold text-paper">Interactive adventure</h2>
+          <p class="mt-4 leading-7 text-paper/70">
+            The agent retrieves a scene, discusses available choices with the
+            user, submits the user's decision, and receives the next scene URL.
+          </p>
+        </div>
+        <pre class="code-block"><code>{adventure}</code></pre>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

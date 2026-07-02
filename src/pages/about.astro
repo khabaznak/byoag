@@ -1,0 +1,70 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const principles = [
+  "User agency",
+  "Environment sovereignty",
+  "Explicit contracts",
+  "Evidence over assumptions",
+  "Progressive interoperability",
+  "Implementation before premature standardization",
+  "Open discussion",
+];
+---
+
+<BaseLayout
+  title="About"
+  description="Project status and principles for BYOAg, an experimental architectural pattern."
+>
+  <section class="bg-[#07111f] py-20">
+    <div class="page-shell max-w-4xl">
+      <p class="eyebrow">About</p>
+      <h1 class="mt-4 text-5xl font-black leading-tight text-paper">
+        BYOAg is an experimental architectural pattern.
+      </h1>
+      <div class="prose-lite mt-8">
+        <p>
+          BYOAg is implementation-independent and intended to be explored
+          through working prototypes. It is not currently a formal standard, and
+          it is not owned by a specific agent vendor.
+        </p>
+        <p>
+          The project is designed to encourage agent portability and
+          environment-defined experiences while keeping claims honest and
+          testable.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="project-status" class="bg-paper py-20 text-ink">
+    <div class="page-shell grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+      <div>
+        <p class="eyebrow">Project status</p>
+        <h2 class="mt-3 text-4xl font-black">
+          Experimental, open, and evolving
+        </h2>
+      </div>
+      <p class="text-lg leading-8 text-ink/70">
+        The current work is to clarify the pattern, build small examples,
+        identify trust boundaries, and improve a draft specification through
+        implementation and discussion.
+      </p>
+    </div>
+  </section>
+
+  <section class="bg-[#0b1626] py-20">
+    <div class="page-shell">
+      <h2 class="text-4xl font-black text-paper">Project principles</h2>
+      <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          principles.map((principle) => (
+            <p class="rounded-lg border border-white/12 bg-white/[0.04] p-5 font-bold text-paper/82">
+              {principle}
+            </p>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

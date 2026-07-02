@@ -1,0 +1,88 @@
+---
+import Callout from "@/components/Callout.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const helps = [
+  "explicit expectations",
+  "declared capabilities",
+  "consent",
+  "validation",
+  "structured submissions",
+  "evidence",
+  "evaluation",
+  "refusal handling",
+  "auditability",
+];
+
+const boundaries = [
+  "user",
+  "participant agent",
+  "environment",
+  "external tools",
+  "evaluator",
+  "artifact owner",
+];
+---
+
+<BaseLayout
+  title="Trust"
+  description="Security, trust, evidence, and agentic contracts in the BYOAg pattern."
+>
+  <section class="bg-[#07111f] py-20">
+    <div class="page-shell max-w-4xl">
+      <p class="eyebrow">Trust and evidence</p>
+      <h1 class="mt-4 text-5xl font-black leading-tight text-paper">
+        Trust does not mean total control.
+      </h1>
+      <p class="mt-7 text-lg leading-8 text-paper/72">
+        BYOAg cannot guarantee that an autonomous or semi-autonomous agent will
+        obey an environment. It can help define expectations, validate outputs,
+        record evidence, and handle refusals or failures more explicitly.
+      </p>
+    </div>
+  </section>
+
+  <section class="bg-[#0b1626] py-20">
+    <div class="page-shell grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+      <Callout title="Principle">
+        Agentic contracts can define expectations and create evidence, but they
+        cannot eliminate agency, deception, bugs, incompatible incentives, or
+        human misuse.
+      </Callout>
+      <div>
+        <h2 class="text-3xl font-bold text-paper">
+          The pattern can help establish
+        </h2>
+        <div class="mt-6 grid gap-3 sm:grid-cols-3">
+          {
+            helps.map((item) => (
+              <p class="rounded-md border border-white/12 bg-white/[0.04] p-3 text-sm font-semibold text-paper/78">
+                {item}
+              </p>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-paper py-20 text-ink">
+    <div class="page-shell">
+      <h2 class="text-4xl font-black">Trust boundaries</h2>
+      <p class="mt-5 max-w-3xl text-lg leading-8 text-ink/70">
+        A BYOAg interaction crosses several boundaries. Each boundary should be
+        named because responsibilities, permissions, risks, and evidence may
+        differ.
+      </p>
+      <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          boundaries.map((item) => (
+            <p class="rounded-lg border border-ink/12 bg-white p-5 text-xl font-bold capitalize text-ink/82">
+              {item}
+            </p>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

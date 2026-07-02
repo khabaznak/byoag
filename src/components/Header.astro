@@ -1,0 +1,83 @@
+---
+import { navItems, site } from "@/config/site";
+
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+---
+
+<header
+  class="sticky top-0 z-40 border-b border-white/10 bg-ink/88 backdrop-blur"
+>
+  <div class="page-shell flex min-h-16 items-center justify-between gap-4 py-3">
+    <a
+      class="flex items-center gap-3 font-semibold text-paper"
+      href="/"
+      aria-label="BYOAg home"
+    >
+      <span
+        class="grid h-9 w-9 place-items-center rounded-md border border-white/15 bg-white/5 text-accent"
+        >B</span
+      >
+      <span>BYOAg</span>
+    </a>
+    <nav
+      class="hidden items-center gap-1 md:flex"
+      aria-label="Primary navigation"
+    >
+      {
+        navItems.map((item) => {
+          const active =
+            currentPath === item.href ||
+            currentPath.startsWith(`${item.href}/`);
+          return (
+            <a
+              class:list={[
+                "rounded-md px-3 py-2 text-sm font-medium transition hover:bg-white/[0.08] hover:text-paper",
+                active ? "bg-white/10 text-paper" : "text-paper/72",
+              ]}
+              href={item.href}
+              aria-current={active ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          );
+        })
+      }
+      <a
+        class="ml-2 rounded-md border border-white/15 px-3 py-2 text-sm font-semibold text-paper/85 transition hover:border-accent hover:text-paper"
+        href={site.githubUrl}
+      >
+        GitHub
+      </a>
+    </nav>
+    <details class="relative md:hidden">
+      <summary
+        class="cursor-pointer rounded-md border border-white/15 px-3 py-2 text-sm font-semibold text-paper"
+      >
+        Menu
+      </summary>
+      <nav
+        class="absolute right-0 mt-3 grid w-56 gap-1 rounded-lg border border-white/12 bg-[#081120] p-2 shadow-2xl"
+        aria-label="Mobile navigation"
+      >
+        {
+          navItems.map((item) => (
+            <a
+              class="rounded-md px-3 py-2 text-sm text-paper/86 hover:bg-white/[0.08]"
+              href={item.href}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+        <a
+          class="rounded-md px-3 py-2 text-sm text-paper/86 hover:bg-white/[0.08]"
+          href={site.githubUrl}>GitHub</a
+        >
+      </nav>
+    </details>
+  </div>
+</header>

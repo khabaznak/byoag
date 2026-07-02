@@ -1,0 +1,28 @@
+---
+import { site } from "@/config/site";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-white/10 bg-[#050c17]">
+  <div class="page-shell grid gap-8 py-10 md:grid-cols-[1fr_auto] md:items-end">
+    <div>
+      <p class="text-lg font-semibold text-paper">
+        BYOAg — Bring Your Own Agent
+      </p>
+      <p class="mt-2 max-w-xl text-sm leading-6 text-paper/66">
+        Experimental open pattern for agent-portable experiences.
+      </p>
+      <p class="mt-5 text-xs text-paper/48">
+        &copy; {year} BYOAg contributors.
+      </p>
+    </div>
+    <nav class="flex flex-wrap gap-4 text-sm" aria-label="Footer navigation">
+      <a class="text-paper/68 hover:text-paper" href="/spec">Draft Spec</a>
+      <a class="text-paper/68 hover:text-paper" href={site.githubUrl}>GitHub</a>
+      <a class="text-paper/68 hover:text-paper" href={site.statusUrl}
+        >Project status</a
+      >
+    </nav>
+  </div>
+</footer>

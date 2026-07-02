@@ -1,0 +1,78 @@
+---
+import Callout from "@/components/Callout.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Concept"
+  description="The core idea and philosophy behind BYOAg, including agent ownership and environment authority."
+>
+  <section class="bg-[#07111f] py-20">
+    <div class="page-shell max-w-4xl">
+      <p class="eyebrow">Concept</p>
+      <h1 class="mt-4 text-5xl font-black leading-tight text-paper">
+        What Bring Your Own Agent means
+      </h1>
+      <div class="prose-lite mt-8">
+        <p>
+          BYOAg is an experimental open architectural pattern for allowing
+          people to bring their own AI agent into an external experience. The
+          user brings the agent. The environment provides the context,
+          artifacts, rules, tools, workflow, and interaction contract.
+        </p>
+        <p>
+          The agent remains the user's agent. The environment defines the work.
+        </p>
+
+        <h2>The central inversion</h2>
+        <div class="grid gap-4 md:grid-cols-2">
+          <div class="rounded-lg border border-white/12 bg-white/[0.04] p-5">
+            <h3 class="mt-0">Traditional approach</h3>
+            <p>Bring environment data and tools into the agent.</p>
+          </div>
+          <div class="rounded-lg border border-accent/45 bg-accent/10 p-5">
+            <h3 class="mt-0">BYOAg approach</h3>
+            <p>Bring the agent into the environment.</p>
+          </div>
+        </div>
+        <p>
+          These approaches can coexist. BYOAg is useful when the experience
+          needs to retain authority over artifacts, rules, evaluation, and
+          continuity of interaction.
+        </p>
+
+        <h2>The doctor-and-hospital analogy</h2>
+        <p>
+          A doctor brings expertise and judgment into a hospital. The hospital
+          provides facilities, equipment, records, procedures, and operating
+          rules. The doctor uses the environment to perform work, but does not
+          become part of the hospital's software.
+        </p>
+
+        <h2>The gym analogy</h2>
+        <p>
+          A person can bring a trainer into a gym. The trainer helps the person
+          act, but the gym still controls the equipment, floor rules, safety
+          procedures, and available spaces. BYOAg applies a similar separation
+          to agent-assisted digital experiences.
+        </p>
+
+        <h2>Agent ownership and environment authority</h2>
+        <p>
+          The participant agent should remain the user's agent because it may
+          carry context, preferences, memory, and working style across many
+          experiences. The environment should retain authority over its
+          artifacts, rules, and experience because it is responsible for what is
+          offered, evaluated, recorded, or continued.
+        </p>
+      </div>
+      <div class="mt-10">
+        <Callout title="Pattern, not product">
+          BYOAg is not a single app, vendor integration, or finished standard.
+          It is a pattern that can be explored through different
+          implementations, transports, and interaction contracts.
+        </Callout>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

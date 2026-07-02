@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-ink: 7 17 31;
+  --color-paper: 248 250 252;
+  --color-muted: 147 161 176;
+  --color-accent: 245 158 11;
+  --color-cyan: 56 189 248;
+  --surface: #0b1626;
+  --surface-soft: #111f33;
+  --surface-warm: #fff8ed;
+  --line: rgb(255 255 255 / 0.12);
+  --line-dark: rgb(7 17 31 / 0.14);
+}
+
+html {
+  background: rgb(var(--color-ink));
+  color: rgb(var(--color-paper));
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+body::selection {
+  background: rgb(var(--color-accent) / 0.35);
+}
+
+a {
+  text-underline-offset: 0.22em;
+}
+
+:focus-visible {
+  outline: 3px solid rgb(var(--color-cyan));
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.page-shell {
+  width: min(1120px, calc(100% - 32px));
+  margin-inline: auto;
+}
+
+.eyebrow {
+  color: rgb(var(--color-accent));
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.section-title {
+  max-width: 760px;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 760;
+  line-height: 1.02;
+}
+
+.prose-lite {
+  color: rgb(216 225 236 / 0.88);
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.prose-lite p + p {
+  margin-top: 1rem;
+}
+
+.prose-lite h2 {
+  margin-top: 3rem;
+  color: rgb(var(--color-paper));
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 740;
+  line-height: 1.1;
+}
+
+.prose-lite h3 {
+  margin-top: 2rem;
+  color: rgb(var(--color-paper));
+  font-size: 1.35rem;
+  font-weight: 720;
+}
+
+.prose-lite ul,
+.prose-lite ol {
+  margin-top: 1rem;
+  padding-left: 1.3rem;
+}
+
+.prose-lite li + li {
+  margin-top: 0.45rem;
+}
+
+.code-block {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #050c17;
+  padding: 1rem;
+  color: #e5eef8;
+  font-family:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    monospace;
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
