@@ -10,6 +10,9 @@ const terms = [
   "Submission",
   "Evidence",
   "Continuation",
+  "Project",
+  "Agent Docking Bay",
+  "Remote Capability",
   "Participant Agent",
   "Evaluator Agent",
 ];
@@ -27,33 +30,53 @@ const terms = [
           How an agent enters an environment
         </h1>
         <p class="mt-6 text-lg leading-8 text-paper/72">
-          A BYOAg environment exposes an entry point. A user's agent retrieves
-          the work package, follows the declared expectations, submits
-          structured output, and may receive feedback or a continuation.
+          A BYOAg environment can offer an Agent Docking Bay: a user-friendly
+          way to connect a personal agent to an application. The user should not
+          need to understand APIs, URLs, or HTTP requests to begin.
         </p>
       </div>
       <pre
         class="code-block"
-        aria-label="Conceptual BYOAg flow"><code>Human
+        aria-label="Conceptual BYOAg flow"><code>Project
   |
   v
-Personal Agent
+Docking Bay
   |
-  | GET entry point
+  | human pairing + permission contract
   v
-BYOAg Environment
+Connected personal agent
   |
-  | Prompt Package
-  | Rules
-  | Artifacts
-  | Tools
-  | Submission contract
+  | remote capabilities
   v
-Agent performs work
+Application operation
   |
-  | POST submission
+  | audit + revocation
   v
-Result / feedback / score / next interaction</code></pre>
+Result / feedback / continuation</code></pre>
+    </div>
+  </section>
+
+  <section class="bg-[#0b1626] py-20">
+    <div class="page-shell grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+      <div>
+        <p class="eyebrow">Agent Docking Bay</p>
+        <h2 class="mt-3 text-4xl font-black leading-tight text-paper">
+          A connection flow a person can understand
+        </h2>
+      </div>
+      <div class="prose-lite">
+        <p>
+          An application can provide a ready-to-paste magic prompt that tells a
+          personal agent how to initiate the connection. The app can visibly
+          show that it is waiting for, and then has established, the connection.
+        </p>
+        <p>
+          A short pairing code entered by the human can confirm that the user is
+          present on both sides. From there, the project can set the permission
+          contract, make remote capabilities available, and support operation,
+          audit, and revocation.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -80,6 +103,38 @@ Result / feedback / score / next interaction</code></pre>
             </p>
           ))
         }
+      </div>
+      <div class="mt-12 grid gap-8 lg:grid-cols-2">
+        <div>
+          <h2 class="text-3xl font-black">Projects are the trust boundary</h2>
+          <p class="mt-5 text-lg leading-8 text-ink/70">
+            Connections do not belong only to the agent or only to the
+            application. They belong to a project. A project can isolate the
+            connection, permissions, shared context, operating prompts,
+            scheduled tasks, and audit history.
+          </p>
+          <p class="mt-4 leading-7 text-ink/70">
+            A user can switch into a 10x Consultant project, delegate work to
+            Eve, or schedule weekly student reminders, then return to other work
+            without cross-project context leakage.
+          </p>
+        </div>
+        <div>
+          <h2 class="text-3xl font-black">
+            Remote capabilities, not local tools
+          </h2>
+          <p class="mt-5 text-lg leading-8 text-ink/70">
+            An application may expose capabilities through authenticated API
+            endpoints. An agent can reason about them as available capabilities,
+            but they are not necessarily local tools registered inside the
+            agent's own tool registry.
+          </p>
+          <p class="mt-4 leading-7 text-ink/70">
+            They are remote actions performed through the connected application.
+            This distinction helps agent harnesses with strict tool registries
+            avoid treating every remote endpoint as a locally callable tool.
+          </p>
+        </div>
       </div>
     </div>
   </section>

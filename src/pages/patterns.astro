@@ -5,6 +5,20 @@ import Callout from "@/components/Callout.astro";
 const patterns = [
   {
     number: "01",
+    title: "Agent Docking Bay",
+    text: "An application offers a user-friendly way to connect a personal agent without asking the user to understand APIs, URLs, or HTTP requests.",
+    lead: "A Docking Bay can make the flow visible:",
+    items: [
+      "A ready-to-paste magic prompt starts the connection",
+      "The application shows when it is waiting for and has established a connection",
+      "A short human-entered pairing code confirms presence on both sides",
+      "The project declares a permission contract before remote capabilities are used",
+    ],
+    closing:
+      "Conceptually, the flow is Project → Docking Bay → human pairing → permission contract → remote capabilities → operation, audit, and revocation.",
+  },
+  {
+    number: "02",
     title: "Prompt Package",
     text: "An environment publishes a portable package containing the information an agent needs to participate in an experience.",
     lead: "A Prompt Package may include:",
@@ -18,7 +32,7 @@ const patterns = [
       "The package allows the environment to define the experience without requiring the user to abandon their preferred agent.",
   },
   {
-    number: "02",
+    number: "03",
     title: "Enriched Submission",
     text: "An agent submits structured work to the environment. The response may include more than a success or failure status.",
     lead: "An enriched response may return:",
@@ -32,7 +46,7 @@ const patterns = [
       "This turns BYOAg into an interaction model rather than merely a mechanism for distributing prompts.",
   },
   {
-    number: "03",
+    number: "04",
     title: "Continuation Chain",
     text: "A submission may produce the next entry point in an experience, allowing the environment to reveal the next step only after evaluating the previous interaction.",
     lead: "Continuation Chains can support:",
@@ -46,7 +60,7 @@ const patterns = [
       "The environment maintains control of state and progression, while the user continues participating through their own agent.",
   },
   {
-    number: "04",
+    number: "05",
     title: "Agentic Contract and Evidence",
     text: "An environment cannot assume that every agent will interpret or follow instructions in exactly the same way. Instead of relying on assumed compliance, the environment can declare:",
     items: [
@@ -58,7 +72,7 @@ const patterns = [
       "The agent may then report what it attempted, completed, refused, or could not verify.",
   },
   {
-    number: "05",
+    number: "06",
     title: "Asynchronous Continuation",
     text: "Some experiences continue after the immediate interaction has ended. An environment may need to contact the user's agent when an external condition changes.",
     lead: "This may include:",
@@ -124,12 +138,12 @@ const patterns = [
               ))}
             </ul>
             <p class="mt-5 leading-7 text-paper/70">{pattern.closing}</p>
-            {pattern.number === "04" && (
+            {pattern.number === "05" && (
               <Callout title="Evidence over assumed compliance.">
                 Make the requested work and its observable outcome explicit.
               </Callout>
             )}
-            {pattern.number === "05" && (
+            {pattern.number === "06" && (
               <p class="mt-5 text-sm font-bold uppercase tracking-wide text-accent">
                 Exploratory — not yet finalized
               </p>
