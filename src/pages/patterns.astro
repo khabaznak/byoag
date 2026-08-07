@@ -1,0 +1,154 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Callout from "@/components/Callout.astro";
+
+const patterns = [
+  {
+    number: "01",
+    title: "Prompt Package",
+    text: "An environment publishes a portable package containing the information an agent needs to participate in an experience.",
+    lead: "A Prompt Package may include:",
+    items: [
+      "Context and objective",
+      "Available resources and constraints",
+      "Allowed actions and expected output",
+      "Evaluation criteria and interaction instructions",
+    ],
+    closing:
+      "The package allows the environment to define the experience without requiring the user to abandon their preferred agent.",
+  },
+  {
+    number: "02",
+    title: "Enriched Submission",
+    text: "An agent submits structured work to the environment. The response may include more than a success or failure status.",
+    lead: "An enriched response may return:",
+    items: [
+      "Validation results and preliminary evaluation",
+      "Corrective feedback or missing information",
+      "Scoring and retry instructions",
+      "The next available action or a continuation of the experience",
+    ],
+    closing:
+      "This turns BYOAg into an interaction model rather than merely a mechanism for distributing prompts.",
+  },
+  {
+    number: "03",
+    title: "Continuation Chain",
+    text: "A submission may produce the next entry point in an experience, allowing the environment to reveal the next step only after evaluating the previous interaction.",
+    lead: "Continuation Chains can support:",
+    items: [
+      "Guided workflows and educational exercises",
+      "Simulations and approval processes",
+      "Interactive stories and games",
+      "Multi-stage assessments",
+    ],
+    closing:
+      "The environment maintains control of state and progression, while the user continues participating through their own agent.",
+  },
+  {
+    number: "04",
+    title: "Agentic Contract and Evidence",
+    text: "An environment cannot assume that every agent will interpret or follow instructions in exactly the same way. Instead of relying on assumed compliance, the environment can declare:",
+    items: [
+      "Expectations, constraints, and acceptance criteria",
+      "Required evidence and permitted refusals",
+      "Partial-completion rules and observable outcomes",
+    ],
+    closing:
+      "The agent may then report what it attempted, completed, refused, or could not verify.",
+  },
+  {
+    number: "05",
+    title: "Asynchronous Continuation",
+    text: "Some experiences continue after the immediate interaction has ended. An environment may need to contact the user's agent when an external condition changes.",
+    lead: "This may include:",
+    items: [
+      "An approval, cancellation, deadline, result, or status change",
+      "New availability or a request for intervention",
+    ],
+    closing:
+      "This exploratory pattern considers authorized callbacks, subscriptions, event delivery, agent inboxes, resumable interaction state, stable agent identity, and safe context restoration. Its purpose is to allow event-driven interactions without requiring continuous polling.",
+  },
+];
+---
+
+<BaseLayout
+  title="BYOAg Patterns"
+  description="Experimental, composable interaction patterns for BYOAg."
+>
+  <section class="border-b border-white/10 bg-[#07111f] py-20">
+    <div class="page-shell max-w-4xl">
+      <p class="eyebrow">Experimental patterns</p>
+      <h1 class="mt-4 text-5xl font-black leading-tight text-paper sm:text-6xl">
+        BYOAg Patterns
+      </h1>
+      <div class="prose-lite mt-8 max-w-3xl">
+        <p>
+          BYOAg is being developed through small, composable interaction
+          patterns rather than as a prematurely finalized universal protocol.
+        </p>
+        <p>
+          Each pattern describes a recurring way in which a user-owned agent can
+          participate in an environment-defined experience.
+        </p>
+        <p>
+          These patterns are experimental. Their purpose is to make
+          architectural questions explicit, support working prototypes, and
+          establish a shared vocabulary for implementation and discussion.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[#0b1626] py-20">
+    <div class="page-shell grid max-w-4xl gap-6">
+      {
+        patterns.map((pattern) => (
+          <article class="rounded-lg border border-white/12 bg-white/[0.04] p-6 sm:p-8">
+            <p class="text-sm font-bold text-accent">
+              Pattern {pattern.number}
+            </p>
+            <h2 class="mt-3 text-3xl font-black text-paper">{pattern.title}</h2>
+            <p class="mt-5 text-lg leading-8 text-paper/78">{pattern.text}</p>
+            {pattern.lead && (
+              <p class="mt-5 font-semibold text-paper">{pattern.lead}</p>
+            )}
+            <ul class="mt-4 grid gap-2 text-paper/70" role="list">
+              {pattern.items.map((item) => (
+                <li class="flex gap-3">
+                  <span class="text-cyan" aria-hidden="true">
+                    •
+                  </span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+            <p class="mt-5 leading-7 text-paper/70">{pattern.closing}</p>
+            {pattern.number === "04" && (
+              <Callout title="Evidence over assumed compliance.">
+                Make the requested work and its observable outcome explicit.
+              </Callout>
+            )}
+            {pattern.number === "05" && (
+              <p class="mt-5 text-sm font-bold uppercase tracking-wide text-accent">
+                Exploratory — not yet finalized
+              </p>
+            )}
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="bg-paper py-20 text-ink">
+    <div class="page-shell max-w-4xl">
+      <p class="eyebrow">Status</p>
+      <h2 class="mt-3 text-4xl font-black">Experimental and evolving</h2>
+      <p class="mt-6 max-w-3xl text-lg leading-8 text-ink/72">
+        These patterns are experimental and are expected to evolve through
+        prototypes, implementation experience, security analysis, and public
+        discussion. They are not yet intended to represent a finalized standard.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

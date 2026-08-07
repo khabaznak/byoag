@@ -13,6 +13,7 @@ export const navItems = [
   { label: "Concept", href: "/concept" },
   { label: "How It Works", href: "/how-it-works" },
   { label: "Examples", href: "/examples" },
+  { label: "Patterns", href: "/patterns" },
   { label: "Draft Spec", href: "/spec" },
   { label: "Trust", href: "/trust" },
   { label: "About", href: "/about" },
