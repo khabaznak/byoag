@@ -113,6 +113,15 @@ a {
   margin-top: 0.45rem;
 }
 
+.prose-on-paper {
+  color: rgb(7 17 31 / 0.76);
+}
+
+.prose-on-paper h2,
+.prose-on-paper h3 {
+  color: rgb(var(--color-ink));
+}
+
 .code-block {
   overflow-x: auto;
   border: 1px solid var(--line);
