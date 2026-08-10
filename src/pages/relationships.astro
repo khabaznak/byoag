@@ -1,0 +1,503 @@
+---
+import Callout from "@/components/Callout.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const journey = [
+  {
+    number: "01",
+    title: "Discover",
+    person: "Notices a signal that a provider works with their agent.",
+    agent:
+      "Recognizes a verified entry point without loading a permanent toolset.",
+    provider:
+      "Exposes minimal public metadata: identity, service category, and how to begin.",
+  },
+  {
+    number: "02",
+    title: "Express intent",
+    person: "Asks for an outcome.",
+    agent:
+      "Uses the active project, preferences, and constraints to find relevant services.",
+    provider:
+      "Does not receive the person’s full profile or private agent transcript.",
+  },
+  {
+    number: "03",
+    title: "Connect",
+    person: "Agrees only to what is required for the current relationship.",
+    agent: "Checks whether it already has compatible capabilities.",
+    provider:
+      "Declares requirements, available actions, limits, and event options.",
+  },
+  {
+    number: "04",
+    title: "Act",
+    person: "Stays in control of consequential choices and approvals.",
+    agent: "Composes authorized actions and applies user preferences.",
+    provider:
+      "Can use deterministic APIs, workflows, or internal agents. Its harness remains private.",
+  },
+  {
+    number: "05",
+    title: "Close",
+    person: "Gets a clear receipt, status, and revocation option.",
+    agent:
+      "Retains only approved, useful preferences and reusable capabilities.",
+    provider: "Lets temporary authority expire.",
+  },
+];
+---
+
+<BaseLayout
+  title="Personal agents. Trusted service relationships."
+  description="How personal agents can form trusted, account-linked and bounded relationships with BYOAg-enabled providers."
+  socialImage="/og-relationships.png"
+>
+  <section class="relationship-hero">
+    <div class="page-shell relationship-layout">
+      <aside class="relationship-toc" aria-label="On this page">
+        <p>On this page</p>
+        <a href="#journey">Interaction journey</a>
+        <a href="#delegation">Delegation</a>
+        <a href="#capabilities">Capability model</a>
+      </aside>
+      <div>
+        <p class="eyebrow">Relationship model</p>
+        <h1 class="relationship-title">
+          Personal agents.<br />Trusted service relationships.
+        </h1>
+        <p class="relationship-lead">
+          BYOAg lets a person bring their own agent into a service relationship
+          without requiring every provider to deploy a customer-facing agent or
+          adopt the same internal harness.
+        </p>
+        <p class="relationship-kicker">
+          Standardize the boundary, not the mind.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="journey" class="relationship-section">
+    <div class="page-shell relationship-content">
+      <p class="eyebrow">01 · Interaction journey</p>
+      <h2 class="section-title">
+        From discovery to a useful, bounded relationship.
+      </h2>
+      <p class="relationship-intro">
+        A provider can be agent-enabled without an always-on integration or
+        disclosure of its private implementation.
+      </p>
+      <ol
+        class="journey-list"
+        aria-label="Five stages of a personal agent service relationship"
+      >
+        {
+          journey.map((step, index) => (
+            <>
+              <li class="journey-step">
+                <div class="journey-number" aria-hidden="true">
+                  {step.number}
+                </div>
+                <article class="journey-card">
+                  <h3>{step.title}</h3>
+                  <div class="journey-lanes">
+                    <div class="lane lane-person">
+                      <>
+                        <h4>Person</h4>
+                        <p>{step.person}</p>
+                      </>
+                    </div>
+                    <div class="lane lane-agent">
+                      <>
+                        <h4>Personal agent</h4>
+                        <p>{step.agent}</p>
+                      </>
+                    </div>
+                    <div class="lane lane-provider">
+                      <>
+                        <h4>Provider</h4>
+                        <p>{step.provider}</p>
+                      </>
+                    </div>
+                  </div>
+                </article>
+              </li>
+              {index === 2 && (
+                <li class="journey-gate-item">
+                  <aside
+                    class="decision-gate"
+                    aria-label="Capability decision gate"
+                  >
+                    <p class="eyebrow">Decision gate</p>
+                    <h3>
+                      Does the agent already have a compatible capability?
+                    </h3>
+                    <p>
+                      Reuse it with scoped consent; otherwise propose a trusted
+                      adapter or a safe fallback. Never install arbitrary code
+                      merely because a provider requests it.
+                    </p>
+                  </aside>
+                </li>
+              )}
+            </>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section
+    id="delegation"
+    class="relationship-section relationship-section-soft"
+  >
+    <div class="page-shell relationship-content">
+      <p class="eyebrow">02 · Account-linked agent delegation</p>
+      <h2 class="section-title">
+        A provider trusts an authorization, not an opaque intelligence.
+      </h2>
+      <p class="relationship-intro">
+        The human account remains the provider’s source of accountability. The
+        agent proves that it is the enrolled instance acting within a limited,
+        revocable delegation.
+      </p>
+      <figure class="svg-diagram">
+        <svg
+          viewBox="0 0 900 780"
+          role="img"
+          aria-labelledby="delegation-diagram-title delegation-diagram-desc"
+        >
+          <title id="delegation-diagram-title">
+            Account-linked agent delegation sequence
+          </title>
+          <desc id="delegation-diagram-desc"
+            >A sequence diagram showing sign-in, account approval, agent key
+            enrollment, short-lived authority, and future proof of possession
+            between a person, provider account, and personal agent.</desc
+          >
+          <defs
+            ><marker
+              id="sequence-arrow"
+              markerWidth="8"
+              markerHeight="8"
+              refX="7"
+              refY="4"
+              orient="auto"
+              ><path d="M0,0 L8,4 L0,8 Z" fill="#f59e0b"></path></marker
+            ></defs
+          >
+          <g font-family="Inter, system-ui, sans-serif">
+            <g fill="#0d293b" stroke="#38bdf8" stroke-opacity=".7"
+              ><rect x="50" y="28" width="190" height="46" rx="23"></rect><rect
+                x="355"
+                y="28"
+                width="190"
+                height="46"
+                rx="23"></rect><rect
+                x="660"
+                y="28"
+                width="190"
+                height="46"
+                rx="23"></rect></g
+            >
+            <g
+              fill="#f8fafc"
+              font-size="15"
+              font-weight="700"
+              text-anchor="middle"
+              ><text x="145" y="57">Person</text><text x="450" y="57"
+                >Provider account</text
+              ><text x="755" y="57">Personal agent</text></g
+            >
+            <g stroke="#38bdf8" stroke-opacity=".36" stroke-dasharray="6 8"
+              ><path d="M145 74V748"></path><path d="M450 74V748"></path><path
+                d="M755 74V748"></path></g
+            >
+            <g
+              stroke="#f59e0b"
+              stroke-width="2"
+              marker-end="url(#sequence-arrow)"
+              ><path d="M145 125H450"></path><path d="M450 195H145"></path><path
+                d="M145 265H450"></path><path d="M450 335H755"></path><path
+                d="M755 405H450"></path><path d="M450 545H755"></path><path
+                d="M755 615H450"></path><path d="M450 685H755"></path></g
+            >
+            <g fill="#f8fafc" font-size="13"
+              ><g
+                ><rect
+                  x="188"
+                  y="96"
+                  width="220"
+                  height="21"
+                  rx="5"
+                  fill="#102137"></rect><text x="198" y="111"
+                  >01 · Normal provider sign-in</text
+                ></g
+              ><g
+                ><rect
+                  x="188"
+                  y="166"
+                  width="220"
+                  height="21"
+                  rx="5"
+                  fill="#102137"></rect><text x="198" y="181"
+                  >02 · Show relationship and limits</text
+                ></g
+              ><g
+                ><rect
+                  x="188"
+                  y="236"
+                  width="220"
+                  height="21"
+                  rx="5"
+                  fill="#102137"></rect><text x="198" y="251"
+                  >03 · Approve enrollment</text
+                ></g
+              ><g
+                ><rect
+                  x="493"
+                  y="306"
+                  width="220"
+                  height="21"
+                  rx="5"
+                  fill="#102137"></rect><text x="503" y="321"
+                  >04 · One-time docking challenge</text
+                ></g
+              ><g
+                ><rect
+                  x="493"
+                  y="376"
+                  width="220"
+                  height="21"
+                  rx="5"
+                  fill="#102137"></rect><text x="503" y="391"
+                  >05 · Public key and signature</text
+                ></g
+              ><g
+                ><rect
+                  x="493"
+                  y="516"
+                  width="220"
+                  height="21"
+                  rx="5"
+                  fill="#102137"></rect><text x="503" y="531"
+                  >07 · Scoped delegated authority</text
+                ></g
+              ><g
+                ><rect
+                  x="493"
+                  y="586"
+                  width="220"
+                  height="21"
+                  rx="5"
+                  fill="#102137"></rect><text x="503" y="601"
+                  >08 · Proof of key possession</text
+                ></g
+              ><g
+                ><rect
+                  x="493"
+                  y="656"
+                  width="220"
+                  height="21"
+                  rx="5"
+                  fill="#102137"></rect><text x="503" y="671"
+                  >09 · Result, status, or consent event</text
+                ></g
+              ></g
+            >
+            <g
+              stroke="#f59e0b"
+              stroke-width="2"
+              fill="none"
+              marker-end="url(#sequence-arrow)"
+            >
+              <path d="M450 445H585V490H450"></path>
+            </g>
+            <g fill="#102137"
+              ><rect x="468" y="452" width="224" height="34" rx="5"></rect></g
+            >
+            <g fill="#f8fafc" font-size="12"
+              ><text x="478" y="466">06 · Bind account, agent key,</text><text
+                x="478"
+                y="480">scopes, and policy</text
+              ></g
+            >
+          </g>
+        </svg>
+        <figcaption>
+          Enrollment is account-linked: the provider authenticates the person,
+          verifies the agent’s enrolled key, and issues bounded authority.
+        </figcaption>
+      </figure>
+      <div class="proof-grid">
+        <article>
+          <h3>Human proof</h3><p>
+            The provider authenticates its own account holder using the
+            assurance appropriate to its domain.
+          </p>
+        </article>
+        <article>
+          <h3>Agent proof</h3><p>
+            The agent holds a private key; the provider stores the public key
+            and verifies a signature or proof of possession.
+          </p>
+        </article>
+        <article>
+          <h3>Delegation proof</h3><p>
+            Each authorization is scoped, time-bounded, auditable, and revocable
+            by the person or the provider.
+          </p>
+        </article>
+      </div>
+      <div class="mt-5">
+        <Callout title="Not an API key vault"
+          >Prefer provider-specific credentials bound to the enrolled agent key.
+          A stolen bearer token should not be enough to impersonate the agent.</Callout
+        >
+      </div>
+    </div>
+  </section>
+
+  <section id="capabilities" class="relationship-section">
+    <div class="page-shell relationship-content">
+      <p class="eyebrow">03 · Personal agent capability model</p>
+      <h2 class="section-title">What an agent needs beyond tools.</h2>
+      <p class="relationship-intro">
+        A personal agent needs to discover relationships, establish trust, carry
+        bounded authority, and manage the human experience across them.
+      </p>
+      <figure class="svg-diagram capability-svg">
+        <svg
+          viewBox="0 0 1100 760"
+          role="img"
+          aria-labelledby="capability-diagram-title capability-diagram-desc"
+        >
+          <title id="capability-diagram-title">
+            Personal agent runtime capability map
+          </title>
+          <desc id="capability-diagram-desc"
+            >Nine capabilities radiate from a personal agent runtime, each
+            paired with its expected relationship outcome.</desc
+          >
+          <g fill="none" stroke="#38bdf8" stroke-opacity=".38" stroke-width="2"
+            ><path d="M550 375L170 130"></path><path d="M550 375L500 130"
+            ></path><path d="M550 375L850 130"></path><path d="M550 375L170 380"
+            ></path><path d="M550 375L900 380"></path><path d="M550 375L170 630"
+            ></path><path d="M550 375L500 630"></path><path d="M550 375L850 630"
+            ></path><path d="M550 375L550 680"></path></g
+          >
+          <g font-family="Inter, system-ui, sans-serif"
+            ><rect
+              x="415"
+              y="320"
+              width="270"
+              height="110"
+              rx="55"
+              fill="#0d293b"
+              stroke="#38bdf8"
+              stroke-width="2"></rect><text
+              x="550"
+              y="366"
+              fill="#e0f2fe"
+              font-size="21"
+              font-weight="800"
+              text-anchor="middle">Personal agent runtime</text
+            ><text
+              x="550"
+              y="393"
+              fill="#bae6fd"
+              font-size="13"
+              text-anchor="middle">trust, authority, and human context</text
+            >
+            <g fill="#102137" stroke="#a78bfa" stroke-opacity=".72"
+              ><rect x="35" y="55" width="270" height="110" rx="12"></rect><rect
+                x="365"
+                y="55"
+                width="270"
+                height="110"
+                rx="12"></rect><rect
+                x="795"
+                y="55"
+                width="270"
+                height="110"
+                rx="12"></rect><rect
+                x="35"
+                y="305"
+                width="270"
+                height="110"
+                rx="12"></rect><rect
+                x="795"
+                y="305"
+                width="270"
+                height="110"
+                rx="12"></rect><rect
+                x="35"
+                y="555"
+                width="270"
+                height="110"
+                rx="12"></rect><rect
+                x="365"
+                y="555"
+                width="270"
+                height="110"
+                rx="12"></rect><rect
+                x="795"
+                y="555"
+                width="270"
+                height="110"
+                rx="12"></rect><rect
+                x="415"
+                y="680"
+                width="270"
+                height="70"
+                rx="12"></rect></g
+            >
+            <g fill="#f8fafc" font-size="15" font-weight="700"
+              ><text x="55" y="86">Discover service availability</text><text
+                x="385"
+                y="86">Identity and key management</text
+              ><text x="815" y="86">Enrollment and registry</text><text
+                x="55"
+                y="336">Capability matching</text
+              ><text x="815" y="336">Policy, limits, and consent</text><text
+                x="55"
+                y="586">Safe execution environment</text
+              ><text x="385" y="586">Event and notification handling</text><text
+                x="815"
+                y="586">Audit, receipts, and revocation</text
+              ><text x="435" y="708">Project-scoped memory</text></g
+            >
+            <g fill="#fcd34d" font-size="12"
+              ><text x="55" y="119">Minimal verified provider profile</text
+              ><text x="385" y="119">Proof of possession</text><text
+                x="815"
+                y="119">Account-linked delegations</text
+              ><text x="55" y="369">Reuse or acquire compatible capability</text
+              ><text x="815" y="369">Human approval for consequential acts</text
+              ><text x="55" y="619"
+                >No unrestricted network or secret exposure</text
+              ><text x="385" y="619">Authenticated status updates</text><text
+                x="815"
+                y="619">Explain and disable any relationship</text
+              ><text x="435" y="733">Keep context relevant to the human</text
+              ></g
+            >
+          </g>
+        </svg>
+        <figcaption>
+          Each relationship capability has a concrete outcome: discover only
+          what is needed, prove enrollment, carry bounded authority, and keep
+          context relevant to the person.
+        </figcaption>
+      </figure>
+      <div class="mt-6">
+        <Callout title="Persistent does not mean always exposed"
+          >The relationship registry can remember an enrolled provider while
+          only bringing the relevant authority and service semantics into the
+          active project when needed.</Callout
+        >
+      </div>
+    </div>
+  </section>
+</BaseLayout>

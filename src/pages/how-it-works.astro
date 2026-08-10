@@ -1,5 +1,33 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const flow = [
+  {
+    title: "Project",
+    detail:
+      "The active work context keeps the relationship relevant and bounded.",
+  },
+  {
+    title: "Agent Docking Bay",
+    detail:
+      "A clear entry point helps the person start without handling transport details.",
+  },
+  {
+    title: "Connected personal agent",
+    detail:
+      "Pairing and permission establish only the authority needed for the work.",
+  },
+  {
+    title: "Application operation",
+    detail:
+      "The application exposes remote capabilities while retaining its own rules and harness.",
+  },
+  {
+    title: "Result and continuation",
+    detail:
+      "The person receives status, receipts, and a path to review or revoke the relationship.",
+  },
+];
 ---
 
 <BaseLayout
@@ -19,24 +47,31 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
           need to understand APIs, URLs, or HTTP requests to begin.
         </p>
       </div>
-      <pre
-        class="code-block"
-        aria-label="Conceptual BYOAg flow"><code>Project
-  |
-  v
-Docking Bay
-  |
-  | human pairing + permission contract
-  v
-Connected personal agent
-  |
-  | remote capabilities
-  v
-Application operation
-  |
-  | audit + revocation
-  v
-Result / feedback / continuation</code></pre>
+      <ol
+        class="docking-flow"
+        aria-label="Conceptual BYOAg flow from a project through connection, operation, and a result"
+      >
+        {
+          flow.map((step, index) => (
+            <li class="docking-flow-step">
+              <span class="docking-flow-index" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <article>
+                <>
+                  <h2>{step.title}</h2>
+                  <p>{step.detail}</p>
+                </>
+              </article>
+              {index < flow.length - 1 && (
+                <span class="docking-flow-arrow" aria-hidden="true">
+                  ↓
+                </span>
+              )}
+            </li>
+          ))
+        }
+      </ol>
     </div>
   </section>
 
@@ -118,6 +153,12 @@ Result / feedback / continuation</code></pre>
           </p>
         </div>
       </div>
+      <a
+        class="mt-8 inline-flex rounded-md border border-ink/18 px-5 py-3 font-bold text-ink transition hover:border-cyan hover:bg-ink/[0.04]"
+        href="/relationships"
+      >
+        Explore trusted service relationships
+      </a>
     </div>
   </section>
 </BaseLayout>

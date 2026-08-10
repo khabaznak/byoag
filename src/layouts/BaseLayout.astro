@@ -8,17 +8,19 @@ interface Props {
   title?: string;
   description?: string;
   pathname?: string;
+  socialImage?: string;
 }
 
 const {
   title = site.title,
   description = site.description,
   pathname = Astro.url.pathname,
+  socialImage = site.socialImage,
 } = Astro.props;
 
 const canonical = new URL(pathname, site.url).toString();
 const pageTitle = title === site.title ? title : `${title} — BYOAg`;
-const image = new URL(site.socialImage, site.url).toString();
+const image = new URL(socialImage, site.url).toString();
 ---
 
 <!doctype html>
