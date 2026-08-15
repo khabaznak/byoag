@@ -1,20 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
-const helloWorld = `{
-  "byoag_version": "0.1-draft",
-  "task": "Explain BYOAg in your own words.",
-  "constraints": {
-    "max_words": 40,
-    "audience": "curious developer"
-  },
-  "submission": {
-    "method": "POST",
-    "url": "https://example.org/byoag/hello/submissions"
-  }
-}`;
-
-const classroom = `{
+const education = `{
   "activity": "Compare two explanations of a scientific concept.",
   "resources": ["reading-brief.md", "rubric.json"],
   "time_limit_minutes": 30,
@@ -25,19 +12,34 @@ const classroom = `{
   }
 }`;
 
-const adventure = `{
+const entertainment = `{
   "scene": "The user is at a locked observatory door.",
   "choices": ["inspect keypad", "search desk", "ask for hint"],
+  "requires_user_confirmation": true,
   "continuation": {
     "submit_to": "https://example.org/adventure/scene/7",
     "returns": "next_scene_url"
   }
 }`;
+
+const healthcare = `{
+  "purpose": "Prepare for a scheduled care visit.",
+  "available_services": ["appointment preparation", "coverage questions"],
+  "allowed_actions": ["collect questions", "request scheduling support"],
+  "clinical_boundary": "Escalate medical questions to a qualified clinician."
+}`;
+
+const commerce = `{
+  "request": "Compare eligible delivery options.",
+  "resources": ["catalog.json", "availability.json", "return-policy.md"],
+  "allowed_actions": ["compare", "save a shortlist", "prepare checkout"],
+  "confirmation_required_for": ["purchase", "subscription"]
+}`;
 ---
 
 <BaseLayout
   title="Examples"
-  description="Conceptual BYOAg examples for hello world, classrooms, and interactive adventures."
+  description="Conceptual BYOAg examples for education, entertainment, healthcare care navigation, and commerce."
 >
   <section class="bg-[#07111f] py-20">
     <div class="page-shell">
@@ -47,7 +49,8 @@ const adventure = `{
       </h1>
       <p class="mt-6 max-w-3xl text-lg leading-8 text-paper/72">
         These examples use valid JSON to sketch possible packages and
-        submissions. They are draft illustrations for discussion.
+        submissions. They are draft illustrations for discussion, not final
+        protocol definitions or production integrations.
       </p>
     </div>
   </section>
@@ -58,38 +61,53 @@ const adventure = `{
         class="grid gap-6 rounded-lg border border-white/12 bg-white/[0.04] p-6 lg:grid-cols-[0.8fr_1.2fr]"
       >
         <div>
-          <h2 class="text-3xl font-bold text-paper">Hello World</h2>
+          <h2 class="text-3xl font-bold text-paper">Education</h2>
           <p class="mt-4 leading-7 text-paper/70">
-            The environment asks the agent to help the user explain BYOAg in
-            their own words and submit a concise definition.
+            A student agent retrieves a guided activity. Later, an instructor
+            can retrieve submissions and a shared evaluation rubric.
           </p>
         </div>
-        <pre class="code-block"><code>{helloWorld}</code></pre>
+        <pre class="code-block"><code>{education}</code></pre>
       </article>
       <article
         class="grid gap-6 rounded-lg border border-white/12 bg-white/[0.04] p-6 lg:grid-cols-[0.8fr_1.2fr]"
       >
         <div>
-          <h2 class="text-3xl font-bold text-paper">Classroom activity</h2>
+          <h2 class="text-3xl font-bold text-paper">Entertainment and games</h2>
           <p class="mt-4 leading-7 text-paper/70">
-            A student agent retrieves an assignment package. Later, an
-            instructor agent retrieves submissions and a shared evaluation
-            rubric.
+            An agent retrieves a scene, discusses the choices with the person,
+            and submits their confirmed decision to receive the next scene.
           </p>
         </div>
-        <pre class="code-block"><code>{classroom}</code></pre>
+        <pre class="code-block"><code>{entertainment}</code></pre>
       </article>
       <article
         class="grid gap-6 rounded-lg border border-white/12 bg-white/[0.04] p-6 lg:grid-cols-[0.8fr_1.2fr]"
       >
         <div>
-          <h2 class="text-3xl font-bold text-paper">Interactive adventure</h2>
+          <h2 class="text-3xl font-bold text-paper">
+            Healthcare care navigation
+          </h2>
           <p class="mt-4 leading-7 text-paper/70">
-            The agent retrieves a scene, discusses available choices with the
-            user, submits the user's decision, and receives the next scene URL.
+            An agent helps a person prepare for a visit and navigate available
+            services. Medical questions are routed to a qualified clinician; the
+            example does not provide diagnosis or treatment.
           </p>
         </div>
-        <pre class="code-block"><code>{adventure}</code></pre>
+        <pre class="code-block"><code>{healthcare}</code></pre>
+      </article>
+      <article
+        class="grid gap-6 rounded-lg border border-white/12 bg-white/[0.04] p-6 lg:grid-cols-[0.8fr_1.2fr]"
+      >
+        <div>
+          <h2 class="text-3xl font-bold text-paper">Commerce</h2>
+          <p class="mt-4 leading-7 text-paper/70">
+            A service exposes current options and policies. The agent helps the
+            person compare them, but a purchase or subscription remains subject
+            to explicit user confirmation.
+          </p>
+        </div>
+        <pre class="code-block"><code>{commerce}</code></pre>
       </article>
     </div>
   </section>

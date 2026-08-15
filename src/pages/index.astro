@@ -5,7 +5,7 @@ import SectionHeader from "@/components/SectionHeader.astro";
 
 <BaseLayout
   title="BYOAg — Bring Your Own Agent"
-  description="Explore BYOAg, an experimental open pattern for agent-portable experiences."
+  description="Explore BYOAg, an experimental open pattern for people and providers to create agent-portable experiences."
 >
   <section
     class="relative overflow-hidden border-b border-white/10 bg-[#07111f]"
@@ -31,7 +31,9 @@ import SectionHeader from "@/components/SectionHeader.astro";
         <p class="mt-7 max-w-2xl text-xl leading-8 text-paper/76">
           BYOAg allows people to bring their own AI agent into an external
           environment where the experience provides the context, artifacts,
-          tools, rules, and interaction contract.
+          tools, rules, and interaction contract. People retain continuity with
+          their chosen agent while providers can offer a bounded experience
+          without owning a general-purpose customer agent.
         </p>
         <div class="mt-9 flex flex-wrap gap-3">
           <a
@@ -174,24 +176,52 @@ import SectionHeader from "@/components/SectionHeader.astro";
     <div class="page-shell">
       <SectionHeader
         eyebrow="Why BYOAg"
-        title="A pattern for shared work without forced agent ownership"
-        text="The goal is not to guarantee perfect interoperability. It is to make the work surface explicit enough for different capable agents to participate."
+        title="A more practical path to agent-enabled services"
+        text="BYOAg explores how providers can participate in agent-mediated experiences without assuming they must first build and operate a complete customer-facing agent platform."
       />
-      <div class="mt-10 grid gap-4 md:grid-cols-2">
-        {
-          [
-            "Users retain continuity with their preferred agent.",
-            "Experiences do not need to own all intelligence.",
-            "Environments can define consistent rules and evaluation criteria.",
-            "Interactions can generate evidence of what was requested, attempted, and submitted.",
-            "The same environment can work with different capable agents.",
-          ].map((benefit) => (
-            <p class="rounded-lg border border-ink/12 bg-white p-5 font-medium leading-7 text-ink/78">
-              {benefit}
+      <div class="mt-10 grid gap-8 lg:grid-cols-2">
+        <div>
+          <h3 class="text-2xl font-bold">Why now</h3>
+          <div class="mt-4 grid gap-4 text-lg leading-8 text-ink/72">
+            <p>
+              A useful, reliable AI experience can require data preparation,
+              retrieval, evaluation, permissions, security, observability, and
+              safe execution. Building and operating that foundation can keep
+              many businesses waiting.
             </p>
-          ))
-        }
+            <p>
+              BYOAg can shift the starting point. Instead of requiring every
+              provider to own all of the intelligence layer, it lets them focus
+              on the capabilities, data, policies, and experience that are
+              specific to their service.
+            </p>
+          </div>
+        </div>
+        <div class="rounded-lg border border-ink/12 bg-[#fff8ed] p-6">
+          <p class="eyebrow">The future BYOAg is exploring</p>
+          <h3 class="mt-3 text-2xl font-bold">
+            Personal agents may become a common service interface.
+          </h3>
+          <p class="mt-4 text-lg leading-8 text-ink/72">
+            This is a directional hypothesis, not a prediction. As personal
+            agents take on more comparison, coordination, and delegated work,
+            human attention, judgment, and authorization may become the real
+            constraint.
+          </p>
+          <p class="mt-4 leading-7 text-ink/72">
+            BYOAg explores how a provider could collaborate with the agent a
+            person already chose while keeping the person at the center of the
+            relationship.
+          </p>
+        </div>
       </div>
+      <p
+        class="mt-8 max-w-4xl rounded-lg border border-ink/12 bg-white p-5 leading-7 text-ink/72"
+      >
+        BYOAg does not remove a provider's responsibility for secure systems,
+        data quality, authorization, or operations. It makes the work surface
+        and its boundaries more explicit for people, agents, and environments.
+      </p>
     </div>
   </section>
 
@@ -201,7 +231,7 @@ import SectionHeader from "@/components/SectionHeader.astro";
         eyebrow="Initial use cases"
         title="Places where the pattern can be explored first"
       />
-      <div class="mt-10 grid gap-5 lg:grid-cols-3">
+      <div class="mt-10 grid gap-5 md:grid-cols-2">
         {
           [
             [
@@ -209,12 +239,16 @@ import SectionHeader from "@/components/SectionHeader.astro";
               "An environment provides activities, resources, constraints, and evaluation criteria. A student's agent helps them complete the activity, while an instructor's agent can evaluate submissions using a shared contract.",
             ],
             [
-              "Games and interactive experiences",
+              "Entertainment and games",
               "An agent enters a game, trivia session, simulation, or branching story. Each submission can produce feedback, scoring, or the next scene.",
             ],
             [
-              "Guided workflows",
-              "An environment provides structured forms, procedures, artifacts, and checkpoints while the user's agent helps them navigate the process.",
+              "Healthcare care navigation",
+              "A care provider can help a person prepare for an appointment, understand available services, and route questions to an appropriate clinician. It does not replace medical judgment or clinical care.",
+            ],
+            [
+              "Commerce",
+              "A service can present relevant products, availability, policies, and next steps while a person's agent helps compare options and requests approval before a consequential action.",
             ],
           ].map(([title, text]) => (
             <article class="rounded-lg border border-white/12 bg-white/[0.04] p-6">
@@ -306,14 +340,17 @@ import SectionHeader from "@/components/SectionHeader.astro";
       <div>
         <p class="text-lg leading-8 text-paper/72">
           We are looking for early design partners interested in exploring
-          agent-portable experiences, guided workflows, education, games,
-          enterprise processes, and asynchronous agent interactions.
+          agent-portable experiences for education, entertainment, care
+          navigation, commerce, enterprise processes, and asynchronous agent
+          interactions.
         </p>
         <p class="mt-4 leading-7 text-paper/64">
           BYOAg is an open architectural pattern. Organizations may still need
           support identifying suitable use cases, designing interaction
           contracts, implementing secure integrations, and validating
-          compatibility.
+          compatibility. The pattern is intended to help providers focus on
+          their own service rather than require a general-purpose customer agent
+          from day one.
         </p>
         <div class="mt-7 flex flex-wrap items-center gap-4">
           <!-- TODO: Replace with a public contact destination when one is configured. -->
