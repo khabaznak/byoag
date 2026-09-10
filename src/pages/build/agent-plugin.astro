@@ -1,0 +1,233 @@
+---
+import Callout from "@/components/Callout.astro";
+import DocsLayout from "@/layouts/DocsLayout.astro";
+import { site } from "@/config/site";
+
+const packageFiles = [
+  [
+    "plugin.json",
+    "Agent Plugins 1.0.0 manifest and the small ai.byoag extension pointer.",
+  ],
+  [
+    "mcp.json",
+    "Local stdio MCP server configuration using plugin-root and plugin-data variables.",
+  ],
+  [
+    "byoag.json",
+    "Draft native extension manifest, security claims, and bundled schema references.",
+  ],
+  [
+    "skills/byoag/",
+    "Static bootstrap skill and runtime protocol invariants for compatible clients.",
+  ],
+  [
+    "src/",
+    "Generic connector, cryptography, storage, validation, MCP server, and reference host.",
+  ],
+  [
+    "schemas/",
+    "Draft JSON Schemas for discovery, pairing, delegation, engagements, and more.",
+  ],
+];
+---
+
+<DocsLayout
+  pageId="plugin"
+  title="Agent Plugin"
+  description="Build and load the BYOAg bootstrap plugin and understand its compatibility and native-client boundaries."
+>
+  <section class="bg-[#07111f] py-20">
+    <div class="page-shell max-w-4xl">
+      <p class="eyebrow">For agent builders</p>
+      <h1 class="mt-4 text-5xl font-black leading-tight text-paper">
+        Make an agent BYOAg-ready without replacing it
+      </h1>
+      <p class="mt-6 max-w-3xl text-xl leading-8 text-paper/74">
+        The 0.1 plugin packages a universal bootstrap skill with one
+        platform-neutral local connector. It adds BYOAg behavior alongside the
+        agent’s existing tools, skills, memory, and configuration.
+      </p>
+      <a
+        class="mt-8 inline-flex rounded-md bg-accent px-5 py-3 font-bold text-[#07111f] transition hover:bg-[#ffb837]"
+        href={site.pluginGithubUrl}
+      >
+        Open the plugin repository
+      </a>
+    </div>
+  </section>
+
+  <section class="bg-paper py-20 text-ink">
+    <div class="page-shell grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+      <div class="min-w-0">
+        <p class="eyebrow">Build from source</p>
+        <h2 class="mt-3 text-4xl font-black leading-tight">
+          Node.js 20 or newer
+        </h2>
+        <p class="mt-5 text-lg leading-8 text-ink/70">
+          Packaged distribution automation is not included yet. A source
+          checkout must be built before an Agent Plugins client loads it.
+        </p>
+      </div>
+      <div class="min-w-0">
+        <pre
+          class="code-block"><code>{`git clone https://github.com/khabaznak/byoag-agent-plugin.git
+cd byoag-agent-plugin
+npm install
+npm test
+npm run build`}</code></pre>
+        <p class="mt-4 text-sm leading-6 text-ink/60">
+          The plugin is active development software. Review the repository, its
+          dependencies, and local data behavior before loading it into an agent.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[#0b1626] py-20">
+    <div class="page-shell">
+      <div class="max-w-3xl">
+        <p class="eyebrow">Package anatomy</p>
+        <h2 class="mt-3 text-4xl font-black text-paper">
+          Portable core, optional native extension
+        </h2>
+        <p class="mt-5 text-lg leading-8 text-paper/70">
+          Legacy clients can load the ordinary skill and MCP definition.
+          BYOAg-aware clients additionally resolve the namespaced extension
+          manifest.
+        </p>
+      </div>
+      <div class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {
+          packageFiles.map(([name, description]) => (
+            <article class="rounded-lg border border-white/12 bg-white/[0.04] p-5">
+              <h3 class="font-mono text-base font-bold text-cyan">{name}</h3>
+              <p class="mt-3 leading-7 text-paper/66">{description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-paper py-20 text-ink">
+    <div class="page-shell">
+      <div class="max-w-3xl">
+        <p class="eyebrow">Runtime contract</p>
+        <h2 class="mt-3 text-4xl font-black">
+          One stdio server, connector-owned state
+        </h2>
+        <p class="mt-5 text-lg leading-8 text-ink/70">
+          The current <code>mcp.json</code> launches the compiled connector with Node
+          and gives it a client-managed data directory.
+        </p>
+      </div>
+      <pre
+        class="code-block mt-8"><code>{`node \${PLUGIN_ROOT}/dist/src/index.js
+
+BYOAG_DATA_DIR=\${PLUGIN_DATA}/byoag
+BYOAG_PLUGIN_ROOT=\${PLUGIN_ROOT}`}</code></pre>
+      <div class="mt-8 grid gap-5 md:grid-cols-2">
+        <article class="rounded-lg border border-ink/12 bg-white p-6">
+          <p class="eyebrow">Public state</p>
+          <h3 class="mt-3 text-2xl font-bold">Safe connector references</h3>
+          <p class="mt-4 leading-7 text-ink/70">
+            Local registration IDs, platform domains, display names, status, and
+            expiration metadata may be returned to the client.
+          </p>
+        </article>
+        <article class="rounded-lg border border-accent/35 bg-[#fff8ed] p-6">
+          <p class="eyebrow">Protected state</p>
+          <h3 class="mt-3 text-2xl font-bold">
+            Keys and credentials stay local
+          </h3>
+          <p class="mt-4 leading-7 text-ink/70">
+            Pairwise private keys and registration credentials are held behind
+            the connector’s replaceable vault interface and omitted from MCP
+            results.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[#07111f] py-20">
+    <div class="page-shell grid gap-10 lg:grid-cols-2">
+      <article>
+        <p class="eyebrow">Compatibility client</p>
+        <h2 class="mt-3 text-3xl font-black text-paper">
+          Useful bootstrap, disclosed limits
+        </h2>
+        <ul class="mt-6 grid gap-3 leading-7 text-paper/68">
+          <li>Loads the static bootstrap skill and local MCP connector.</li>
+          <li>
+            Uses an owner-only file vault rather than OS-backed secure storage.
+          </li>
+          <li>
+            May accept a one-time pairing code through model-visible arguments
+            after warning.
+          </li>
+          <li>Must identify its compatibility mode during negotiation.</li>
+        </ul>
+      </article>
+      <article
+        class="rounded-lg border border-cyan/35 bg-cyan/[0.05] p-6 sm:p-8"
+      >
+        <p class="eyebrow">Full-conformance client</p>
+        <h2 class="mt-3 text-3xl font-black text-paper">
+          Native security and lifecycle surfaces
+        </h2>
+        <ul class="mt-6 grid gap-3 leading-7 text-paper/68">
+          <li>
+            Protected secret and confirmation input outside model context.
+          </li>
+          <li>OS-backed credential and private-key storage.</li>
+          <li>
+            Dynamic engagement, capability, tool, and signed-skill isolation.
+          </li>
+          <li>
+            Data-label propagation, enforcement, and clean scoped teardown.
+          </li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="bg-paper py-20 text-ink">
+    <div class="page-shell grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+      <div>
+        <p class="eyebrow">Protected terminal entry</p>
+        <h2 class="mt-3 text-4xl font-black leading-tight">
+          Use an opaque, single-use code reference
+        </h2>
+      </div>
+      <div>
+        <pre
+          class="code-block"><code>{`BYOAG_DATA_DIR=/the/same/plugin/data/directory \\
+  node dist/src/secret-cli.js`}</code></pre>
+        <p class="mt-5 leading-7 text-ink/70">
+          The helper reads without echo and returns a short-lived reference for
+          <code>byoag_complete_pairing</code>. A native client should provide
+          its own protected input surface instead.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[#0b1626] py-20">
+    <div class="page-shell max-w-4xl">
+      <Callout title="Current implementation boundary">
+        The source plugin, six lifecycle tools, static bootstrap skill, schemas,
+        reference host, and automated tests exist at 0.1.0. Packaged
+        distribution, OS-backed vault adapters, native protected UI, dynamic
+        engagement tool routing, and verified remote skill activation remain
+        future work.
+      </Callout>
+      <a
+        class="mt-8 inline-flex rounded-md border border-white/18 px-5 py-3 font-bold text-paper transition hover:border-cyan hover:bg-white/[0.06]"
+        href="/build/platform"
+      >
+        Continue to platform implementation
+      </a>
+    </div>
+  </section>
+</DocsLayout>

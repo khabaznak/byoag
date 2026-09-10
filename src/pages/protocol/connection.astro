@@ -1,0 +1,206 @@
+---
+import Callout from "@/components/Callout.astro";
+import PairingSequenceDiagram from "@/components/PairingSequenceDiagram.astro";
+import DocsLayout from "@/layouts/DocsLayout.astro";
+
+const discoveryChecks = [
+  "Exact hostname supplied by the person",
+  "HTTPS outside explicit loopback development",
+  "Fixed /.well-known/byoag.json path",
+  "Supported protocol version 0.1.0",
+  "Issuer, endpoints, and JWKS on the requested origin",
+  "Schema-valid document and detached EdDSA signature",
+  "Redirects and private-network destinations rejected",
+];
+
+const failureCodes = [
+  "discovery_not_found",
+  "issuer_mismatch",
+  "unsupported_version",
+  "pairing_code_invalid",
+  "pairing_code_expired",
+  "pairing_code_replayed",
+  "pairing_rate_limited",
+  "confirmation_required",
+  "proof_of_possession_failed",
+];
+---
+
+<DocsLayout
+  pageId="connection"
+  title="Discovery and Pairing"
+  description="The implemented BYOAg 0.1 exact-domain discovery, pairwise identity, DPoP pairing, and registration flow."
+>
+  <section class="bg-[#07111f] py-20">
+    <div class="page-shell">
+      <div class="max-w-4xl">
+        <p class="eyebrow">Implemented 0.1 binding</p>
+        <h1 class="mt-4 text-5xl font-black leading-tight text-paper">
+          Pair without putting trust in the prompt
+        </h1>
+        <p class="mt-6 max-w-3xl text-xl leading-8 text-paper/74">
+          The platform initiates pairing, its exact domain anchors discovery,
+          the connector proves control of a new installation key, and the result
+          is a scoped, revocable registration.
+        </p>
+      </div>
+      <PairingSequenceDiagram />
+    </div>
+  </section>
+
+  <section class="bg-paper py-20 text-ink">
+    <div class="page-shell grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+      <div>
+        <p class="eyebrow">Step 1 · Discovery</p>
+        <h2 class="mt-3 text-4xl font-black leading-tight">
+          The domain is the initial trust anchor
+        </h2>
+        <p class="mt-5 text-lg leading-8 text-ink/70">
+          A brand name or search result may help someone locate a service, but
+          it cannot establish protocol trust. The connector accepts a canonical
+          hostname—not a URL, path, query, fragment, or embedded credential.
+        </p>
+      </div>
+      <div class="rounded-lg border border-ink/12 bg-white p-6">
+        <h3 class="text-2xl font-bold">Connector validation</h3>
+        <ul class="mt-5 grid gap-3 text-ink/72" role="list">
+          {
+            discoveryChecks.map((item) => (
+              <li class="flex gap-3">
+                <>
+                  <span class="font-bold text-cyan" aria-hidden="true">
+                    ✓
+                  </span>
+                  <span>{item}</span>
+                </>
+              </li>
+            ))
+          }
+        </ul>
+        <pre
+          class="code-block mt-6"><code>GET https://platform.example/.well-known/byoag.json
+Accept: application/json</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[#0b1626] py-20">
+    <div class="page-shell grid gap-10 lg:grid-cols-2">
+      <article>
+        <p class="eyebrow">Step 2 · Pairwise identity</p>
+        <h2 class="mt-3 text-3xl font-black text-paper">
+          A different identity for every platform
+        </h2>
+        <p class="mt-5 text-lg leading-8 text-paper/70">
+          The connector generates separate Ed25519 key pairs for the agent’s
+          platform-pairwise identity and the local installation. Another
+          platform receives different identifiers and keys by default.
+        </p>
+        <p class="mt-4 leading-7 text-paper/62">
+          This makes cross-platform correlation an explicit user decision rather
+          than an accidental consequence of a global agent identifier.
+        </p>
+      </article>
+      <article class="rounded-lg border border-accent/40 bg-accent/[0.06] p-6">
+        <p class="eyebrow">Step 3 · Proof of possession</p>
+        <h2 class="mt-3 text-3xl font-black text-paper">
+          A stolen bearer token is not enough
+        </h2>
+        <p class="mt-5 text-lg leading-8 text-paper/70">
+          Pairing completion carries a DPoP proof signed by the installation key
+          and bound to the HTTP method and pairing endpoint. The issued
+          registration credential is then bound to that same key’s JWK
+          thumbprint.
+        </p>
+        <p class="mt-4 leading-7 text-paper/62">
+          Later authenticated requests bind fresh proofs to the target URI,
+          method, access-token hash, timestamp, and replay-protected identifier.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bg-paper py-20 text-ink">
+    <div class="page-shell">
+      <div class="max-w-3xl">
+        <p class="eyebrow">Human confirmation</p>
+        <h2 class="mt-3 text-4xl font-black">Two advertised pairing modes</h2>
+      </div>
+      <div class="mt-10 grid gap-5 md:grid-cols-2">
+        <article class="rounded-lg border border-ink/12 bg-white p-6">
+          <h3 class="text-2xl font-bold">Code is consent</h3>
+          <p class="mt-4 leading-7 text-ink/70">
+            Successful redemption of the short-lived, single-use code completes
+            registration. The code is bound to the platform account, issuer,
+            expiration, intended use, and rate-limit state.
+          </p>
+        </article>
+        <article class="rounded-lg border border-ink/12 bg-[#fff8ed] p-6">
+          <h3 class="text-2xl font-bold">Platform confirmation</h3>
+          <p class="mt-4 leading-7 text-ink/70">
+            After code redemption, the platform asks its authenticated account
+            holder to approve the presented agent. The connector polls status
+            with a fresh proof and never resends the pairing code.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[#07111f] py-20">
+    <div class="page-shell grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+      <div>
+        <p class="eyebrow">Secret handling</p>
+        <h2 class="mt-3 text-4xl font-black leading-tight text-paper">
+          Compatibility is explicit about its limits
+        </h2>
+      </div>
+      <div class="prose-lite">
+        <p>
+          A fully conformant client collects pairing codes through protected
+          input and keeps pairing codes, private keys, and credentials outside
+          model context. The model sees only the operation’s public result.
+        </p>
+        <p>
+          The bundled connector also offers an opaque, single-use protected-code
+          reference. If a client can only pass the code as an ordinary tool
+          argument, it must explain that the one-time value may be model-visible
+          before asking the person to provide it.
+        </p>
+        <Callout title="The file vault is compatibility-grade">
+          It separates secrets from public connector state and uses owner-only
+          file permissions where supported. It is not OS-backed encryption and
+          cannot be presented as full BYOAg conformance.
+        </Callout>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[#0b1626] py-20">
+    <div class="page-shell grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+      <div>
+        <p class="eyebrow">Fail closed</p>
+        <h2 class="mt-3 text-4xl font-black leading-tight text-paper">
+          Errors remain specific without leaking unrelated accounts
+        </h2>
+      </div>
+      <div>
+        <div class="flex flex-wrap gap-2">
+          {
+            failureCodes.map((code) => (
+              <code class="rounded-md border border-white/12 bg-white/[0.04] px-3 py-2 text-sm text-cyan">
+                {code}
+              </code>
+            ))
+          }
+        </div>
+        <p class="mt-6 leading-7 text-paper/66">
+          Expired, replayed, tampered, mismatched, rate-limited, or
+          cryptographically invalid inputs stop the connection. Error responses
+          must not reveal whether unrelated accounts, identities, or
+          registrations exist.
+        </p>
+      </div>
+    </div>
+  </section>
+</DocsLayout>

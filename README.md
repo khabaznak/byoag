@@ -1,8 +1,8 @@
 # BYOAg Website
 
-Initial public website for BYOAg — Bring Your Own Agent.
+Public website and implementation guide for BYOAg — Bring Your Own Agent.
 
-BYOAg is an experimental open architectural pattern for allowing people to bring their own AI agent into an environment-controlled experience. The site explains the concept, draft interaction model, early examples, trust boundaries, and project status.
+BYOAg is an open architectural pattern in active development for bringing a user-owned AI agent into a platform-controlled experience through explicit identity, scoped authority, and clean separation. The site documents the concept, working 0.1 protocol binding, reference plugin, trust model, adoption patterns, implementation guidance, and project status.
 
 ## Local Setup
 
@@ -28,9 +28,9 @@ npm run build     # Type-check and build production output
 ```text
 src/
   components/     Shared UI components
-  config/         Site metadata, navigation, and replaceable links
+  config/         Site metadata, documentation navigation, and replaceable links
   layouts/        Base HTML layout and metadata
-  pages/          Static routes
+  pages/          Static routes, including protocol and build guides
   styles/         Global CSS variables and utilities
 public/           Static assets, robots.txt, favicon, social card
 ```
@@ -47,10 +47,12 @@ Recommended Cloudflare Pages settings:
 
 The canonical site URL is configured as `https://byoag.ai` in `astro.config.mjs`.
 
+Cloudflare Pages should deploy the `main` branch after the production build succeeds. The repository intentionally contains no application server, authentication layer, database, or runtime secrets.
+
 ## Editing Content
 
-Most page content lives in `src/pages`. Shared navigation, GitHub URL, social metadata, and project URLs live in `src/config/site.ts`.
+Most page content lives in `src/pages`. Documentation navigation and status labels live in `src/config/navigation.ts`. Shared navigation, repository links, social metadata, and the replaceable adoption-inquiry destination live in `src/config/site.ts`.
 
 ## Status
 
-BYOAg is experimental. Do not describe it as a finalized standard, production guarantee, or vendor-owned product.
+The repository contains a working 0.1 implementation target and remains in active development. Keep protocol maturity, implemented behavior, planned features, and production-readiness claims clearly separated.

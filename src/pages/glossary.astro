@@ -1,84 +1,220 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import DocsLayout from "@/layouts/DocsLayout.astro";
 
-const terms = [
-  [
-    "Agent Docking Bay",
-    "A user-friendly connection surface where an application helps a person pair their personal agent with a project, without requiring them to work directly with APIs or URLs.",
-  ],
-  [
-    "Project",
-    "The trust boundary for a connection. It can isolate permissions, shared context, operating prompts, scheduled tasks, and audit history from other work.",
-  ],
-  [
-    "Pairing",
-    "A human-confirmed step—such as entering a short code—that helps establish that the user is present on both sides of a connection.",
-  ],
-  [
-    "Permission Contract",
-    "The explicit scopes, expectations, and limits a project declares before an agent can use an application's remote capabilities.",
-  ],
-  [
-    "Prompt Package",
-    "A portable package describing the context, objective, resources, constraints, allowed actions, expected output, and evaluation criteria for an experience.",
-  ],
-  [
-    "Remote Capability",
-    "An authenticated action exposed by a connected application. An agent may reason about it as available, but it is not necessarily a local tool in the agent's own registry.",
-  ],
-  [
-    "Enriched Submission",
-    "Structured work sent to an environment that can return validation, feedback, scoring, missing information, retry guidance, or the next available action.",
-  ],
-  [
-    "Continuation Chain",
-    "A sequence in which an evaluated submission produces the next entry point, allowing an experience to reveal later steps only when appropriate.",
-  ],
-  [
-    "Agentic Contract",
-    "A declaration of expectations, constraints, acceptance criteria, evidence, permitted refusals, and observable outcomes for an interaction.",
-  ],
-  [
-    "Evidence",
-    "A record of what an agent attempted, completed, refused, or could not verify—used in place of assumed compliance.",
-  ],
-  [
-    "Revocation",
-    "Ending or deleting a connection and its authority so an application can no longer perform actions through that project relationship.",
-  ],
+const groups = [
+  {
+    label: "Actors and boundaries",
+    terms: [
+      [
+        "Agent",
+        "The user’s AI system, including its existing instructions, tools, skills, memory, and configuration. BYOAg extends it temporarily; it does not replace it.",
+      ],
+      [
+        "Agent client",
+        "The application that hosts the agent and applies model, user, and client-safety policy. A fully conformant client also provides protected input and secure credential storage.",
+      ],
+      [
+        "Connector",
+        "A trusted local component that discovers platforms, manages pairwise keys and credentials, validates protocol documents, and mediates authenticated requests without exposing secrets to the model.",
+      ],
+      [
+        "Platform",
+        "The external application that owns its accounts, roles, resources, permissions, tools, data policy, and final authorization decisions.",
+      ],
+      [
+        "Reference host",
+        "The deliberately small, in-memory platform included with the plugin for interoperability testing. It is not a production server or application template.",
+      ],
+    ],
+  },
+  {
+    label: "Connection and identity",
+    terms: [
+      [
+        "Discovery document",
+        "Signed public metadata retrieved from the exact platform domain at /.well-known/byoag.json. It advertises the issuer, protocol version, endpoints, pairing modes, and JWKS URI.",
+      ],
+      [
+        "Trust anchor",
+        "The exact domain supplied by the person. Brand names, search results, redirects, and prompt text do not establish protocol trust.",
+      ],
+      [
+        "Pairing",
+        "The human-confirmed process that links an agent installation to a platform account using a short-lived, single-use code and proof of possession.",
+      ],
+      [
+        "Pairwise agent identity",
+        "A platform-specific agent identifier and key pair. Different platforms receive different identities by default to reduce unintended correlation.",
+      ],
+      [
+        "Installation",
+        "One local instance of an agent client, represented by its own key pair. Registration credentials are bound to the installation key.",
+      ],
+      [
+        "DPoP",
+        "Demonstration of Proof of Possession. A signed proof binds a protected request to its method, target URI, credential, time, replay identifier, and installation key.",
+      ],
+      [
+        "Registration",
+        "The durable, revocable relationship among a human platform account, a pairwise agent identity, and one installation. Connector and platform registration IDs remain local to their respective sides.",
+      ],
+    ],
+  },
+  {
+    label: "Authority and operation",
+    terms: [
+      [
+        "Engagement",
+        "A temporary, isolated operating context within a registration. It carries a role, delegation, capabilities, skills, lifetime, and data policy.",
+      ],
+      [
+        "Delegation",
+        "The authority the platform offers for an engagement, narrowed by the person. The person and client may reduce it but cannot widen the platform maximum.",
+      ],
+      [
+        "Effective authority",
+        "The strict intersection of the platform maximum, user delegation, and client safety policy.",
+      ],
+      [
+        "Permission",
+        "A structured statement about an operation, resource, effects, data handling, reversibility, and confirmation requirements.",
+      ],
+      [
+        "Capability",
+        "A versioned semantic contract describing what an authorized action means independently of a vendor-specific tool name.",
+      ],
+      [
+        "Concrete MCP tool",
+        "A platform-specific callable action mapped to a capability. Its presence is discovery, not proof that a particular invocation is authorized.",
+      ],
+      [
+        "Confirmation reference",
+        "A protected, single-use reference showing that the person approved a consequential action. It should be bound to the intended operation and consumed once.",
+      ],
+      [
+        "Data-handling label",
+        "Engagement-scoped policy metadata limiting persistence, disclosure, or transmission of platform-originated data.",
+      ],
+    ],
+  },
+  {
+    label: "Skills, compatibility, and lifecycle",
+    terms: [
+      [
+        "Bootstrap skill",
+        "The static skill packaged with the Agent Plugin. It explains the universal connection flow and safety boundaries to compatible clients.",
+      ],
+      [
+        "Declarative skill bundle",
+        "Proposed signed, content-addressed guidance containing instructions, references, examples, and schemas for one compatible engagement. It cannot contain executable code.",
+      ],
+      [
+        "Compatibility mode",
+        "The implemented plugin path for clients without native BYOAg support. It uses the static skill, local connector, and compatibility vault while disclosing its limitations.",
+      ],
+      [
+        "Full conformance",
+        "A future client capability level that includes protected input, OS-backed secrets, dynamic engagement isolation, signed skill activation, data-label enforcement, and clean teardown.",
+      ],
+      [
+        "Revocation",
+        "The platform or client decision that invalidates authority for a registration or engagement. Subsequent protected calls fail closed.",
+      ],
+      [
+        "Disconnect",
+        "The user-initiated operation that asks the platform to revoke one registration and then removes its local BYOAg credentials and state.",
+      ],
+      [
+        "Teardown",
+        "Deterministic removal of the affected BYOAg overlay while preserving unrelated agent tools, skills, memory, configuration, and registrations.",
+      ],
+      [
+        "Conformance suite",
+        "Automated black-box tests for observable 0.1 behavior. Passing the present suite is evidence for covered invariants, not a production-readiness claim.",
+      ],
+    ],
+  },
 ];
 ---
 
-<BaseLayout
+<DocsLayout
+  pageId="glossary"
   title="Glossary"
-  description="An evolving glossary of practical BYOAg architecture and interaction terms."
+  description="Canonical working vocabulary for the BYOAg 0.1 architecture, protocol, implementation, and lifecycle."
 >
   <section class="border-b border-white/10 bg-[#07111f] py-20">
     <div class="page-shell max-w-4xl">
-      <p class="eyebrow">Evolving terminology</p>
+      <p class="eyebrow">Canonical working vocabulary</p>
       <h1 class="mt-4 text-5xl font-black leading-tight text-paper">
-        BYOAg Glossary
+        Name the boundaries before building across them
       </h1>
       <p class="mt-7 max-w-3xl text-lg leading-8 text-paper/72">
-        Working definitions for the patterns explored on this site. They are
-        practical vocabulary for prototypes and discussion, not a finalized
-        technical standard.
+        These definitions align the website with the working 0.1 plugin and
+        protocol documents. They are precise enough for implementation
+        discussion, but remain open to revision as the pattern is tested.
       </p>
     </div>
   </section>
 
-  <section class="bg-paper py-20 text-ink">
+  {
+    groups.map((group, index) => (
+      <section
+        class:list={[
+          "py-20",
+          index % 2 === 0 ? "bg-paper text-ink" : "bg-[#0b1626]",
+        ]}
+      >
+        <div class="page-shell max-w-4xl">
+          <p class="eyebrow">{group.label}</p>
+          <dl class="mt-8 grid gap-4">
+            {group.terms.map(([term, definition]) => (
+              <div
+                class:list={[
+                  "rounded-lg border p-6",
+                  index % 2 === 0
+                    ? "border-ink/12 bg-white"
+                    : "border-white/12 bg-white/[0.04]",
+                ]}
+              >
+                <dt
+                  class:list={[
+                    "text-2xl font-black",
+                    index % 2 === 0 ? "text-ink" : "text-paper",
+                  ]}
+                >
+                  {term}
+                </dt>
+                <dd
+                  class:list={[
+                    "mt-3 leading-7",
+                    index % 2 === 0 ? "text-ink/70" : "text-paper/68",
+                  ]}
+                >
+                  {definition}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="bg-[#07111f] py-20">
     <div class="page-shell max-w-4xl">
-      <dl class="grid gap-4">
-        {
-          terms.map(([term, definition]) => (
-            <div class="rounded-lg border border-ink/12 bg-white p-6">
-              <dt class="text-2xl font-black text-ink">{term}</dt>
-              <dd class="mt-3 leading-7 text-ink/70">{definition}</dd>
-            </div>
-          ))
-        }
-      </dl>
+      <p class="eyebrow">Retired shorthand</p>
+      <h2 class="mt-3 text-4xl font-black text-paper">
+        Use protocol terms when the distinction matters
+      </h2>
+      <p class="mt-6 text-lg leading-8 text-paper/70">
+        Earlier explorations used terms such as <em>Project</em>, <em
+          >Permission Contract</em
+        >,
+        <em>Prompt Package</em>, and <em>Remote Capability</em>. They remain
+        useful as product-language ideas, but the current technical vocabulary
+        distinguishes registrations, engagements, delegations, capabilities,
+        concrete tools, and declarative skills more precisely.
+      </p>
     </div>
   </section>
-</BaseLayout>
+</DocsLayout>

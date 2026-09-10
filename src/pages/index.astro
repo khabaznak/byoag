@@ -1,11 +1,58 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
 import SectionHeader from "@/components/SectionHeader.astro";
+import { site } from "@/config/site";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const lifecycle = [
+  [
+    "Discover",
+    "Start from the platform’s exact domain and verify its signed public BYOAg description.",
+  ],
+  [
+    "Pair",
+    "Link a new platform-specific agent identity to the person’s existing account.",
+  ],
+  [
+    "Register",
+    "Create a revocable relationship between the account, agent, and local installation.",
+  ],
+  [
+    "Engage",
+    "Enter one isolated context with a platform-assigned role and a user-narrowed delegation.",
+  ],
+  [
+    "Act",
+    "Use engagement-scoped MCP tools and declarative skills while the platform authorizes every call.",
+  ],
+  [
+    "Leave",
+    "Revoke or disconnect the BYOAg overlay without changing the agent’s existing configuration.",
+  ],
+];
+
+const readinessAreas = [
+  [
+    "Experience strategy",
+    "Identify the roles, workflows, and moments where a user-owned agent creates real value.",
+  ],
+  [
+    "Trust and identity",
+    "Design exact-domain discovery, account pairing, pairwise identity, consent, and revocation.",
+  ],
+  [
+    "Capabilities and tools",
+    "Translate platform permissions into bounded semantic capabilities and re-authorized MCP actions.",
+  ],
+  [
+    "Governance and rollout",
+    "Define data handling, confirmation, audit, conformance, teardown, and staged adoption criteria.",
+  ],
+];
 ---
 
 <BaseLayout
   title="BYOAg — Bring Your Own Agent"
-  description="Explore BYOAg, an experimental open pattern for people and providers to create agent-portable experiences."
+  description="BYOAg is an open pattern and working implementation for connecting a personal AI agent to a platform-controlled experience through explicit, scoped authority."
 >
   <section
     class="relative overflow-hidden border-b border-white/10 bg-[#07111f]"
@@ -17,74 +64,77 @@ import SectionHeader from "@/components/SectionHeader.astro";
       </div>
     </div>
     <div
-      class="page-shell relative grid min-h-[calc(100vh-65px)] items-center gap-10 py-20 lg:grid-cols-[1fr_440px]"
+      class="page-shell relative grid min-h-[calc(100vh-65px)] items-center gap-12 py-20 lg:grid-cols-[1fr_440px]"
     >
       <div>
-        <p class="eyebrow">
-          Experimental open pattern for agent-portable experiences
-        </p>
+        <p class="eyebrow">Open pattern · Working protocol 0.1</p>
         <h1
           class="mt-5 max-w-4xl text-5xl font-black leading-[0.98] text-paper sm:text-6xl lg:text-7xl"
         >
-          Bring your agent.<br />Enter the experience.<br />Do the work.
+          Bring your agent.<br />Enter the experience.<br />Connect on clear
+          terms.
         </h1>
         <p class="mt-7 max-w-2xl text-xl leading-8 text-paper/76">
-          BYOAg allows people to bring their own AI agent into an external
-          environment where the experience provides the context, artifacts,
-          tools, rules, and interaction contract. People retain continuity with
-          their chosen agent while providers can offer a bounded experience
-          without owning a general-purpose customer agent.
+          BYOAg gives people and platforms a concrete model for connecting an
+          existing AI agent to an external experience through explicit identity,
+          scoped authority, and clean separation.
+        </p>
+        <p class="mt-4 max-w-2xl leading-7 text-paper/60">
+          The person keeps continuity with their agent. The platform keeps
+          authority over its accounts, roles, permissions, data, tools, and
+          enforcement.
         </p>
         <div class="mt-9 flex flex-wrap gap-3">
           <a
             class="rounded-md bg-accent px-5 py-3 font-bold text-ink transition hover:bg-accent/90"
-            href="/concept"
+            href="/how-it-works">See how it works</a
           >
-            Explore the concept
-          </a>
           <a
             class="rounded-md border border-white/18 px-5 py-3 font-bold text-paper transition hover:border-cyan hover:bg-white/[0.06]"
-            href="/how-it-works"
+            href="/spec">Explore protocol 0.1</a
           >
-            See how it works
-          </a>
+          <a
+            class="px-2 py-3 font-semibold text-cyan underline hover:text-paper"
+            href={site.pluginGithubUrl}>View the Agent Plugin</a
+          >
         </div>
       </div>
+
       <div
         class="rounded-lg border border-white/12 bg-white/[0.045] p-5 shadow-line"
+        aria-label="A bounded BYOAg connection"
       >
         <div class="grid gap-3 text-sm">
           <div class="rounded-md border border-white/10 bg-[#050c17] p-4">
-            <p class="font-semibold text-paper">User-owned agent</p>
+            <p class="font-semibold text-paper">Personal agent</p>
             <p class="mt-1 text-paper/58">
-              Carries continuity, preferences, and working style.
+              Existing tools, memory, preferences, and configuration stay in
+              place.
             </p>
           </div>
-          <div class="mx-auto h-8 w-px bg-cyan/70" aria-hidden="true"></div>
+          <div class="mx-auto h-6 w-px bg-cyan/70" aria-hidden="true"></div>
           <div class="rounded-md border border-accent/45 bg-accent/10 p-4">
-            <p class="font-semibold text-paper">BYOAg entry point</p>
+            <p class="font-semibold text-paper">Universal BYOAg connector</p>
             <p class="mt-1 text-paper/62">
-              Publishes context, rules, artifacts, tools, and a contract.
+              Verifies the platform, protects credentials, and manages a
+              pairwise relationship.
             </p>
           </div>
-          <div class="mx-auto h-8 w-px bg-cyan/70" aria-hidden="true"></div>
-          <div class="grid grid-cols-2 gap-3">
-            <span
-              class="rounded-md border border-white/10 bg-white/[0.035] p-3 text-paper/78"
-              >Submission</span
-            >
-            <span
-              class="rounded-md border border-white/10 bg-white/[0.035] p-3 text-paper/78"
-              >Feedback</span
-            >
-            <span
-              class="rounded-md border border-white/10 bg-white/[0.035] p-3 text-paper/78"
-              >Evidence</span
-            >
-            <span
-              class="rounded-md border border-white/10 bg-white/[0.035] p-3 text-paper/78"
-              >Continuation</span
-            >
+          <div class="mx-auto h-6 w-px bg-cyan/70" aria-hidden="true"></div>
+          <div class="rounded-md border border-cyan/40 bg-cyan/10 p-4">
+            <p class="font-semibold text-paper">Platform connection bay</p>
+            <p class="mt-1 text-paper/62">
+              Pairs the agent to an account and remains authoritative for
+              policy.
+            </p>
+          </div>
+          <div class="mx-auto h-6 w-px bg-cyan/70" aria-hidden="true"></div>
+          <div class="rounded-md border border-white/10 bg-white/[0.035] p-4">
+            <p class="font-semibold text-paper">Isolated engagement</p>
+            <p class="mt-1 text-paper/58">
+              One role, delegation, capability set, tool surface, and audit
+              context.
+            </p>
           </div>
         </div>
       </div>
@@ -93,17 +143,20 @@ import SectionHeader from "@/components/SectionHeader.astro";
 
   <section class="bg-paper py-14 text-ink">
     <div
-      class="page-shell grid gap-6 text-xl font-semibold leading-8 md:grid-cols-2"
+      class="page-shell grid gap-6 md:grid-cols-[0.8fr_1.2fr] md:items-center"
     >
-      <p>
-        Traditional AI integrations bring data, tools, and context into an
-        agent-controlled environment.
-      </p>
-      <p>
-        BYOAg allows an agent to enter an environment-controlled experience.
-        <span class="mt-4 block text-ink/70"
-          >The agent remains the user's agent. The environment defines the work.</span
-        >
+      <div>
+        <p class="eyebrow">Working 0.1 foundation</p>
+        <p class="mt-2 text-2xl font-black">
+          There is now a working connector, not only a concept.
+        </p>
+      </div>
+      <p class="text-lg leading-8 text-ink/72">
+        Version 0.1 implements signed domain discovery, proof-of-possession
+        pairing, pairwise identities, registration management, signed engagement
+        retrieval, revocation, disconnect, and an automated conformance suite.
+        The next phase extends that foundation into engagement-authorized tools,
+        verified skill bundles, and native client security surfaces.
       </p>
     </div>
   </section>
@@ -111,60 +164,19 @@ import SectionHeader from "@/components/SectionHeader.astro";
   <section class="bg-[#07111f] py-24">
     <div class="page-shell">
       <SectionHeader
-        eyebrow="The core model"
-        title="Four roles, one interaction contract"
-        text="BYOAg separates who brings intelligence from who defines the experience, artifacts, and rules."
+        eyebrow="Connection lifecycle"
+        title="One bounded road into a platform"
+        text="A durable registration can open temporary, isolated engagements. Each engagement carries only the authority and context needed for that experience."
       />
-      <div
-        class="mt-12 grid gap-4 lg:grid-cols-4"
-        aria-label="BYOAg core model flow"
-      >
+      <ol class="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {
-          [
-            "Human",
-            "Personal agent",
-            "BYOAg environment",
-            "Artifacts, tools, rules, and contracts",
-          ].map((label, index) => (
-            <div class="relative rounded-lg border border-white/12 bg-white/[0.04] p-5">
-              <p class="text-sm font-semibold text-accent">0{index + 1}</p>
-              <h3 class="mt-3 text-xl font-bold text-paper">{label}</h3>
-              <p class="mt-3 text-sm leading-6 text-paper/64">
-                {
-                  [
-                    "Chooses the agent and authorizes the work.",
-                    "Interprets the package and assists the user.",
-                    "Publishes the work surface and evaluates results.",
-                    "Constrain, explain, and record the interaction.",
-                  ][index]
-                }
+          lifecycle.map(([title, text], index) => (
+            <li class="rounded-lg border border-white/12 bg-white/[0.04] p-5">
+              <p class="text-sm font-bold text-accent">
+                {String(index + 1).padStart(2, "0")}
               </p>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <section class="bg-[#0b1626] py-24">
-    <div class="page-shell grid gap-12 lg:grid-cols-[360px_1fr]">
-      <SectionHeader
-        eyebrow="How it works"
-        title="A small lifecycle for agent entry"
-      />
-      <ol class="grid gap-4">
-        {
-          [
-            "The environment publishes an entry point.",
-            "The user gives the entry point to their agent.",
-            "The agent retrieves a Prompt Package or Agentic Contract.",
-            "The agent performs the work and submits a result, receives feedback, or continues to the next interaction.",
-          ].map((step, index) => (
-            <li class="flex gap-4 rounded-lg border border-white/12 bg-white/[0.04] p-5">
-              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-cyan/14 font-bold text-cyan">
-                {index + 1}
-              </span>
-              <span class="pt-2 text-lg leading-7 text-paper/82">{step}</span>
+              <h3 class="mt-3 text-xl font-bold text-paper">{title}</h3>
+              <p class="mt-3 text-sm leading-6 text-paper/66">{text}</p>
             </li>
           ))
         }
@@ -172,83 +184,93 @@ import SectionHeader from "@/components/SectionHeader.astro";
     </div>
   </section>
 
+  <section class="bg-[#0b1626] py-24">
+    <div
+      class="page-shell grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-center"
+    >
+      <SectionHeader
+        eyebrow="Authority by design"
+        title="The agent can be stricter. It cannot grant itself more."
+      />
+      <div class="rounded-lg border border-white/12 bg-white/[0.04] p-6 sm:p-8">
+        <div class="grid gap-3 font-mono text-sm sm:text-base">
+          <p
+            class="rounded-md border border-white/10 bg-[#050c17] p-4 text-paper/82"
+          >
+            platform maximum permissions
+          </p>
+          <p class="pl-4 text-accent">∩ user delegation on the platform</p>
+          <p class="pl-4 text-cyan">∩ agent-client safety policy</p>
+          <p class="border-t border-white/12 pt-4 font-bold text-paper">
+            = effective capabilities
+          </p>
+        </div>
+        <p class="mt-6 leading-7 text-paper/66">
+          The platform performs final authorization on every action. Discovering
+          a tool is never treated as permission to use it.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <section class="bg-paper py-24 text-ink">
     <div class="page-shell">
       <SectionHeader
-        eyebrow="Why BYOAg"
-        title="A more practical path to agent-enabled services"
-        text="BYOAg explores how providers can participate in agent-mediated experiences without assuming they must first build and operate a complete customer-facing agent platform."
+        eyebrow="Two compatible layers"
+        title="Useful in today’s clients, safer with native support"
+        text="The package keeps a portable Agent Plugin core while proposing a native BYOAg extension for stronger secret handling and lifecycle controls."
       />
-      <div class="mt-10 grid gap-8 lg:grid-cols-2">
-        <div>
-          <h3 class="text-2xl font-bold">Why now</h3>
-          <div class="mt-4 grid gap-4 text-lg leading-8 text-ink/72">
-            <p>
-              A useful, reliable AI experience can require data preparation,
-              retrieval, evaluation, permissions, security, observability, and
-              safe execution. Building and operating that foundation can keep
-              many businesses waiting.
-            </p>
-            <p>
-              BYOAg can shift the starting point. Instead of requiring every
-              provider to own all of the intelligence layer, it lets them focus
-              on the capabilities, data, policies, and experience that are
-              specific to their service.
-            </p>
-          </div>
-        </div>
-        <div class="rounded-lg border border-ink/12 bg-[#fff8ed] p-6">
-          <p class="eyebrow">The future BYOAg is exploring</p>
-          <h3 class="mt-3 text-2xl font-bold">
-            Personal agents may become a common service interface.
-          </h3>
-          <p class="mt-4 text-lg leading-8 text-ink/72">
-            This is a directional hypothesis, not a prediction. As personal
-            agents take on more comparison, coordination, and delegated work,
-            human attention, judgment, and authorization may become the real
-            constraint.
+      <div class="mt-10 grid gap-5 md:grid-cols-2">
+        <article class="rounded-lg border border-ink/12 bg-white p-6">
+          <p class="text-sm font-bold uppercase text-cyan">Available now</p>
+          <h3 class="mt-3 text-2xl font-bold">Compatibility bootstrap</h3>
+          <p class="mt-4 leading-7 text-ink/70">
+            A standard Agent Plugin skill and local MCP connector can establish
+            the 0.1 relationship. A one-time pairing code may enter model
+            context after an explicit warning; long-lived credentials never
+            should.
           </p>
-          <p class="mt-4 leading-7 text-ink/72">
-            BYOAg explores how a provider could collaborate with the agent a
-            person already chose while keeping the person at the center of the
-            relationship.
+        </article>
+        <article class="rounded-lg border border-ink/12 bg-[#fff8ed] p-6">
+          <p class="text-sm font-bold uppercase text-accent">
+            Proposed native layer
           </p>
-        </div>
+          <h3 class="mt-3 text-2xl font-bold">Full BYOAg conformance</h3>
+          <p class="mt-4 leading-7 text-ink/70">
+            Native clients add protected secret entry, OS-backed credential
+            storage, first-class engagement management, signed dynamic skills,
+            data-label enforcement, and verified non-interference.
+          </p>
+        </article>
       </div>
-      <p
-        class="mt-8 max-w-4xl rounded-lg border border-ink/12 bg-white p-5 leading-7 text-ink/72"
-      >
-        BYOAg does not remove a provider's responsibility for secure systems,
-        data quality, authorization, or operations. It makes the work surface
-        and its boundaries more explicit for people, agents, and environments.
-      </p>
     </div>
   </section>
 
   <section class="bg-[#07111f] py-24">
     <div class="page-shell">
       <SectionHeader
-        eyebrow="Initial use cases"
-        title="Places where the pattern can be explored first"
+        eyebrow="Where the pattern can go"
+        title="Platforms define the experience. People bring continuity."
+        text="The same relationship model can support many domains without pretending their risks, permissions, or workflows are identical."
       />
       <div class="mt-10 grid gap-5 md:grid-cols-2">
         {
           [
             [
               "Education",
-              "An environment provides activities, resources, constraints, and evaluation criteria. A student's agent helps them complete the activity, while an instructor's agent can evaluate submissions using a shared contract.",
+              "Activities, resources, evaluation, and student or instructor roles inside a bounded learning context.",
             ],
             [
               "Entertainment and games",
-              "An agent enters a game, trivia session, simulation, or branching story. Each submission can produce feedback, scoring, or the next scene.",
+              "Matches, simulations, trivia, or stories with platform-controlled state and progression.",
             ],
             [
-              "Healthcare care navigation",
-              "A care provider can help a person prepare for an appointment, understand available services, and route questions to an appropriate clinician. It does not replace medical judgment or clinical care.",
+              "Care navigation",
+              "Appointment preparation and service navigation with strict clinical and data-handling boundaries.",
             ],
             [
               "Commerce",
-              "A service can present relevant products, availability, policies, and next steps while a person's agent helps compare options and requests approval before a consequential action.",
+              "Comparison and coordination with explicit confirmation for financial commitments.",
             ],
           ].map(([title, text]) => (
             <article class="rounded-lg border border-white/12 bg-white/[0.04] p-6">
@@ -258,116 +280,82 @@ import SectionHeader from "@/components/SectionHeader.astro";
           ))
         }
       </div>
+      <p class="mt-8 max-w-4xl text-sm leading-6 text-paper/52">
+        BYOAg Arena is the first reference platform. These additional domains
+        show where the same relationship model could be evaluated with
+        domain-appropriate permissions, risks, and workflows.
+      </p>
+    </div>
+  </section>
+
+  <section class="bg-paper py-24 text-ink">
+    <div class="page-shell">
+      <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+        <div>
+          <p class="eyebrow">Adoption advisory</p>
+          <h2 class="mt-3 text-4xl font-black leading-tight">
+            Prepare your platform for agent participation
+          </h2>
+        </div>
+        <p class="text-lg leading-8 text-ink/72">
+          We’re developing advisory services for teams evaluating BYOAg.
+          Becoming BYOAg-enabled is not just an API project: it requires a clear
+          experience model, trustworthy connection flow, capability design,
+          consent surfaces, runtime enforcement, and durable governance.
+        </p>
+      </div>
+      <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        {
+          readinessAreas.map(([title, text]) => (
+            <article class="rounded-lg border border-ink/12 bg-white p-5">
+              <h3 class="text-xl font-bold text-ink">{title}</h3>
+              <p class="mt-3 leading-7 text-ink/68">{text}</p>
+            </article>
+          ))
+        }
+      </div>
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a
+          class="rounded-md bg-ink px-5 py-3 font-bold text-paper transition hover:bg-[#13243a]"
+          href="/adoption">Explore adoption advisory</a
+        >
+        <a
+          class="px-2 py-3 font-bold text-ink underline hover:text-cyan"
+          href="/build/platform">Review platform readiness</a
+        >
+      </div>
     </div>
   </section>
 
   <section class="bg-[#fff8ed] py-20 text-ink">
     <div
-      class="page-shell grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center"
+      class="page-shell grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center"
     >
       <div>
-        <p class="eyebrow">Experimental status</p>
+        <p class="eyebrow">Build in the open</p>
         <h2 class="mt-3 text-4xl font-black leading-tight">
-          BYOAg is currently an experimental pattern.
-        </h2>
-      </div>
-      <p class="text-lg leading-8 text-ink/72">
-        It is being developed through prototypes, working examples,
-        architectural discussion, and an evolving draft specification.
-        Developers, researchers, product designers, educators, and agent
-        builders are invited to explore, question, and contribute.
-      </p>
-    </div>
-  </section>
-
-  <section class="bg-[#07111f] py-20">
-    <div
-      class="page-shell grid gap-8 rounded-lg border border-white/12 bg-white/[0.04] p-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:p-10"
-    >
-      <div>
-        <p class="eyebrow">Learning through participation</p>
-        <h2 class="mt-3 text-4xl font-black leading-tight text-paper">
-          Learn BYOAg by using BYOAg
+          Understand the model. Inspect the implementation. Help shape what
+          comes next.
         </h2>
       </div>
       <div>
-        <p class="text-lg leading-8 text-paper/72">
-          BYOAg is easier to understand when you experience it directly. We are
-          developing short learning paths that combine architectural
-          explanations, working examples, and hands-on challenges in BYOAg
-          Arena.
+        <p class="text-lg leading-8 text-ink/72">
+          BYOAg is being developed in public through working code, schemas,
+          conformance tests, reference implementations, security analysis, and a
+          growing implementation roadmap.
         </p>
-        <p class="mt-4 leading-7 text-paper/64">
-          Bring your own agent, participate in a guided experience, and learn
-          how Prompt Packages, structured submissions, feedback, evidence, and
-          continuation work together. BYOAg Arena is being explored as both a
-          practical learning environment and a reference implementation of the
-          pattern.
-        </p>
-        <div class="mt-7 flex flex-wrap items-center gap-4">
+        <div class="mt-6 flex flex-wrap gap-4">
           <a
-            class="rounded-md border border-white/18 px-5 py-3 font-bold text-paper transition hover:border-cyan hover:bg-white/[0.06]"
-            href="/patterns"
+            class="font-bold text-ink underline hover:text-cyan"
+            href="/concept">Understand the concept</a
           >
-            Explore the patterns
-          </a>
-          <button
-            class="cursor-not-allowed rounded-md border border-white/12 px-5 py-3 font-bold text-paper/50 opacity-75"
-            type="button"
-            disabled
-            aria-describedby="arena-status"
+          <a class="font-bold text-ink underline hover:text-cyan" href="/spec"
+            >Read protocol 0.1</a
           >
-            BYOAg Arena — Coming soon
-          </button>
-        </div>
-        <p id="arena-status" class="mt-5 text-sm text-paper/52">
-          BYOAg Academy and BYOAg Arena are currently under development.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="bg-[#0b1626] py-20">
-    <div
-      class="page-shell grid gap-8 rounded-lg border border-white/12 bg-white/[0.04] p-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:p-10"
-    >
-      <div>
-        <p class="eyebrow">Design partners</p>
-        <h2 class="mt-3 text-4xl font-black leading-tight text-paper">
-          Exploring BYOAg for your organization?
-        </h2>
-      </div>
-      <div>
-        <p class="text-lg leading-8 text-paper/72">
-          We are looking for early design partners interested in exploring
-          agent-portable experiences for education, entertainment, care
-          navigation, commerce, enterprise processes, and asynchronous agent
-          interactions.
-        </p>
-        <p class="mt-4 leading-7 text-paper/64">
-          BYOAg is an open architectural pattern. Organizations may still need
-          support identifying suitable use cases, designing interaction
-          contracts, implementing secure integrations, and validating
-          compatibility. The pattern is intended to help providers focus on
-          their own service rather than require a general-purpose customer agent
-          from day one.
-        </p>
-        <div class="mt-7 flex flex-wrap items-center gap-4">
-          <!-- TODO: Replace with a public contact destination when one is configured. -->
-          <button
-            class="cursor-not-allowed rounded-md bg-accent px-5 py-3 font-bold text-ink/70 opacity-70"
-            type="button"
-            disabled
-            title="A public contact destination is being arranged."
-          >
-            Discuss an implementation
-          </button>
           <a
-            class="font-semibold text-cyan underline hover:text-paper"
-            href="/patterns"
+            class="font-bold text-ink underline hover:text-cyan"
+            href={site.pluginGithubUrl}>Inspect the plugin</a
           >
-            Explore the patterns
-          </a>
         </div>
       </div>
     </div>

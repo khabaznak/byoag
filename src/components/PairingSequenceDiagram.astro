@@ -1,0 +1,406 @@
+<figure class="protocol-diagram protocol-sequence-diagram">
+  <svg
+    viewBox="0 0 960 760"
+    role="img"
+    aria-labelledby="byoag-pairing-title byoag-pairing-desc"
+  >
+    <title id="byoag-pairing-title">BYOAg discovery and pairing sequence</title>
+    <desc id="byoag-pairing-desc">
+      A human requests a code from a platform, an agent client discovers it
+      through a local connector, the connector redeems protected pairing
+      material, and the platform returns a scoped registration before an
+      engagement becomes active.
+    </desc>
+    <defs>
+      <marker
+        id="pairing-arrow"
+        markerWidth="8"
+        markerHeight="6"
+        refX="7"
+        refY="3"
+        orient="auto"
+      >
+        <polygon points="0 0, 8 3, 0 6" fill="#93a1b0"></polygon>
+      </marker>
+      <marker
+        id="pairing-arrow-accent"
+        markerWidth="8"
+        markerHeight="6"
+        refX="7"
+        refY="3"
+        orient="auto"
+      >
+        <polygon points="0 0, 8 3, 0 6" fill="#f59e0b"></polygon>
+      </marker>
+      <marker
+        id="pairing-arrow-link"
+        markerWidth="8"
+        markerHeight="6"
+        refX="7"
+        refY="3"
+        orient="auto"
+      >
+        <polygon points="0 0, 8 3, 0 6" fill="#38bdf8"></polygon>
+      </marker>
+    </defs>
+    <rect width="960" height="760" fill="#07111f"></rect>
+
+    <g stroke="rgba(248,250,252,0.20)" stroke-width="1" stroke-dasharray="3,3">
+      <line x1="96" y1="84" x2="96" y2="700"></line><line
+        x1="280"
+        y1="84"
+        x2="280"
+        y2="700"></line><line x1="472" y1="84" x2="472" y2="700"></line><line
+        x1="664"
+        y1="84"
+        x2="664"
+        y2="700"></line><line x1="864" y1="84" x2="864" y2="700"></line>
+    </g>
+    <rect
+      x="276"
+      y="116"
+      width="8"
+      height="112"
+      fill="rgba(248,250,252,0.06)"
+      stroke="#93a1b0"
+      stroke-width="0.8"></rect>
+    <rect
+      x="660"
+      y="260"
+      width="8"
+      height="424"
+      fill="rgba(248,250,252,0.06)"
+      stroke="#93a1b0"
+      stroke-width="0.8"></rect>
+    <rect
+      x="860"
+      y="300"
+      width="8"
+      height="340"
+      fill="rgba(245,158,11,0.08)"
+      stroke="#f59e0b"
+      stroke-width="0.8"></rect>
+
+    <line
+      x1="96"
+      y1="132"
+      x2="272"
+      y2="132"
+      stroke="#93a1b0"
+      stroke-width="1.2"
+      marker-end="url(#pairing-arrow)"></line>
+    <line
+      x1="272"
+      y1="184"
+      x2="104"
+      y2="184"
+      stroke="#93a1b0"
+      stroke-width="1"
+      stroke-dasharray="4,3"
+      marker-end="url(#pairing-arrow)"></line>
+    <line
+      x1="96"
+      y1="244"
+      x2="464"
+      y2="244"
+      stroke="#93a1b0"
+      stroke-width="1.2"
+      marker-end="url(#pairing-arrow)"></line>
+    <line
+      x1="472"
+      y1="284"
+      x2="656"
+      y2="284"
+      stroke="#93a1b0"
+      stroke-width="1.2"
+      marker-end="url(#pairing-arrow)"></line>
+    <line
+      x1="664"
+      y1="324"
+      x2="856"
+      y2="324"
+      stroke="#38bdf8"
+      stroke-width="1.2"
+      marker-end="url(#pairing-arrow-link)"></line>
+    <line
+      x1="856"
+      y1="372"
+      x2="672"
+      y2="372"
+      stroke="#38bdf8"
+      stroke-width="1"
+      stroke-dasharray="4,3"
+      marker-end="url(#pairing-arrow-link)"></line>
+    <line
+      x1="472"
+      y1="420"
+      x2="656"
+      y2="420"
+      stroke="#93a1b0"
+      stroke-width="1.2"
+      marker-end="url(#pairing-arrow)"></line>
+    <line
+      x1="664"
+      y1="460"
+      x2="856"
+      y2="460"
+      stroke="#93a1b0"
+      stroke-width="1.2"
+      marker-end="url(#pairing-arrow)"></line>
+
+    <rect
+      x="252"
+      y="488"
+      width="640"
+      height="112"
+      rx="4"
+      fill="rgba(248,250,252,0.02)"
+      stroke="rgba(248,250,252,0.24)"
+      stroke-width="1"></rect>
+    <rect
+      x="252"
+      y="488"
+      width="44"
+      height="16"
+      rx="2"
+      fill="#07111f"
+      stroke="rgba(248,250,252,0.24)"
+      stroke-width="1"></rect>
+    <text
+      x="274"
+      y="500"
+      fill="#93a1b0"
+      font-size="8"
+      font-family="ui-monospace, monospace"
+      text-anchor="middle"
+      letter-spacing="0.12em">OPT</text
+    >
+    <text
+      x="308"
+      y="516"
+      fill="#93a1b0"
+      font-size="8"
+      font-family="ui-monospace, monospace">[platform-confirmation]</text
+    >
+    <line
+      x1="856"
+      y1="540"
+      x2="288"
+      y2="540"
+      stroke="#93a1b0"
+      stroke-width="1.2"
+      marker-end="url(#pairing-arrow)"></line>
+    <line
+      x1="280"
+      y1="576"
+      x2="856"
+      y2="576"
+      stroke="#93a1b0"
+      stroke-width="1.2"
+      marker-end="url(#pairing-arrow)"></line>
+    <line
+      x1="856"
+      y1="632"
+      x2="672"
+      y2="632"
+      stroke="#f59e0b"
+      stroke-width="1.2"
+      marker-end="url(#pairing-arrow-accent)"></line>
+    <line
+      x1="656"
+      y1="680"
+      x2="480"
+      y2="680"
+      stroke="#f59e0b"
+      stroke-width="1.2"
+      marker-end="url(#pairing-arrow-accent)"></line>
+
+    <g font-family="ui-monospace, monospace" font-size="8" text-anchor="middle">
+      <rect x="132" y="108" width="112" height="16" rx="2" fill="#07111f"
+      ></rect><text x="188" y="120" fill="#d8e1ec">ADD MY AGENT</text>
+      <rect x="124" y="160" width="120" height="16" rx="2" fill="#07111f"
+      ></rect><text x="184" y="172" fill="#d8e1ec">DOMAIN + CODE</text>
+      <rect x="220" y="220" width="128" height="16" rx="2" fill="#07111f"
+      ></rect><text x="284" y="232" fill="#d8e1ec">CONNECT TO PLATFORM</text>
+      <rect x="516" y="260" width="104" height="16" rx="2" fill="#07111f"
+      ></rect><text x="568" y="272" fill="#d8e1ec">START DISCOVERY</text>
+      <rect x="704" y="300" width="120" height="16" rx="2" fill="#07111f"
+      ></rect><text x="764" y="312" fill="#38bdf8">GET /.WELL-KNOWN</text>
+      <rect x="708" y="348" width="112" height="16" rx="2" fill="#07111f"
+      ></rect><text x="764" y="360" fill="#38bdf8">SIGNED DESCRIPTOR</text>
+      <rect x="508" y="396" width="120" height="16" rx="2" fill="#07111f"
+      ></rect><text x="568" y="408" fill="#d8e1ec">PROTECTED CODE REF</text>
+      <rect x="708" y="436" width="112" height="16" rx="2" fill="#07111f"
+      ></rect><text x="764" y="448" fill="#d8e1ec">CODE + PUBLIC KEY</text>
+      <rect x="504" y="516" width="136" height="16" rx="2" fill="#07111f"
+      ></rect><text x="572" y="528" fill="#d8e1ec">CONFIRM THIS AGENT?</text>
+      <rect x="504" y="552" width="136" height="16" rx="2" fill="#07111f"
+      ></rect><text x="572" y="564" fill="#d8e1ec">USER CONFIRMED</text>
+      <rect x="700" y="608" width="128" height="16" rx="2" fill="#07111f"
+      ></rect><text x="764" y="620" fill="#f59e0b">SCOPED REGISTRATION</text>
+      <rect x="508" y="656" width="120" height="16" rx="2" fill="#07111f"
+      ></rect><text x="568" y="668" fill="#f59e0b">ENGAGEMENT ACTIVE</text>
+    </g>
+
+    <g
+      font-family="Inter, ui-sans-serif, system-ui, sans-serif"
+      text-anchor="middle"
+    >
+      <rect
+        x="44"
+        y="24"
+        width="104"
+        height="60"
+        rx="6"
+        fill="#0b1626"
+        stroke="rgba(248,250,252,0.34)"></rect><text
+        x="96"
+        y="52"
+        fill="#f8fafc"
+        font-size="12"
+        font-weight="600">Human</text
+      ><text
+        x="96"
+        y="68"
+        fill="#93a1b0"
+        font-size="8"
+        font-family="ui-monospace, monospace">ACCOUNT OWNER</text
+      >
+      <rect
+        x="220"
+        y="24"
+        width="120"
+        height="60"
+        rx="6"
+        fill="#0b1626"
+        stroke="rgba(248,250,252,0.34)"></rect><text
+        x="280"
+        y="52"
+        fill="#f8fafc"
+        font-size="12"
+        font-weight="600">Platform UI</text
+      ><text
+        x="280"
+        y="68"
+        fill="#93a1b0"
+        font-size="8"
+        font-family="ui-monospace, monospace">FIRST-PARTY</text
+      >
+      <rect
+        x="412"
+        y="24"
+        width="120"
+        height="60"
+        rx="6"
+        fill="#0b1626"
+        stroke="rgba(248,250,252,0.34)"></rect><text
+        x="472"
+        y="52"
+        fill="#f8fafc"
+        font-size="12"
+        font-weight="600">Agent client</text
+      ><text
+        x="472"
+        y="68"
+        fill="#93a1b0"
+        font-size="8"
+        font-family="ui-monospace, monospace">SECURE INPUT</text
+      >
+      <rect
+        x="604"
+        y="24"
+        width="120"
+        height="60"
+        rx="6"
+        fill="rgba(245,158,11,0.12)"
+        stroke="#f59e0b"
+        stroke-width="1.2"></rect><text
+        x="664"
+        y="52"
+        fill="#f8fafc"
+        font-size="12"
+        font-weight="700">BYOAg connector</text
+      ><text
+        x="664"
+        y="68"
+        fill="#d8e1ec"
+        font-size="8"
+        font-family="ui-monospace, monospace">PAIRWISE KEY</text
+      >
+      <rect
+        x="804"
+        y="24"
+        width="120"
+        height="60"
+        rx="6"
+        fill="rgba(245,158,11,0.12)"
+        stroke="#f59e0b"
+        stroke-width="1.2"></rect><text
+        x="864"
+        y="52"
+        fill="#f8fafc"
+        font-size="12"
+        font-weight="700">Connection bay</text
+      ><text
+        x="864"
+        y="68"
+        fill="#d8e1ec"
+        font-size="8"
+        font-family="ui-monospace, monospace">PLATFORM AUTHORITY</text
+      >
+    </g>
+
+    <line
+      x1="40"
+      y1="716"
+      x2="920"
+      y2="716"
+      stroke="rgba(255,255,255,0.12)"
+      stroke-width="1"></line>
+    <g font-family="ui-monospace, monospace" font-size="8">
+      <text x="40" y="740" fill="#93a1b0" letter-spacing="0.12em">LEGEND</text>
+      <line
+        x1="120"
+        y1="736"
+        x2="152"
+        y2="736"
+        stroke="#38bdf8"
+        stroke-width="1.2"
+        marker-end="url(#pairing-arrow-link)"></line><text
+        x="164"
+        y="740"
+        fill="#d8e1ec">DISCOVERY</text
+      >
+      <line
+        x1="280"
+        y1="736"
+        x2="312"
+        y2="736"
+        stroke="#93a1b0"
+        stroke-width="1"
+        stroke-dasharray="4,3"
+        marker-end="url(#pairing-arrow)"></line><text
+        x="324"
+        y="740"
+        fill="#d8e1ec">RETURN</text
+      >
+      <line
+        x1="420"
+        y1="736"
+        x2="452"
+        y2="736"
+        stroke="#f59e0b"
+        stroke-width="1.2"
+        marker-end="url(#pairing-arrow-accent)"></line><text
+        x="464"
+        y="740"
+        fill="#d8e1ec">SUCCESS</text
+      >
+    </g>
+  </svg>
+  <figcaption>
+    Compatibility mode may expose only the one-time code; a fully conformant
+    client keeps pairing codes, private keys, and credentials outside model
+    context.
+  </figcaption>
+</figure>

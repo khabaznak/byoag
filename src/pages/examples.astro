@@ -1,114 +1,287 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import DocsLayout from "@/layouts/DocsLayout.astro";
+import StatusBadge from "@/components/StatusBadge.astro";
+import type { PageStatus } from "@/config/navigation";
 
-const education = `{
-  "activity": "Compare two explanations of a scientific concept.",
-  "resources": ["reading-brief.md", "rubric.json"],
-  "time_limit_minutes": 30,
-  "submission_schema": {
-    "summary": "string",
-    "evidence_used": "array",
-    "questions_remaining": "array"
-  }
-}`;
+interface Scenario {
+  title: string;
+  status: PageStatus;
+  premise: string;
+  role: string;
+  delegation: string;
+  capabilities: string[];
+  confirmation: string;
+  result: string;
+  boundary: string;
+}
 
-const entertainment = `{
-  "scene": "The user is at a locked observatory door.",
-  "choices": ["inspect keypad", "search desk", "ask for hint"],
-  "requires_user_confirmation": true,
-  "continuation": {
-    "submit_to": "https://example.org/adventure/scene/7",
-    "returns": "next_scene_url"
-  }
-}`;
-
-const healthcare = `{
-  "purpose": "Prepare for a scheduled care visit.",
-  "available_services": ["appointment preparation", "coverage questions"],
-  "allowed_actions": ["collect questions", "request scheduling support"],
-  "clinical_boundary": "Escalate medical questions to a qualified clinician."
-}`;
-
-const commerce = `{
-  "request": "Compare eligible delivery options.",
-  "resources": ["catalog.json", "availability.json", "return-policy.md"],
-  "allowed_actions": ["compare", "save a shortlist", "prepare checkout"],
-  "confirmation_required_for": ["purchase", "subscription"]
-}`;
+const scenarios: Scenario[] = [
+  {
+    title: "Guided learning activity",
+    status: "conceptual",
+    premise:
+      "A learner brings an agent into a course activity with readings, a rubric, and a bounded submission workflow.",
+    role: "Learner assistant",
+    delegation:
+      "Read assigned materials; prepare and submit work for this activity only.",
+    capabilities: [
+      "learning.resource.read",
+      "learning.submission.create",
+      "learning.feedback.read",
+    ],
+    confirmation:
+      "Required before final submission or sharing learner-authored work.",
+    result:
+      "Validation, rubric-aligned feedback, evidence used, and permitted retry guidance.",
+    boundary:
+      "The agent cannot inspect other learners, alter the rubric, or carry restricted course data into another engagement.",
+  },
+  {
+    title: "Interactive game session",
+    status: "conceptual",
+    premise:
+      "A player’s agent enters one match, explains visible choices, and submits only the player’s confirmed move.",
+    role: "Player",
+    delegation:
+      "Read the current match state and submit valid moves for one seat.",
+    capabilities: ["game.state.read", "game.move.submit", "game.result.read"],
+    confirmation:
+      "The experience may require confirmation for irreversible or high-impact moves.",
+    result:
+      "Accepted move, updated public state, audit reference, and the next legal actions.",
+    boundary:
+      "A second simultaneous match has a different engagement and cannot reuse this match’s authority or hidden state.",
+  },
+  {
+    title: "Care-navigation preparation",
+    status: "conceptual",
+    premise:
+      "An agent helps a person prepare questions and navigate available scheduling or coverage services.",
+    role: "Patient-authorized navigator",
+    delegation:
+      "Read selected service information and prepare requests within the person’s chosen scope.",
+    capabilities: [
+      "care.service.read",
+      "care.question.prepare",
+      "care.scheduling.request",
+    ],
+    confirmation:
+      "Required before transmitting health-related information or requesting an appointment change.",
+    result:
+      "A prepared question list, scheduling status, or escalation to a qualified human professional.",
+    boundary:
+      "The example does not diagnose, prescribe, or treat. Sensitive information retains its handling restrictions.",
+  },
+  {
+    title: "Commerce comparison and checkout",
+    status: "conceptual",
+    premise:
+      "A shopper’s agent compares current eligible options and prepares a transaction without silently completing it.",
+    role: "Shopping assistant",
+    delegation:
+      "Read eligible catalog and policy data; save a shortlist; prepare checkout.",
+    capabilities: [
+      "commerce.catalog.read",
+      "commerce.shortlist.modify",
+      "commerce.checkout.prepare",
+    ],
+    confirmation:
+      "Purchase, subscription, or material account change requires protected confirmation.",
+    result:
+      "A comparison with current constraints, prepared checkout details, or a confirmed transaction receipt.",
+    boundary:
+      "Tool discovery is not purchase approval, and an updated skill cannot add payment authority without new consent.",
+  },
+];
 ---
 
-<BaseLayout
+<DocsLayout
+  pageId="examples"
   title="Examples"
-  description="Conceptual BYOAg examples for education, entertainment, healthcare care navigation, and commerce."
+  description="One concrete reference-host flow and clearly labeled conceptual BYOAg scenarios for learning, games, care navigation, and commerce."
 >
   <section class="bg-[#07111f] py-20">
-    <div class="page-shell">
-      <p class="eyebrow">Examples</p>
-      <h1 class="mt-4 max-w-3xl text-5xl font-black leading-tight text-paper">
-        Conceptual flows, not final protocol definitions
+    <div class="page-shell max-w-4xl">
+      <p class="eyebrow">From protocol to experience</p>
+      <h1 class="mt-4 text-5xl font-black leading-tight text-paper">
+        One working connection flow. Several future experience shapes.
       </h1>
-      <p class="mt-6 max-w-3xl text-lg leading-8 text-paper/72">
-        These examples use valid JSON to sketch possible packages and
-        submissions. They are draft illustrations for discussion, not final
-        protocol definitions or production integrations.
+      <p class="mt-6 max-w-3xl text-xl leading-8 text-paper/74">
+        The reference-host example below reflects implemented plugin behavior.
+        Domain scenarios show how the same boundaries could support useful
+        experiences once the remote tool and signed-skill layers exist.
       </p>
     </div>
   </section>
 
-  <section class="bg-[#0b1626] py-20">
-    <div class="page-shell grid gap-8">
-      <article
-        class="grid gap-6 rounded-lg border border-white/12 bg-white/[0.04] p-6 lg:grid-cols-[0.8fr_1.2fr]"
-      >
-        <div>
-          <h2 class="text-3xl font-bold text-paper">Education</h2>
-          <p class="mt-4 leading-7 text-paper/70">
-            A student agent retrieves a guided activity. Later, an instructor
-            can retrieve submissions and a shared evaluation rubric.
-          </p>
-        </div>
-        <pre class="code-block"><code>{education}</code></pre>
-      </article>
-      <article
-        class="grid gap-6 rounded-lg border border-white/12 bg-white/[0.04] p-6 lg:grid-cols-[0.8fr_1.2fr]"
-      >
-        <div>
-          <h2 class="text-3xl font-bold text-paper">Entertainment and games</h2>
-          <p class="mt-4 leading-7 text-paper/70">
-            An agent retrieves a scene, discusses the choices with the person,
-            and submits their confirmed decision to receive the next scene.
-          </p>
-        </div>
-        <pre class="code-block"><code>{entertainment}</code></pre>
-      </article>
-      <article
-        class="grid gap-6 rounded-lg border border-white/12 bg-white/[0.04] p-6 lg:grid-cols-[0.8fr_1.2fr]"
-      >
-        <div>
-          <h2 class="text-3xl font-bold text-paper">
-            Healthcare care navigation
+  <section class="bg-paper py-20 text-ink">
+    <div class="page-shell">
+      <div class="flex flex-wrap items-start justify-between gap-5">
+        <div class="max-w-3xl">
+          <p class="eyebrow">Concrete reference flow</p>
+          <h2 class="mt-3 text-4xl font-black">
+            Connect, inspect two engagements, disconnect
           </h2>
-          <p class="mt-4 leading-7 text-paper/70">
-            An agent helps a person prepare for a visit and navigate available
-            services. Medical questions are routed to a qualified clinician; the
-            example does not provide diagnosis or treatment.
-          </p>
         </div>
-        <pre class="code-block"><code>{healthcare}</code></pre>
-      </article>
-      <article
-        class="grid gap-6 rounded-lg border border-white/12 bg-white/[0.04] p-6 lg:grid-cols-[0.8fr_1.2fr]"
-      >
-        <div>
-          <h2 class="text-3xl font-bold text-paper">Commerce</h2>
-          <p class="mt-4 leading-7 text-paper/70">
-            A service exposes current options and policies. The agent helps the
-            person compare them, but a purchase or subscription remains subject
-            to explicit user confirmation.
+        <StatusBadge status="implemented" />
+      </div>
+      <ol class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3" role="list">
+        <li class="rounded-lg border border-ink/12 bg-white p-5">
+          <span class="font-mono text-sm font-bold text-cyan">01</span>
+          <h3 class="mt-3 text-xl font-bold">Discover loopback host</h3>
+          <p class="mt-3 leading-7 text-ink/68">
+            The connector validates signed discovery and same-origin JWKS using
+            explicit development loopback mode.
           </p>
-        </div>
-        <pre class="code-block"><code>{commerce}</code></pre>
-      </article>
+        </li>
+        <li class="rounded-lg border border-ink/12 bg-white p-5">
+          <span class="font-mono text-sm font-bold text-cyan">02</span>
+          <h3 class="mt-3 text-xl font-bold">Begin pairing</h3>
+          <p class="mt-3 leading-7 text-ink/68">
+            The host issues a short-lived code; the connector returns only its
+            own local connection reference.
+          </p>
+        </li>
+        <li class="rounded-lg border border-ink/12 bg-white p-5">
+          <span class="font-mono text-sm font-bold text-cyan">03</span>
+          <h3 class="mt-3 text-xl font-bold">Complete with DPoP</h3>
+          <p class="mt-3 leading-7 text-ink/68">
+            New pairwise and installation keys establish a key-bound
+            registration without returning the credential.
+          </p>
+        </li>
+        <li class="rounded-lg border border-ink/12 bg-white p-5">
+          <span class="font-mono text-sm font-bold text-cyan">04</span>
+          <h3 class="mt-3 text-xl font-bold">List registration</h3>
+          <p class="mt-3 leading-7 text-ink/68">
+            Public local metadata identifies the platform and state while
+            secrets remain inside the vault.
+          </p>
+        </li>
+        <li class="rounded-lg border border-ink/12 bg-white p-5">
+          <span class="font-mono text-sm font-bold text-cyan">05</span>
+          <h3 class="mt-3 text-xl font-bold">Validate two engagements</h3>
+          <p class="mt-3 leading-7 text-ink/68">
+            Two signed in-memory match contexts are retrieved and checked
+            independently.
+          </p>
+        </li>
+        <li class="rounded-lg border border-accent/30 bg-[#fff8ed] p-5">
+          <span class="font-mono text-sm font-bold text-accent">06</span>
+          <h3 class="mt-3 text-xl font-bold">Disconnect cleanly</h3>
+          <p class="mt-3 leading-7 text-ink/68">
+            The registration is revoked and its local BYOAg state is removed
+            without touching an unrelated sentinel file.
+          </p>
+        </li>
+      </ol>
+      <aside class="mt-8 border-l-4 border-cyan bg-[#eefaff] p-5 text-ink/72">
+        <strong class="text-ink">What this does not demonstrate:</strong> the two
+        engagements do not expose remote game tools or dynamic skill bundles. They
+        are validation fixtures for isolation and signatures.
+      </aside>
     </div>
   </section>
-</BaseLayout>
+
+  <section class="bg-[#0b1626] py-20">
+    <div class="page-shell">
+      <div class="max-w-3xl">
+        <p class="eyebrow">Conceptual domain scenarios</p>
+        <h2 class="mt-3 text-4xl font-black text-paper">
+          Apply the same boundary model in different environments
+        </h2>
+        <p class="mt-5 text-lg leading-8 text-paper/70">
+          Capability identifiers below are illustrative names, not entries in a
+          finalized global registry or implemented remote MCP surface.
+        </p>
+      </div>
+      <div class="mt-10 grid gap-6">
+        {
+          scenarios.map((scenario) => (
+            <article class="rounded-lg border border-white/12 bg-white/[0.04] p-6 sm:p-8">
+              <div class="flex flex-wrap items-center justify-between gap-4">
+                <h3 class="text-3xl font-black text-paper">{scenario.title}</h3>
+                <StatusBadge status={scenario.status} />
+              </div>
+              <p class="mt-5 max-w-3xl text-lg leading-8 text-paper/74">
+                {scenario.premise}
+              </p>
+              <dl class="mt-7 grid gap-4 md:grid-cols-2">
+                <div class="rounded-md border border-white/10 bg-[#07111f]/55 p-5">
+                  <dt class="eyebrow">Platform role</dt>
+                  <dd class="mt-2 font-bold text-paper">{scenario.role}</dd>
+                </div>
+                <div class="rounded-md border border-white/10 bg-[#07111f]/55 p-5">
+                  <dt class="eyebrow">User-narrowed delegation</dt>
+                  <dd class="mt-2 leading-7 text-paper/70">
+                    {scenario.delegation}
+                  </dd>
+                </div>
+                <div class="rounded-md border border-white/10 bg-[#07111f]/55 p-5">
+                  <dt class="eyebrow">Illustrative capabilities</dt>
+                  <dd class="mt-3 flex flex-wrap gap-2">
+                    {scenario.capabilities.map((capability) => (
+                      <code class="rounded-full border border-cyan/25 px-2.5 py-1 text-xs text-cyan">
+                        {capability}
+                      </code>
+                    ))}
+                  </dd>
+                </div>
+                <div class="rounded-md border border-white/10 bg-[#07111f]/55 p-5">
+                  <dt class="eyebrow">Confirmation</dt>
+                  <dd class="mt-2 leading-7 text-paper/70">
+                    {scenario.confirmation}
+                  </dd>
+                </div>
+                <div class="rounded-md border border-white/10 bg-[#07111f]/55 p-5">
+                  <dt class="eyebrow">Structured result</dt>
+                  <dd class="mt-2 leading-7 text-paper/70">
+                    {scenario.result}
+                  </dd>
+                </div>
+                <div class="rounded-md border border-accent/25 bg-accent/[0.05] p-5">
+                  <dt class="eyebrow">Safety boundary</dt>
+                  <dd class="mt-2 leading-7 text-paper/70">
+                    {scenario.boundary}
+                  </dd>
+                </div>
+              </dl>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-paper py-20 text-ink">
+    <div class="page-shell grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+      <div>
+        <p class="eyebrow">Scenario anatomy</p>
+        <h2 class="mt-3 text-4xl font-black leading-tight">
+          What a complete example must show
+        </h2>
+      </div>
+      <ul class="grid gap-3 md:grid-cols-2" role="list">
+        {
+          [
+            "The human account, pairwise agent, and installation",
+            "The registration and exact named engagement",
+            "The platform role and user-narrowed delegation",
+            "Semantic capabilities and concrete tool mappings",
+            "Confirmation, idempotency, and audit behavior",
+            "Data-handling limits, failure paths, and teardown",
+          ].map((item) => (
+            <li class="flex gap-3 rounded-md border border-ink/12 bg-white p-4 leading-7 text-ink/72">
+              <>
+                <span class="font-bold text-cyan" aria-hidden="true">
+                  ✓
+                </span>
+                <span>{item}</span>
+              </>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</DocsLayout>

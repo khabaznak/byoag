@@ -1,0 +1,46 @@
+---
+import { navigationGroups } from "@/config/navigation";
+
+interface Props {
+  currentPage: string;
+  mobile?: boolean;
+}
+
+const { currentPage, mobile = false } = Astro.props;
+---
+
+<nav
+  class:list={["docs-nav", mobile && "docs-nav-mobile"]}
+  aria-label="BYOAg documentation"
+>
+  {
+    navigationGroups.map((group) => (
+      <section class="docs-nav-group">
+        <p class="docs-nav-group-label">{group.label}</p>
+        <ul role="list">
+          {group.items.map((item) => (
+            <li>
+              {item.href ? (
+                <a
+                  class:list={[
+                    "docs-nav-link",
+                    item.id === currentPage && "is-current",
+                  ]}
+                  href={item.href}
+                  aria-current={item.id === currentPage ? "page" : undefined}
+                >
+                  <span>{item.label}</span>
+                </a>
+              ) : (
+                <span class="docs-nav-link is-planned" aria-disabled="true">
+                  <span>{item.label}</span>
+                  <small>Planned</small>
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+</nav>

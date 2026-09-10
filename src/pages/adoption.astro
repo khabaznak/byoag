@@ -1,0 +1,263 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SectionHeader from "@/components/SectionHeader.astro";
+import { site } from "@/config/site";
+
+const advisoryAreas = [
+  [
+    "Readiness assessment",
+    "Evaluate where external user-owned agents fit, what the platform already supports, and which product, security, and governance gaps matter first.",
+  ],
+  [
+    "Experience and role design",
+    "Define valuable bounded experiences, platform-owned roles, user delegation, confirmation points, and clear exit behavior.",
+  ],
+  [
+    "Trust architecture",
+    "Plan discovery, pairing, pairwise identity, credentials, engagement isolation, revocation, audit, and data-handling controls.",
+  ],
+  [
+    "Capability and MCP design",
+    "Translate existing permissions and workflows into semantic capabilities and narrowly authorized platform tool surfaces.",
+  ],
+  [
+    "Pilot planning",
+    "Choose a constrained first use case, define observable success and failure criteria, and sequence implementation in testable layers.",
+  ],
+  [
+    "Enablement roadmap",
+    "Create a practical path from exploration to hardened implementation without claiming maturity the system has not earned.",
+  ],
+];
+
+const workingSequence = [
+  [
+    "Discover",
+    "Clarify the business opportunity, users, workflows, constraints, and existing platform architecture.",
+  ],
+  [
+    "Design",
+    "Model roles, authority, capabilities, consent, security boundaries, evidence, and teardown.",
+  ],
+  [
+    "Pilot",
+    "Implement one bounded path, connect it to measurable outcomes, and test adversarial failure cases.",
+  ],
+  [
+    "Prepare",
+    "Turn what was learned into a prioritized adoption, governance, and production-readiness roadmap.",
+  ],
+];
+---
+
+<BaseLayout
+  title="BYOAg Adoption Advisory"
+  description="Early advisory for organizations evaluating how to prepare their platforms, products, and governance for BYOAg-enabled agent participation."
+>
+  <section
+    class="relative overflow-hidden border-b border-white/10 bg-[#07111f]"
+  >
+    <div class="absolute inset-0 opacity-70" aria-hidden="true">
+      <div
+        class="h-full w-full bg-[radial-gradient(circle_at_78%_18%,rgba(245,158,11,0.15),transparent_30%),radial-gradient(circle_at_18%_82%,rgba(56,189,248,0.12),transparent_32%)]"
+      >
+      </div>
+    </div>
+    <div
+      class="page-shell relative grid min-h-[calc(82vh-65px)] items-center gap-12 py-20 lg:grid-cols-[1fr_380px]"
+    >
+      <div>
+        <p class="eyebrow">Adoption advisory · Early conversations open</p>
+        <h1
+          class="mt-5 max-w-4xl text-5xl font-black leading-[0.98] text-paper sm:text-6xl lg:text-7xl"
+        >
+          Prepare your company for agent participation
+        </h1>
+        <p class="mt-7 max-w-2xl text-xl leading-8 text-paper/76">
+          We’re developing advisory services for teams exploring how user-owned
+          AI agents could participate safely and usefully in their platforms.
+        </p>
+        <p class="mt-4 max-w-2xl leading-7 text-paper/60">
+          Start with the experience and trust model. Then design the interfaces,
+          controls, and evidence needed to support a responsible pilot.
+        </p>
+        <div class="mt-9 flex flex-wrap gap-3">
+          <a
+            class="rounded-md bg-accent px-5 py-3 font-bold text-ink transition hover:bg-accent/90"
+            href="#interest"
+          >
+            Discuss your platform
+          </a>
+          <a
+            class="rounded-md border border-white/18 px-5 py-3 font-bold text-paper transition hover:border-cyan hover:bg-white/[0.06]"
+            href="/build/platform"
+          >
+            Review the implementation guide
+          </a>
+        </div>
+      </div>
+
+      <aside
+        class="rounded-lg border border-white/12 bg-white/[0.045] p-6 shadow-line"
+      >
+        <p class="eyebrow">A useful first conversation</p>
+        <ul class="mt-5 grid gap-4 leading-7 text-paper/72" role="list">
+          <li class="flex gap-3">
+            <span class="font-bold text-cyan" aria-hidden="true">01</span><span
+              >Where could customer-owned agents create meaningful value?</span
+            >
+          </li>
+          <li class="flex gap-3">
+            <span class="font-bold text-cyan" aria-hidden="true">02</span><span
+              >What authority and data should remain platform-controlled?</span
+            >
+          </li>
+          <li class="flex gap-3">
+            <span class="font-bold text-cyan" aria-hidden="true">03</span><span
+              >What is the smallest responsible pilot?</span
+            >
+          </li>
+          <li class="flex gap-3">
+            <span class="font-bold text-cyan" aria-hidden="true">04</span><span
+              >What must be true before broader adoption?</span
+            >
+          </li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="bg-paper py-24 text-ink">
+    <div class="page-shell">
+      <SectionHeader
+        eyebrow="Advisory focus"
+        title="More than adding an agent-facing API"
+        text="BYOAg readiness crosses product strategy, identity, authorization, tool design, consent, security, governance, and operations. The work should connect those decisions rather than optimize each one in isolation."
+      />
+      <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {
+          advisoryAreas.map(([title, text]) => (
+            <article class="rounded-lg border border-ink/12 bg-white p-6">
+              <h2 class="text-2xl font-bold text-ink">{title}</h2>
+              <p class="mt-4 leading-7 text-ink/70">{text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[#0b1626] py-24">
+    <div class="page-shell">
+      <SectionHeader
+        eyebrow="A staged engagement"
+        title="Move from opportunity to a bounded pilot"
+        text="The exact scope should follow the organization and use case. A practical sequence keeps decisions reviewable and produces useful artifacts at every step."
+      />
+      <ol class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4" role="list">
+        {
+          workingSequence.map(([title, text], index) => (
+            <li class="rounded-lg border border-white/12 bg-white/[0.04] p-5">
+              <span class="font-mono text-sm font-bold text-accent">
+                0{index + 1}
+              </span>
+              <h2 class="mt-3 text-2xl font-bold text-paper">{title}</h2>
+              <p class="mt-3 leading-7 text-paper/66">{text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="bg-[#fff8ed] py-24 text-ink">
+    <div class="page-shell grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+      <div>
+        <p class="eyebrow">Good early candidates</p>
+        <h2 class="mt-3 text-4xl font-black leading-tight">
+          Start where the boundary can be made clear
+        </h2>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {
+          [
+            "A known user account and well-defined platform role",
+            "A narrow workflow with observable customer value",
+            "A small capability surface and explicit confirmation points",
+            "Data that can be classified and governed intentionally",
+            "A reversible or safely constrained initial action",
+            "A team prepared to test failures and teardown—not only the happy path",
+          ].map((item) => (
+            <p class="rounded-lg border border-ink/12 bg-white/65 p-5 leading-7 text-ink/72">
+              {item}
+            </p>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[#07111f] py-24">
+    <div class="page-shell grid gap-10 lg:grid-cols-2">
+      <article>
+        <p class="eyebrow">What this is</p>
+        <h2 class="mt-3 text-3xl font-black text-paper">
+          Early architecture and adoption guidance
+        </h2>
+        <p class="mt-5 leading-7 text-paper/68">
+          A way to explore whether BYOAg fits a platform, turn the pattern into
+          company-specific decisions, and define a responsible implementation
+          path.
+        </p>
+      </article>
+      <article
+        class="rounded-lg border border-white/12 bg-white/[0.04] p-6 sm:p-8"
+      >
+        <p class="eyebrow">What this is not</p>
+        <h2 class="mt-3 text-3xl font-black text-paper">
+          Certification or guaranteed interoperability
+        </h2>
+        <p class="mt-5 leading-7 text-paper/68">
+          BYOAg remains an open pattern in active development. Advisory work
+          does not replace application-specific security review, legal analysis,
+          compliance obligations, or production validation.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section id="interest" class="bg-paper py-24 text-ink">
+    <div
+      class="page-shell max-w-4xl rounded-xl border border-ink/12 bg-white p-7 sm:p-10"
+    >
+      <p class="eyebrow">Early interest</p>
+      <h2 class="mt-3 text-4xl font-black leading-tight">
+        Exploring a BYOAg-ready platform?
+      </h2>
+      <p class="mt-6 max-w-3xl text-lg leading-8 text-ink/72">
+        Share the kind of platform or experience you are considering and what
+        you hope agent participation could enable. Early conversations can also
+        help shape the advisory offering and the open implementation roadmap.
+      </p>
+      <div class="mt-8 flex flex-wrap items-center gap-4">
+        <a
+          class="rounded-md bg-ink px-5 py-3 font-bold text-paper transition hover:bg-[#13243a]"
+          href={site.adoptionInterestUrl}
+        >
+          Open an adoption inquiry
+        </a>
+        <a
+          class="px-2 py-3 font-bold text-ink underline hover:text-cyan"
+          href="/about#project-status"
+        >
+          Review current project status
+        </a>
+      </div>
+      <p class="mt-5 text-sm leading-6 text-ink/55">
+        The current inquiry opens a public GitHub issue. Do not include
+        confidential, personal, security-sensitive, or proprietary information.
+        A dedicated private business contact channel will replace it later.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

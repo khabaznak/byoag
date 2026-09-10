@@ -1,0 +1,300 @@
+---
+import Callout from "@/components/Callout.astro";
+import DocsLayout from "@/layouts/DocsLayout.astro";
+
+const surfaces = [
+  [
+    "/.well-known/byoag.json",
+    "Signed discovery metadata, protocol version, modes, endpoints, and JWKS URI.",
+  ],
+  [
+    "JWKS",
+    "Same-origin public Ed25519 verification keys for signed protocol documents.",
+  ],
+  ["Pairing", "Begin, complete, and optional confirmation-status actions."],
+  [
+    "Registrations",
+    "DPoP-authenticated registration revocation by platform-local identifier.",
+  ],
+  [
+    "Engagements",
+    "DPoP-authenticated delivery of signed, registration-bound engagement descriptors.",
+  ],
+  [
+    "Remote MCP",
+    "Future engagement-authorized platform action tools; not implemented by the reference host.",
+  ],
+];
+
+const serverChecks = [
+  "Re-evaluate the registration and engagement on every protected request.",
+  "Verify DPoP method, URI, public-key thumbprint, token hash, time, and replay identifier.",
+  "Enforce role, delegation, resource, rate, confirmation, and current platform policy.",
+  "Never treat tool discovery or an old descriptor as current authorization.",
+  "Return structured, non-enumerating failures and fail closed on revoked credentials.",
+];
+---
+
+<DocsLayout
+  pageId="platforms"
+  title="Platform Implementation"
+  description="A staged guide to implementing the BYOAg 0.1 HTTP binding on an application platform."
+>
+  <section class="bg-[#07111f] py-20">
+    <div class="page-shell max-w-4xl">
+      <p class="eyebrow">For platform builders</p>
+      <h1 class="mt-4 text-5xl font-black leading-tight text-paper">
+        Expose a controlled environment, not an open back door
+      </h1>
+      <p class="mt-6 max-w-3xl text-xl leading-8 text-paper/74">
+        A BYOAg platform owns its accounts, roles, resources, permissions,
+        tools, and final authorization decisions. The draft binding gives an
+        external agent a narrow, revocable way to operate inside those
+        boundaries.
+      </p>
+    </div>
+  </section>
+
+  <section class="bg-paper py-20 text-ink">
+    <div class="page-shell">
+      <div class="max-w-3xl">
+        <p class="eyebrow">Minimum protocol surface</p>
+        <h2 class="mt-3 text-4xl font-black">
+          Start with connection and signed engagements
+        </h2>
+        <p class="mt-5 text-lg leading-8 text-ink/70">
+          The 0.1 connector discovers these surfaces from one exact platform
+          origin. Endpoint paths are platform-defined except for the well-known
+          discovery location.
+        </p>
+      </div>
+      <div class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {
+          surfaces.map(([name, description], index) => (
+            <article
+              class:list={[
+                "rounded-lg border p-5",
+                index === 5
+                  ? "border-cyan/35 bg-[#eefaff]"
+                  : "border-ink/12 bg-white",
+              ]}
+            >
+              <h3 class="font-mono text-base font-bold text-ink">{name}</h3>
+              <p class="mt-3 leading-7 text-ink/68">{description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[#0b1626] py-20">
+    <div class="page-shell grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
+      <div>
+        <p class="eyebrow">Discovery contract</p>
+        <h2 class="mt-3 text-4xl font-black leading-tight text-paper">
+          Make the domain the trust anchor
+        </h2>
+        <p class="mt-5 text-lg leading-8 text-paper/70">
+          Publish the document at the fixed path and sign it with an advertised
+          same-origin key. Issuer, endpoints, and JWKS must remain on the
+          requested origin in the implemented profile.
+        </p>
+      </div>
+      <pre
+        class="code-block min-w-0"><code>{`GET https://platform.example/.well-known/byoag.json
+Accept: application/json
+
+200 OK
+{
+  "protocolVersions": ["0.1.0"],
+  "issuer": "https://platform.example",
+  "endpoints": { "...": "same-origin URLs" },
+  "jwksUri": "https://platform.example/...",
+  "signature": { "...": "detached EdDSA JWS" }
+}`}</code></pre>
+    </div>
+  </section>
+
+  <section class="bg-paper py-20 text-ink">
+    <div class="page-shell grid gap-10 lg:grid-cols-2">
+      <article>
+        <p class="eyebrow">Pairing mode A</p>
+        <h2 class="mt-3 text-3xl font-black">Code is consent</h2>
+        <p class="mt-5 leading-7 text-ink/70">
+          Successful redemption of a short-lived, account-bound, single-use code
+          completes registration. Enforce expiration, replay prevention,
+          intended use, and per-connection rate limits.
+        </p>
+      </article>
+      <article
+        class="rounded-lg border border-accent/35 bg-[#fff8ed] p-6 sm:p-8"
+      >
+        <p class="eyebrow">Pairing mode B</p>
+        <h2 class="mt-3 text-3xl font-black">Platform confirmation</h2>
+        <p class="mt-5 leading-7 text-ink/70">
+          Code redemption creates a pending request. The authenticated account
+          holder approves it in first-party UI before the connector polls status
+          with a fresh proof and receives the registration.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bg-[#07111f] py-20">
+    <div class="page-shell">
+      <div class="max-w-3xl">
+        <p class="eyebrow">Registration issuance</p>
+        <h2 class="mt-3 text-4xl font-black text-paper">
+          Bind access to a specific installation key
+        </h2>
+        <p class="mt-5 text-lg leading-8 text-paper/70">
+          Accept a new pairwise agent identity and a separate installation
+          public key. Issue a credential bound to that installation key’s JWK
+          thumbprint; do not rely on an unbound bearer token.
+        </p>
+      </div>
+      <div class="mt-10 grid gap-5 md:grid-cols-3">
+        <article class="rounded-lg border border-white/12 bg-white/[0.04] p-5">
+          <p class="eyebrow">Human account</p>
+          <h3 class="mt-3 text-xl font-bold text-paper">
+            Platform-owned identity
+          </h3>
+          <p class="mt-3 leading-7 text-paper/66">
+            The existing account remains the source of human authority and
+            consent.
+          </p>
+        </article>
+        <article class="rounded-lg border border-white/12 bg-white/[0.04] p-5">
+          <p class="eyebrow">Pairwise agent</p>
+          <h3 class="mt-3 text-xl font-bold text-paper">
+            Platform-specific identity
+          </h3>
+          <p class="mt-3 leading-7 text-paper/66">
+            Do not require a global agent identifier that enables cross-platform
+            correlation.
+          </p>
+        </article>
+        <article class="rounded-lg border border-cyan/35 bg-cyan/[0.05] p-5">
+          <p class="eyebrow">Installation</p>
+          <h3 class="mt-3 text-xl font-bold text-paper">
+            Proof-of-possession key
+          </h3>
+          <p class="mt-3 leading-7 text-paper/66">
+            Use the installation key to verify pairing and every
+            credential-bound request.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-paper py-20 text-ink">
+    <div class="page-shell grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+      <div>
+        <p class="eyebrow">Server-side enforcement</p>
+        <h2 class="mt-3 text-4xl font-black leading-tight">
+          Authorize the call that is happening now
+        </h2>
+      </div>
+      <ul class="grid gap-3" role="list">
+        {
+          serverChecks.map((check) => (
+            <li class="flex gap-3 rounded-md border border-ink/12 bg-white p-4 leading-7 text-ink/72">
+              <span class="font-bold text-cyan" aria-hidden="true">
+                ✓
+              </span>
+              <span>{check}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="bg-[#0b1626] py-20">
+    <div class="page-shell">
+      <div class="max-w-3xl">
+        <p class="eyebrow">Recommended sequence</p>
+        <h2 class="mt-3 text-4xl font-black text-paper">
+          Implement in testable layers
+        </h2>
+      </div>
+      <ol class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4" role="list">
+        <li class="rounded-lg border border-accent/40 bg-accent/[0.06] p-5">
+          <span class="font-mono text-sm font-bold text-accent">01</span>
+          <h3 class="mt-3 text-xl font-bold text-paper">Discovery and keys</h3>
+          <p class="mt-3 leading-7 text-paper/66">
+            Publish signed metadata and a same-origin JWKS.
+          </p>
+        </li>
+        <li class="rounded-lg border border-white/12 bg-white/[0.04] p-5">
+          <span class="font-mono text-sm font-bold text-cyan">02</span>
+          <h3 class="mt-3 text-xl font-bold text-paper">Pair and revoke</h3>
+          <p class="mt-3 leading-7 text-paper/66">
+            Add one-time consent and DPoP-bound registrations.
+          </p>
+        </li>
+        <li class="rounded-lg border border-white/12 bg-white/[0.04] p-5">
+          <span class="font-mono text-sm font-bold text-cyan">03</span>
+          <h3 class="mt-3 text-xl font-bold text-paper">Signed engagements</h3>
+          <p class="mt-3 leading-7 text-paper/66">
+            Issue isolated contexts with narrowed delegation.
+          </p>
+        </li>
+        <li class="rounded-lg border border-cyan/35 bg-cyan/[0.05] p-5">
+          <span class="font-mono text-sm font-bold text-cyan">04</span>
+          <h3 class="mt-3 text-xl font-bold text-paper">Tool plane</h3>
+          <p class="mt-3 leading-7 text-paper/66">
+            Then add capability-filtered, re-authorized actions.
+          </p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="bg-paper py-20 text-ink">
+    <div class="page-shell grid gap-10 lg:grid-cols-2">
+      <article>
+        <p class="eyebrow">Reference host</p>
+        <h2 class="mt-3 text-3xl font-black">Use it as a test peer</h2>
+        <p class="mt-5 leading-7 text-ink/70">
+          The plugin includes a deliberately small in-memory host with signed
+          discovery, both pairing modes, DPoP replay checks, two engagements,
+          and revocation.
+        </p>
+        <pre class="code-block mt-5"><code>npm run reference-host</code></pre>
+      </article>
+      <article class="rounded-lg border border-ink/12 bg-[#fff8ed] p-6 sm:p-8">
+        <p class="eyebrow">Do not deploy it</p>
+        <h2 class="mt-3 text-3xl font-black">
+          It is not an application template
+        </h2>
+        <p class="mt-5 leading-7 text-ink/70">
+          All accounts, codes, registrations, tokens, replay IDs, and signing
+          keys live only in process memory. It binds to loopback and
+          intentionally omits production storage, UI, operations, and remote MCP
+          actions.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bg-[#07111f] py-20">
+    <div class="page-shell max-w-4xl">
+      <Callout title="Draft implementation target">
+        The generic HTTP binding is implemented by the connector and reference
+        host at 0.1.0, but it is not a finalized standard. Production adoption
+        requires application-specific threat modeling, durable account and key
+        management, operational controls, independent security review, and
+        completion of the outstanding conformance work.
+      </Callout>
+      <a
+        class="mt-8 inline-flex rounded-md border border-white/18 px-5 py-3 font-bold text-paper transition hover:border-cyan hover:bg-white/[0.06]"
+        href="/build/conformance"
+      >
+        Continue to schemas and conformance
+      </a>
+    </div>
+  </section>
+</DocsLayout>

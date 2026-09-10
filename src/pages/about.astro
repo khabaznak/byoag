@@ -1,90 +1,279 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import DocsLayout from "@/layouts/DocsLayout.astro";
+import StatusBadge from "@/components/StatusBadge.astro";
+import { site } from "@/config/site";
+
+const implemented = [
+  "Signed, exact-domain discovery with same-origin JWKS validation",
+  "Code-is-consent and platform-confirmation pairing modes",
+  "Pairwise agent and installation identities with DPoP-bound credentials",
+  "Registration listing and signed concurrent-engagement retrieval",
+  "Registration revocation, disconnect, and local-state cleanup",
+  "Six lifecycle MCP tools, a static bootstrap skill, and draft schemas",
+  "An in-memory reference host and automated development conformance suite",
+];
+
+const planned = [
+  "Engagement-authorized remote MCP discovery, filtering, and invocation",
+  "Signed declarative skill retrieval, verification, resolution, and activation",
+  "OS-backed vault adapters and model-isolated native secret entry",
+  "Data-label propagation and enforcement across tools and engagements",
+  "JWKS rotation, DPoP nonce, DNS rebinding, and malicious-skill fixtures",
+  "BYOAg Arena integration and independent security review",
+  "Packaged plugin distribution and production operations guidance",
+];
 
 const principles = [
-  "User agency",
-  "Environment sovereignty",
-  "Explicit contracts",
-  "Evidence over assumptions",
-  "Progressive interoperability",
-  "Implementation before premature standardization",
-  "Open discussion",
+  [
+    "User agency",
+    "The person keeps their agent and may narrow any proposed delegation.",
+  ],
+  [
+    "Platform sovereignty",
+    "The environment owns its accounts, data, roles, tools, and final authorization.",
+  ],
+  [
+    "Least privilege",
+    "Authority is explicit, contextual, revocable, and re-evaluated at runtime.",
+  ],
+  [
+    "Pairwise identity",
+    "Cross-platform correlation is avoided by default rather than repaired later.",
+  ],
+  [
+    "Evidence over assumptions",
+    "Behavior and conformance claims should be observable and testable.",
+  ],
+  [
+    "Non-interference",
+    "Connecting and leaving must not disrupt the agent’s unrelated configuration.",
+  ],
+  [
+    "Implementation-led learning",
+    "The draft evolves through prototypes, tests, and public discussion.",
+  ],
+  [
+    "Honest status",
+    "Unimplemented and untested boundaries remain visible in the documentation.",
+  ],
 ];
 ---
 
-<BaseLayout
-  title="About"
-  description="Project status and principles for BYOAg, an experimental architectural pattern."
+<DocsLayout
+  pageId="about"
+  title="Roadmap and Project"
+  description="The concrete status, repositories, principles, roadmap, and production-readiness boundaries of the BYOAg project."
 >
   <section class="bg-[#07111f] py-20">
     <div class="page-shell max-w-4xl">
-      <p class="eyebrow">About</p>
+      <p class="eyebrow">Project status · September 2026</p>
       <h1 class="mt-4 text-5xl font-black leading-tight text-paper">
-        BYOAg is an experimental architectural pattern.
+        An open pattern with a working 0.1 foundation
       </h1>
-      <div class="prose-lite mt-8">
-        <p>
-          BYOAg is implementation-independent and intended to be explored
-          through working prototypes. It is not currently a formal standard, and
-          it is not owned by a specific agent vendor.
+      <p class="mt-7 max-w-3xl text-xl leading-8 text-paper/74">
+        BYOAg now has a working 0.1 protocol binding, a generic agent connector,
+        a reference host, draft schemas, and tests. Important runtime,
+        native-client, and production boundaries remain deliberately unfinished.
+      </p>
+    </div>
+  </section>
+
+  <section id="project-status" class="bg-paper py-20 text-ink">
+    <div class="page-shell">
+      <div class="max-w-3xl">
+        <p class="eyebrow">Current inventory</p>
+        <h2 class="mt-3 text-4xl font-black">
+          What exists and what comes next
+        </h2>
+      </div>
+      <div class="mt-10 grid gap-6 lg:grid-cols-2">
+        <article
+          class="rounded-lg border border-cyan/35 bg-[#eefaff] p-6 sm:p-8"
+        >
+          <div class="flex items-center justify-between gap-4">
+            <h3 class="text-2xl font-black">Implemented at 0.1.0</h3>
+            <StatusBadge status="implemented" />
+          </div>
+          <ul class="mt-6 grid gap-3 leading-7 text-ink/72" role="list">
+            {
+              implemented.map((item) => (
+                <li class="flex gap-3">
+                  <>
+                    <span class="font-bold text-cyan" aria-hidden="true">
+                      ✓
+                    </span>
+                    <span>{item}</span>
+                  </>
+                </li>
+              ))
+            }
+          </ul>
+        </article>
+        <article
+          class="rounded-lg border border-accent/30 bg-[#fff8ed] p-6 sm:p-8"
+        >
+          <div class="flex items-center justify-between gap-4">
+            <h3 class="text-2xl font-black">Not implemented yet</h3>
+            <StatusBadge status="planned" />
+          </div>
+          <ul class="mt-6 grid gap-3 leading-7 text-ink/72" role="list">
+            {
+              planned.map((item) => (
+                <li class="flex gap-3">
+                  <>
+                    <span class="font-bold text-accent" aria-hidden="true">
+                      ○
+                    </span>
+                    <span>{item}</span>
+                  </>
+                </li>
+              ))
+            }
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[#0b1626] py-20">
+    <div class="page-shell grid gap-10 lg:grid-cols-2">
+      <article>
+        <p class="eyebrow">Protocol and website</p>
+        <h2 class="mt-3 text-3xl font-black text-paper">byoag</h2>
+        <p class="mt-5 leading-7 text-paper/68">
+          The public explanation, evolving information architecture, protocol
+          documentation, examples, and production-static website.
         </p>
+        <a
+          class="mt-6 inline-flex font-bold text-cyan underline-offset-4 hover:underline"
+          href={site.githubUrl}>Open the website repository</a
+        >
+      </article>
+      <article
+        class="rounded-lg border border-accent/40 bg-accent/[0.06] p-6 sm:p-8"
+      >
+        <p class="eyebrow">Reference implementation</p>
+        <h2 class="mt-3 text-3xl font-black text-paper">byoag-agent-plugin</h2>
+        <p class="mt-5 leading-7 text-paper/68">
+          The universal bootstrap plugin, generic connector, reference host,
+          draft schemas, protocol documents, and test suite.
+        </p>
+        <a
+          class="mt-6 inline-flex font-bold text-cyan underline-offset-4 hover:underline"
+          href={site.pluginGithubUrl}>Open the plugin repository</a
+        >
+      </article>
+    </div>
+  </section>
+
+  <section class="bg-paper py-20 text-ink">
+    <div class="page-shell">
+      <p class="eyebrow">Roadmap</p>
+      <h2 class="mt-3 text-4xl font-black">
+        From connection prototype to tested experience plane
+      </h2>
+      <ol class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4" role="list">
+        <li class="rounded-lg border border-cyan/35 bg-[#eefaff] p-5">
+          <span class="font-mono text-sm font-bold text-cyan">01 · BUILT</span>
+          <h3 class="mt-3 text-xl font-bold">Secure connection core</h3>
+          <p class="mt-3 leading-7 text-ink/68">
+            Discovery, pairing, identity, registration, engagements, and
+            disconnect.
+          </p>
+        </li>
+        <li class="rounded-lg border border-accent/30 bg-[#fff8ed] p-5">
+          <span class="font-mono text-sm font-bold text-accent">02 · NEXT</span>
+          <h3 class="mt-3 text-xl font-bold">Experience tool plane</h3>
+          <p class="mt-3 leading-7 text-ink/68">
+            Capability resolution, tool filtering, invocation, confirmation, and
+            audit.
+          </p>
+        </li>
+        <li class="rounded-lg border border-ink/12 bg-white p-5">
+          <span class="font-mono text-sm font-bold text-ink/45"
+            >03 · PLANNED</span
+          >
+          <h3 class="mt-3 text-xl font-bold">Verified skill lifecycle</h3>
+          <p class="mt-3 leading-7 text-ink/68">
+            Signed bundles, content digests, scoped activation, updates, and
+            teardown.
+          </p>
+        </li>
+        <li class="rounded-lg border border-ink/12 bg-white p-5">
+          <span class="font-mono text-sm font-bold text-ink/45"
+            >04 · PLANNED</span
+          >
+          <h3 class="mt-3 text-xl font-bold">Native and production work</h3>
+          <p class="mt-3 leading-7 text-ink/68">
+            Secure client surfaces, Arena integration, hardening, and
+            independent review.
+          </p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="bg-[#07111f] py-20">
+    <div class="page-shell">
+      <p class="eyebrow">Project principles</p>
+      <h2 class="mt-3 text-4xl font-black text-paper">
+        Constraints that should survive the implementation
+      </h2>
+      <div class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {
+          principles.map(([title, description]) => (
+            <article class="rounded-lg border border-white/12 bg-white/[0.04] p-5">
+              <h3 class="text-xl font-bold text-paper">{title}</h3>
+              <p class="mt-3 leading-7 text-paper/66">{description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-paper py-20 text-ink">
+    <div class="page-shell grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+      <div>
+        <p class="eyebrow">Production readiness</p>
+        <h2 class="mt-3 text-4xl font-black leading-tight">
+          A future claim that must be earned
+        </h2>
+      </div>
+      <div class="prose-on-paper text-lg leading-8">
         <p>
-          The project is designed to encourage agent portability and
-          environment-defined experiences while keeping claims honest and
-          testable.
+          A passing development suite is not enough. A production-readiness
+          claim would require the missing native security surfaces, complete
+          runtime enforcement, operational and abuse controls, broader
+          adversarial tests, cross-implementation interoperability, deployment
+          guidance, and independent security review.
+        </p>
+        <p class="mt-5">
+          Until then, BYOAg should be described as an experimental open pattern
+          and implementation target—not a guaranteed interoperability layer.
         </p>
       </div>
     </div>
   </section>
 
   <section class="bg-[#0b1626] py-20">
-    <div class="page-shell grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+    <div class="page-shell grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
       <div>
         <p class="eyebrow">Origin</p>
         <h2 class="mt-3 text-4xl font-black text-paper">An open exploration</h2>
       </div>
       <div class="prose-lite">
         <p>
-          BYOAg was conceived by Alejandro Gomez Flores as an experimental
-          architectural pattern for allowing people to bring their own AI agents
-          into environment-defined experiences.
+          BYOAg was conceived by Alejandro Gomez Flores as a way for people to
+          bring their own AI agents into environment-defined experiences without
+          surrendering the agent or the platform’s boundaries.
         </p>
         <p>
-          It is being developed openly through prototypes, architectural
-          exploration, implementation experiments, and public discussion.
+          It is being developed openly through working prototypes, architectural
+          exploration, implementation experiments, security analysis, and public
+          discussion.
         </p>
       </div>
     </div>
   </section>
-
-  <section id="project-status" class="bg-paper py-20 text-ink">
-    <div class="page-shell grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
-      <div>
-        <p class="eyebrow">Project status</p>
-        <h2 class="mt-3 text-4xl font-black">
-          Experimental, open, and evolving
-        </h2>
-      </div>
-      <p class="text-lg leading-8 text-ink/70">
-        The current work is to clarify the pattern, build small examples,
-        identify trust boundaries, and improve a draft specification through
-        implementation and discussion.
-      </p>
-    </div>
-  </section>
-
-  <section class="bg-[#07111f] py-20">
-    <div class="page-shell">
-      <h2 class="text-4xl font-black text-paper">Project principles</h2>
-      <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {
-          principles.map((principle) => (
-            <p class="rounded-lg border border-white/12 bg-white/[0.04] p-5 font-bold text-paper/82">
-              {principle}
-            </p>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-</BaseLayout>
+</DocsLayout>

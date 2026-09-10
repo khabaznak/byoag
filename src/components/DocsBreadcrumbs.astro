@@ -1,0 +1,31 @@
+---
+import { findNavigationGroup, findNavigationItem } from "@/config/navigation";
+
+interface Props {
+  pageId: string;
+}
+
+const { pageId } = Astro.props;
+const group = findNavigationGroup(pageId);
+const item = findNavigationItem(pageId);
+---
+
+<nav aria-label="Breadcrumb" class="docs-breadcrumbs">
+  <ol>
+    <li><a href="/">BYOAg</a></li>
+    {
+      group && (
+        <li>
+          <span>{group.label}</span>
+        </li>
+      )
+    }
+    {
+      item && (
+        <li aria-current="page">
+          <span>{item.label}</span>
+        </li>
+      )
+    }
+  </ol>
+</nav>

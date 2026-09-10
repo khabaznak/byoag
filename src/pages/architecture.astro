@@ -1,0 +1,203 @@
+---
+import ArchitectureDiagram from "@/components/ArchitectureDiagram.astro";
+import Callout from "@/components/Callout.astro";
+import DocsLayout from "@/layouts/DocsLayout.astro";
+
+const commitments = [
+  [
+    "One bootstrap",
+    "A universal connector can discover and connect to many BYOAg-enabled platforms.",
+  ],
+  [
+    "Pairwise by default",
+    "Each platform receives a different agent and installation identity unless the person deliberately chooses otherwise.",
+  ],
+  [
+    "Platform authority",
+    "The platform owns its accounts, roles, permissions, data, tools, policies, and enforcement.",
+  ],
+  [
+    "Isolated engagements",
+    "Every active context has its own role, delegation, capabilities, skills, data labels, expiration, and audit trail.",
+  ],
+  [
+    "Declarative extensions",
+    "Remote skills explain authorized platform tools but cannot execute downloaded code or rewrite higher-priority policy.",
+  ],
+  [
+    "Clean exit",
+    "Disconnecting removes the scoped overlay and leaves the agent’s existing configuration unchanged.",
+  ],
+];
+---
+
+<DocsLayout
+  pageId="architecture"
+  title="Architecture"
+  description="The BYOAg components, trust boundaries, identity model, engagement isolation, and non-interference guarantees."
+>
+  <section class="bg-[#07111f] py-20">
+    <div class="page-shell">
+      <div class="max-w-4xl">
+        <p class="eyebrow">System and trust boundaries</p>
+        <h1 class="mt-4 text-5xl font-black leading-tight text-paper">
+          One bounded road into a platform
+        </h1>
+        <p class="mt-6 max-w-3xl text-xl leading-8 text-paper/74">
+          BYOAg places a trusted local connector between an existing personal
+          agent and a platform-controlled environment. The connector adds an
+          isolated engagement; it does not turn the platform into the owner of
+          the agent.
+        </p>
+      </div>
+      <ArchitectureDiagram />
+    </div>
+  </section>
+
+  <section class="bg-paper py-20 text-ink">
+    <div class="page-shell">
+      <div class="max-w-3xl">
+        <p class="eyebrow">Architectural commitments</p>
+        <h2 class="mt-3 text-4xl font-black">
+          Boundaries that survive different implementations
+        </h2>
+        <p class="mt-5 text-lg leading-8 text-ink/70">
+          Transports and client interfaces may evolve. These commitments define
+          the relationship the pattern is trying to preserve.
+        </p>
+      </div>
+      <div class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {
+          commitments.map(([title, text], index) => (
+            <article class="rounded-lg border border-ink/12 bg-white p-5">
+              <p class="text-xs font-bold text-cyan">0{index + 1}</p>
+              <h3 class="mt-3 text-xl font-bold">{title}</h3>
+              <p class="mt-3 leading-7 text-ink/70">{text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[#0b1626] py-20">
+    <div class="page-shell grid gap-10 lg:grid-cols-[0.75fr_1.25fr]">
+      <div>
+        <p class="eyebrow">Two authorities</p>
+        <h2 class="mt-3 text-4xl font-black leading-tight text-paper">
+          The relationship crosses a boundary. It does not erase it.
+        </h2>
+      </div>
+      <div class="grid gap-4 md:grid-cols-2">
+        <article class="rounded-lg border border-white/12 bg-white/[0.04] p-6">
+          <h3 class="text-2xl font-bold text-paper">User trust zone</h3>
+          <p class="mt-4 leading-7 text-paper/70">
+            The human chooses the agent. The agent client holds its existing
+            tools, skills, memory, and policies. The local connector manages
+            platform-specific identity material and credentials.
+          </p>
+        </article>
+        <article
+          class="rounded-lg border border-accent/40 bg-accent/[0.06] p-6"
+        >
+          <h3 class="text-2xl font-bold text-paper">Platform authority</h3>
+          <p class="mt-4 leading-7 text-paper/70">
+            The connection bay authenticates the account relationship. Platform
+            identity and policy services assign roles, issue grants, authorize
+            actions, record outcomes, and revoke access.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-paper py-20 text-ink">
+    <div class="page-shell grid gap-10 lg:grid-cols-2">
+      <article>
+        <p class="eyebrow">Identity model</p>
+        <h2 class="mt-3 text-3xl font-black">
+          Four concepts, deliberately separate
+        </h2>
+        <dl class="mt-6 grid gap-4">
+          <div>
+            <dt class="font-bold">Human account</dt><dd
+              class="mt-1 text-ink/70"
+            >
+              The person’s account and entitlements in the platform.
+            </dd>
+          </div>
+          <div>
+            <dt class="font-bold">Local agent</dt><dd class="mt-1 text-ink/70">
+              The durable personal concept of the agent, including its chosen
+              identity and working style.
+            </dd>
+          </div>
+          <div>
+            <dt class="font-bold">Agent installation</dt><dd
+              class="mt-1 text-ink/70"
+            >
+              A device or harness instance that holds a platform-specific
+              private key.
+            </dd>
+          </div>
+          <div>
+            <dt class="font-bold">Platform registration</dt><dd
+              class="mt-1 text-ink/70"
+            >
+              The platform-local binding among the account, pairwise agent
+              identity, installation, and registration policy.
+            </dd>
+          </div>
+        </dl>
+      </article>
+      <article class="rounded-lg border border-ink/12 bg-[#fff8ed] p-6 sm:p-8">
+        <p class="eyebrow">Engagement model</p>
+        <h2 class="mt-3 text-3xl font-black">
+          One registration, many isolated contexts
+        </h2>
+        <p class="mt-5 text-lg leading-8 text-ink/70">
+          A registration may own several simultaneous engagements. Each
+          invocation names exactly one engagement and is evaluated against that
+          context’s current grant.
+        </p>
+        <ul class="mt-5 grid gap-2 text-ink/72" role="list">
+          {
+            [
+              "Platform context and assigned role",
+              "Delegation grant and expiration",
+              "Capability set and concrete MCP mappings",
+              "Signed skill-bundle versions",
+              "Data-handling labels and audit correlation",
+            ].map((item) => (
+              <li class="flex gap-3">
+                <>
+                  <span class="font-bold text-cyan" aria-hidden="true">
+                    •
+                  </span>
+                  <span>{item}</span>
+                </>
+              </li>
+            ))
+          }
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="bg-[#07111f] py-20">
+    <div class="page-shell max-w-4xl">
+      <Callout title="Non-interference is an architectural boundary">
+        Starting an engagement cannot uninstall, disable, rewrite, or reorder
+        the agent’s existing skills, tools, memories, hooks, or instructions.
+        Platform restrictions apply to the engagement and data derived from
+        it—not globally to unrelated work.
+      </Callout>
+      <a
+        class="mt-8 inline-flex rounded-md border border-white/18 px-5 py-3 font-bold text-paper transition hover:border-cyan hover:bg-white/[0.06]"
+        href="/protocol/connection"
+      >
+        Continue to discovery and pairing
+      </a>
+    </div>
+  </section>
+</DocsLayout>

@@ -1,9 +1,10 @@
 ---
 import Callout from "@/components/Callout.astro";
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import DocsLayout from "@/layouts/DocsLayout.astro";
 ---
 
-<BaseLayout
+<DocsLayout
+  pageId="concept"
   title="Concept"
   description="The core idea and philosophy behind BYOAg, including agent ownership and environment authority."
 >
@@ -15,10 +16,10 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
       </h1>
       <div class="prose-lite mt-8">
         <p>
-          BYOAg is an experimental open architectural pattern for allowing
-          people to bring their own AI agent into an external experience. The
-          user brings the agent. The environment provides the context,
-          artifacts, rules, tools, workflow, and interaction contract.
+          BYOAg is an open architectural pattern in active development for
+          allowing people to bring their own AI agent into an external
+          experience. The user brings the agent. The environment provides the
+          context, artifacts, rules, tools, workflow, and interaction contract.
         </p>
         <p>
           The agent remains the user's agent. The environment defines the work.
@@ -137,4 +138,4 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
       </div>
     </div>
   </section>
-</BaseLayout>
+</DocsLayout>

@@ -1,0 +1,45 @@
+---
+import DocsBreadcrumbs from "@/components/DocsBreadcrumbs.astro";
+import DocsPageNavigation from "@/components/DocsPageNavigation.astro";
+import DocsSidebar from "@/components/DocsSidebar.astro";
+import StatusBadge from "@/components/StatusBadge.astro";
+import { findNavigationItem } from "@/config/navigation";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+interface Props {
+  pageId: string;
+  title: string;
+  description: string;
+  socialImage?: string;
+}
+
+const { pageId, title, description, socialImage } = Astro.props;
+const page = findNavigationItem(pageId);
+---
+
+<BaseLayout title={title} description={description} socialImage={socialImage}>
+  <div class="docs-layout">
+    <aside class="docs-sidebar">
+      <DocsSidebar currentPage={pageId} />
+    </aside>
+    <div class="docs-document">
+      <details class="docs-mobile-browser">
+        <summary>
+          <span>Browse BYOAg</span>
+          <span aria-hidden="true">＋</span>
+        </summary>
+        <div class="docs-mobile-browser-panel">
+          <DocsSidebar currentPage={pageId} mobile />
+        </div>
+      </details>
+      <div class="docs-context-bar">
+        <DocsBreadcrumbs pageId={pageId} />
+        {page && <StatusBadge status={page.status} />}
+      </div>
+      <div class="docs-page-content">
+        <slot />
+      </div>
+      <DocsPageNavigation pageId={pageId} />
+    </div>
+  </div>
+</BaseLayout>

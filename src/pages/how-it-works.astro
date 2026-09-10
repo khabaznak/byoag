@@ -1,67 +1,70 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import Callout from "@/components/Callout.astro";
+import DocsLayout from "@/layouts/DocsLayout.astro";
 
 const flow = [
-  {
-    title: "Project",
-    detail:
-      "The active work context keeps the relationship relevant and bounded.",
-  },
-  {
-    title: "Agent Docking Bay",
-    detail:
-      "A clear entry point helps the person start without handling transport details.",
-  },
-  {
-    title: "Connected personal agent",
-    detail:
-      "Pairing and permission establish only the authority needed for the work.",
-  },
-  {
-    title: "Application operation",
-    detail:
-      "The application exposes remote capabilities while retaining its own rules and harness.",
-  },
-  {
-    title: "Result and continuation",
-    detail:
-      "The person receives status, receipts, and a path to review or revoke the relationship.",
-  },
+  [
+    "Start in the platform",
+    "The person signs in normally and asks the platform to add their agent. The platform displays its exact domain and a short-lived pairing code.",
+  ],
+  [
+    "Discover from the exact domain",
+    "The connector retrieves /.well-known/byoag.json, validates the issuer and endpoints, and verifies its signature against same-origin keys.",
+  ],
+  [
+    "Create a pairwise identity",
+    "The connector generates new agent and installation keys for this platform instead of disclosing a shared global identity.",
+  ],
+  [
+    "Pair with proof of possession",
+    "The code links the agent to the human account. The installation proves control of its private key; the platform may require an additional confirmation.",
+  ],
+  [
+    "Establish a registration",
+    "The platform creates a revocable, platform-local relationship and issues a credential bound to the installation key.",
+  ],
+  [
+    "Enter an engagement",
+    "A signed descriptor names one context, role, delegation, capability set, tool mapping, skill set, and expiration.",
+  ],
+  [
+    "Act, renew, or leave",
+    "The platform authorizes every tool call. Expiration, revocation, or disconnect removes only the affected BYOAg overlay.",
+  ],
 ];
 ---
 
-<BaseLayout
+<DocsLayout
+  pageId="how-it-works"
   title="How It Works"
-  description="A technical overview of the BYOAg interaction model and evolving draft terminology."
+  description="How BYOAg discovers a platform, pairs an agent, creates a registration, activates an engagement, and disconnects cleanly."
 >
   <section class="bg-[#07111f] py-20">
-    <div class="page-shell grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+    <div class="page-shell grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
       <div>
-        <p class="eyebrow">Interaction model</p>
+        <p class="eyebrow">Human-readable lifecycle</p>
         <h1 class="mt-4 text-5xl font-black leading-tight text-paper">
-          How an agent enters an environment
+          A bounded connection, not a permanent takeover
         </h1>
         <p class="mt-6 text-lg leading-8 text-paper/72">
-          A BYOAg environment can offer an Agent Docking Bay: a user-friendly
-          way to connect a personal agent to an application. The user should not
-          need to understand APIs, URLs, or HTTP requests to begin.
+          BYOAg adds a temporary, platform-scoped extension to an agent that is
+          already working. The platform provides the controlled environment; the
+          connector establishes and mediates the relationship.
         </p>
       </div>
       <ol
         class="docking-flow"
-        aria-label="Conceptual BYOAg flow from a project through connection, operation, and a result"
+        aria-label="BYOAg discovery, pairing, registration, and engagement lifecycle"
       >
         {
-          flow.map((step, index) => (
+          flow.map(([title, detail], index) => (
             <li class="docking-flow-step">
               <span class="docking-flow-index" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}
               </span>
               <article>
-                <>
-                  <h2>{step.title}</h2>
-                  <p>{step.detail}</p>
-                </>
+                <h2>{title}</h2>
+                <p>{detail}</p>
               </article>
               {index < flow.length - 1 && (
                 <span class="docking-flow-arrow" aria-hidden="true">
@@ -76,89 +79,182 @@ const flow = [
   </section>
 
   <section class="bg-[#0b1626] py-20">
-    <div class="page-shell grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+    <div class="page-shell grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
       <div>
-        <p class="eyebrow">Agent Docking Bay</p>
+        <p class="eyebrow">Trust begins before pairing</p>
         <h2 class="mt-3 text-4xl font-black leading-tight text-paper">
-          A connection flow a person can understand
+          The prompt is not the trust anchor
         </h2>
       </div>
       <div class="prose-lite">
         <p>
-          An application can provide a ready-to-paste magic prompt that tells a
-          personal agent how to initiate the connection. The app can visibly
-          show that it is waiting for, and then has established, the connection.
+          A brand name, search result, QR destination, or pasted instruction can
+          help a person find a platform, but none of them proves which service
+          the connector should trust. First-time discovery begins from the exact
+          domain shown in the platform’s authenticated interface.
         </p>
         <p>
-          A short pairing code entered by the human can confirm that the user is
-          present on both sides. From there, the project can set the permission
-          contract, make remote capabilities available, and support operation,
-          audit, and revocation.
+          The connector retrieves one fixed well-known document over HTTPS,
+          rejects redirects and unexpected origins, validates the protocol
+          version and endpoints, and verifies the platform’s signature before
+          accepting pairing metadata.
+        </p>
+        <Callout title="Discovery is public, not personal">
+          The discovery document explains how the platform speaks BYOAg. It does
+          not reveal the person’s account, roles, registrations, or available
+          engagements.
+        </Callout>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-paper py-20 text-ink">
+    <div class="page-shell grid gap-10 lg:grid-cols-2">
+      <article>
+        <p class="eyebrow">Durable relationship</p>
+        <h2 class="mt-3 text-3xl font-black">Registration</h2>
+        <p class="mt-5 text-lg leading-8 text-ink/70">
+          A registration binds the human’s platform account, a platform-pairwise
+          agent identity, one agent installation, and the platform’s
+          registration policy. It can outlive any single activity while
+          remaining revocable.
+        </p>
+        <p class="mt-4 leading-7 text-ink/70">
+          Registration credentials stay in the connector’s vault and are
+          attached to requests without appearing in ordinary model-visible tool
+          results.
+        </p>
+      </article>
+      <article class="rounded-lg border border-ink/12 bg-[#fff8ed] p-6">
+        <p class="eyebrow">Temporary operating context</p>
+        <h2 class="mt-3 text-3xl font-black">Engagement</h2>
+        <p class="mt-5 text-lg leading-8 text-ink/70">
+          An engagement is one isolated platform context: a game, course, case,
+          transaction, workspace, or other bounded experience. It carries its
+          own role, delegation, capabilities, tools, skills, data policy, and
+          lifetime.
+        </p>
+        <p class="mt-4 leading-7 text-ink/70">
+          One registration may hold several engagements, but every action must
+          name exactly one. Authority or data must never silently cross between
+          them.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="bg-[#07111f] py-20">
+    <div class="page-shell">
+      <div class="max-w-3xl">
+        <p class="eyebrow">Delegation and capability</p>
+        <h2 class="mt-3 text-4xl font-black leading-tight text-paper">
+          The platform sets the ceiling
+        </h2>
+        <p class="mt-5 text-lg leading-8 text-paper/70">
+          The platform assigns the role and maximum permissions. The person can
+          narrow that authority in platform-owned controls, and the agent client
+          can apply stricter local safety policy. Neither the client nor a
+          remote skill can expand what the platform allows.
+        </p>
+      </div>
+      <div class="mt-10 grid gap-4 md:grid-cols-3">
+        {
+          [
+            [
+              "Platform maximum",
+              "What this account, role, context, and policy are permitted to do.",
+            ],
+            [
+              "User delegation",
+              "What the person chooses to enable within the platform’s maximum.",
+            ],
+            [
+              "Client policy",
+              "Any additional safety limits or confirmation requirements applied locally.",
+            ],
+          ].map(([title, text], index) => (
+            <article class="rounded-lg border border-white/12 bg-white/[0.04] p-5">
+              <p class="text-sm font-bold text-accent">0{index + 1}</p>
+              <h3 class="mt-3 text-xl font-bold text-paper">{title}</h3>
+              <p class="mt-3 leading-7 text-paper/66">{text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[#0b1626] py-20">
+    <div class="page-shell grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+      <div>
+        <p class="eyebrow">Tools and skills</p>
+        <h2 class="mt-3 text-4xl font-black leading-tight text-paper">
+          Availability is not authorization
+        </h2>
+      </div>
+      <div class="prose-lite">
+        <p>
+          The platform maps concrete MCP tools to versioned capability
+          contracts. A skill can require compatible capabilities without
+          assuming that every platform uses the same tool names.
+        </p>
+        <p>
+          Tool discovery only describes what may be available in the engagement.
+          The platform still evaluates the current registration, engagement,
+          role, delegation, limits, and confirmation policy on every invocation.
+        </p>
+        <p>
+          Remotely supplied BYOAg skills are designed to be signed,
+          content-addressed, versioned, declarative, and scoped to one
+          engagement. They cannot install or execute scripts, binaries, hooks,
+          installers, or executable HTML.
         </p>
       </div>
     </div>
   </section>
 
   <section class="bg-paper py-20 text-ink">
-    <div class="page-shell max-w-4xl">
-      <div class="prose-lite prose-on-paper">
-        <p>
-          GET and POST are examples of an initial web-based implementation. They
-          are not the only transport mechanisms BYOAg could ever support. The
-          pattern is about the relationship between user-owned agents and
-          environment-defined work, not about one mandatory protocol stack.
-        </p>
-        <h2 class="text-ink">Evolving terminology</h2>
-        <p>
-          These draft concepts are intentionally lightweight while prototypes
-          and discussion shape the pattern. Browse the glossary for concise
-          definitions and their role in a BYOAg implementation.
-        </p>
+    <div class="page-shell grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
+      <div>
+        <p class="eyebrow">Compatibility boundary</p>
+        <h2 class="mt-3 text-4xl font-black leading-tight">
+          What works today—and what needs native support
+        </h2>
       </div>
-      <a
-        class="mt-6 inline-flex rounded-md border border-ink/18 px-5 py-3 font-bold text-ink transition hover:border-cyan hover:bg-ink/[0.04]"
-        href="/glossary"
-      >
-        Browse the glossary
-      </a>
-      <div class="mt-12 grid gap-8 lg:grid-cols-2">
-        <div>
-          <h2 class="text-3xl font-black">Projects are the trust boundary</h2>
-          <p class="mt-5 text-lg leading-8 text-ink/70">
-            Connections do not belong only to the agent or only to the
-            application. They belong to a project. A project can isolate the
-            connection, permissions, shared context, operating prompts,
-            scheduled tasks, and audit history.
+      <div class="grid gap-4 sm:grid-cols-2">
+        <article class="rounded-lg border border-ink/12 bg-white p-5">
+          <h3 class="text-xl font-bold">Compatibility mode</h3>
+          <p class="mt-3 leading-7 text-ink/70">
+            The working plugin and connector support the core connection
+            lifecycle. A one-time pairing code may be model-visible after
+            warning the person. The bundled file vault is owner-only but not
+            OS-backed encryption.
           </p>
-          <p class="mt-4 leading-7 text-ink/70">
-            A user can switch into a BYOAg-enabled school management project,
-            delegate work to an agent, or schedule weekly student reminders,
-            then return to other work without cross-project context leakage.
+        </article>
+        <article class="rounded-lg border border-ink/12 bg-[#fff8ed] p-5">
+          <h3 class="text-xl font-bold">Full conformance</h3>
+          <p class="mt-3 leading-7 text-ink/70">
+            A native client must provide protected input, secure credential
+            storage, dynamic skill enforcement, engagement isolation, data-label
+            propagation, and clean lifecycle management outside model context.
           </p>
-        </div>
-        <div>
-          <h2 class="text-3xl font-black">
-            Remote capabilities, not local tools
-          </h2>
-          <p class="mt-5 text-lg leading-8 text-ink/70">
-            An application may expose capabilities through authenticated API
-            endpoints. An agent can reason about them as available capabilities,
-            but they are not necessarily local tools registered inside the
-            agent's own tool registry.
-          </p>
-          <p class="mt-4 leading-7 text-ink/70">
-            They are remote actions performed through the connected application.
-            This distinction helps agent harnesses with strict tool registries
-            avoid treating every remote endpoint as a locally callable tool.
-          </p>
-        </div>
+        </article>
       </div>
-      <a
-        class="mt-8 inline-flex rounded-md border border-ink/18 px-5 py-3 font-bold text-ink transition hover:border-cyan hover:bg-ink/[0.04]"
-        href="/relationships"
-      >
-        Explore trusted service relationships
-      </a>
     </div>
   </section>
-</BaseLayout>
+
+  <section class="bg-[#07111f] py-20">
+    <div class="page-shell max-w-4xl">
+      <Callout title="Leaving is part of the protocol">
+        Revocation or disconnect removes the affected BYOAg tools, skills,
+        context, and credentials. It does not uninstall, disable, rewrite, or
+        reorder the agent’s pre-existing tools, skills, memory, hooks, or
+        configuration.
+      </Callout>
+      <a
+        class="mt-8 inline-flex rounded-md border border-white/18 px-5 py-3 font-bold text-paper transition hover:border-cyan hover:bg-white/[0.06]"
+        href="/spec">Continue to protocol 0.1</a
+      >
+    </div>
+  </section>
+</DocsLayout>

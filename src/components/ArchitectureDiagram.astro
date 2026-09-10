@@ -1,0 +1,382 @@
+<figure class="protocol-diagram">
+  <svg
+    viewBox="0 0 960 560"
+    role="img"
+    aria-labelledby="byoag-architecture-title byoag-architecture-desc"
+  >
+    <title id="byoag-architecture-title">
+      BYOAg system and trust boundaries
+    </title>
+    <desc id="byoag-architecture-desc">
+      A human and personal agent connect through a secure BYOAg connector to a
+      platform connection bay, policy service, isolated engagement, tools,
+      skills, and audit record while global agent mutation is blocked.
+    </desc>
+    <defs>
+      <marker
+        id="architecture-arrow"
+        markerWidth="8"
+        markerHeight="6"
+        refX="7"
+        refY="3"
+        orient="auto"
+      >
+        <polygon points="0 0, 8 3, 0 6" fill="#93a1b0"></polygon>
+      </marker>
+      <marker
+        id="architecture-arrow-accent"
+        markerWidth="8"
+        markerHeight="6"
+        refX="7"
+        refY="3"
+        orient="auto"
+      >
+        <polygon points="0 0, 8 3, 0 6" fill="#f59e0b"></polygon>
+      </marker>
+      <marker
+        id="architecture-arrow-link"
+        markerWidth="8"
+        markerHeight="6"
+        refX="7"
+        refY="3"
+        orient="auto"
+      >
+        <polygon points="0 0, 8 3, 0 6" fill="#38bdf8"></polygon>
+      </marker>
+    </defs>
+    <rect width="960" height="560" fill="#07111f"></rect>
+
+    <rect
+      x="40"
+      y="40"
+      width="352"
+      height="400"
+      rx="8"
+      fill="rgba(248,250,252,0.02)"
+      stroke="rgba(248,250,252,0.18)"
+      stroke-width="1"
+      stroke-dasharray="4,4"></rect>
+    <rect x="56" y="44" width="132" height="16" rx="2" fill="#07111f"></rect>
+    <text
+      x="122"
+      y="56"
+      fill="#93a1b0"
+      font-size="8"
+      font-family="ui-monospace, monospace"
+      text-anchor="middle"
+      letter-spacing="0.12em">USER TRUST ZONE</text
+    >
+
+    <rect
+      x="520"
+      y="40"
+      width="400"
+      height="460"
+      rx="8"
+      fill="rgba(245,158,11,0.03)"
+      stroke="rgba(245,158,11,0.48)"
+      stroke-width="1"
+      stroke-dasharray="4,4"></rect>
+    <rect x="536" y="44" width="148" height="16" rx="2" fill="#07111f"></rect>
+    <text
+      x="610"
+      y="56"
+      fill="#f59e0b"
+      font-size="8"
+      font-family="ui-monospace, monospace"
+      text-anchor="middle"
+      letter-spacing="0.12em">PLATFORM AUTHORITY</text
+    >
+
+    <line
+      x1="192"
+      y1="136"
+      x2="236"
+      y2="136"
+      stroke="#93a1b0"
+      stroke-width="1.2"
+      marker-end="url(#architecture-arrow)"></line>
+    <line
+      x1="296"
+      y1="172"
+      x2="296"
+      y2="240"
+      stroke="#93a1b0"
+      stroke-width="1.2"
+      marker-end="url(#architecture-arrow)"></line>
+    <path
+      d="M356 284 H448 Q456 284 456 276 V144 Q456 136 464 136 H552"
+      fill="none"
+      stroke="#38bdf8"
+      stroke-width="1.2"
+      marker-end="url(#architecture-arrow-link)"></path>
+    <line
+      x1="688"
+      y1="136"
+      x2="736"
+      y2="136"
+      stroke="#93a1b0"
+      stroke-width="1.2"
+      marker-end="url(#architecture-arrow)"></line>
+    <path
+      d="M804 172 V200 Q804 208 796 208 H628 Q620 208 620 216 V240"
+      fill="none"
+      stroke="#f59e0b"
+      stroke-width="1.2"
+      marker-end="url(#architecture-arrow-accent)"></path>
+    <line
+      x1="688"
+      y1="284"
+      x2="736"
+      y2="284"
+      stroke="#38bdf8"
+      stroke-width="1.2"
+      marker-end="url(#architecture-arrow-link)"></line>
+    <path
+      d="M620 328 V348 Q620 356 628 356 H704 Q712 356 712 364 V392"
+      fill="none"
+      stroke="#93a1b0"
+      stroke-width="1"
+      stroke-dasharray="4,3"
+      marker-end="url(#architecture-arrow)"></path>
+
+    <path
+      d="M804 328 V452 Q804 460 796 460 H408"
+      fill="none"
+      stroke="#f59e0b"
+      stroke-width="1"
+      stroke-dasharray="5,4"></path>
+    <line
+      x1="400"
+      y1="452"
+      x2="416"
+      y2="468"
+      stroke="#f59e0b"
+      stroke-width="1.2"></line>
+    <line
+      x1="416"
+      y1="452"
+      x2="400"
+      y2="468"
+      stroke="#f59e0b"
+      stroke-width="1.2"></line>
+
+    <g font-family="ui-monospace, monospace" font-size="8" text-anchor="middle">
+      <rect x="396" y="244" width="120" height="16" rx="2" fill="#07111f"
+      ></rect><text x="456" y="256" fill="#38bdf8">VERIFIED HTTPS</text>
+      <rect x="652" y="184" width="136" height="16" rx="2" fill="#07111f"
+      ></rect><text x="720" y="196" fill="#f59e0b">SCOPED GRANT</text>
+      <rect x="696" y="260" width="32" height="16" rx="2" fill="#07111f"
+      ></rect><text x="712" y="272" fill="#38bdf8">MCP</text>
+      <rect x="648" y="332" width="56" height="16" rx="2" fill="#07111f"
+      ></rect><text x="676" y="344" fill="#93a1b0">AUDIT</text>
+      <rect x="496" y="436" width="152" height="16" rx="2" fill="#07111f"
+      ></rect><text x="572" y="448" fill="#f59e0b">NO GLOBAL MUTATION</text>
+    </g>
+
+    <g
+      font-family="Inter, ui-sans-serif, system-ui, sans-serif"
+      text-anchor="middle"
+    >
+      <rect
+        x="72"
+        y="100"
+        width="120"
+        height="72"
+        rx="6"
+        fill="#0b1626"
+        stroke="rgba(248,250,252,0.34)"></rect>
+      <text x="132" y="132" fill="#f8fafc" font-size="12" font-weight="600"
+        >Human</text
+      ><text
+        x="132"
+        y="152"
+        fill="#93a1b0"
+        font-size="8"
+        font-family="ui-monospace, monospace">ACCOUNT OWNER</text
+      >
+      <rect
+        x="236"
+        y="100"
+        width="120"
+        height="72"
+        rx="6"
+        fill="#0b1626"
+        stroke="rgba(248,250,252,0.34)"></rect>
+      <text x="296" y="132" fill="#f8fafc" font-size="12" font-weight="600"
+        >Agent client</text
+      ><text
+        x="296"
+        y="152"
+        fill="#93a1b0"
+        font-size="8"
+        font-family="ui-monospace, monospace">EXISTING CONFIG</text
+      >
+      <rect
+        x="236"
+        y="240"
+        width="120"
+        height="88"
+        rx="6"
+        fill="rgba(245,158,11,0.12)"
+        stroke="#f59e0b"
+        stroke-width="1.2"></rect>
+      <text x="296" y="276" fill="#f8fafc" font-size="12" font-weight="700"
+        >BYOAg connector</text
+      ><text
+        x="296"
+        y="296"
+        fill="#d8e1ec"
+        font-size="8"
+        font-family="ui-monospace, monospace">PAIRWISE ID · VAULT</text
+      >
+      <rect
+        x="552"
+        y="100"
+        width="136"
+        height="72"
+        rx="6"
+        fill="rgba(245,158,11,0.12)"
+        stroke="#f59e0b"
+        stroke-width="1.2"></rect>
+      <text x="620" y="132" fill="#f8fafc" font-size="12" font-weight="700"
+        >Connection bay</text
+      ><text
+        x="620"
+        y="152"
+        fill="#d8e1ec"
+        font-size="8"
+        font-family="ui-monospace, monospace">PAIR · VERIFY</text
+      >
+      <rect
+        x="736"
+        y="100"
+        width="136"
+        height="72"
+        rx="6"
+        fill="#0b1626"
+        stroke="rgba(248,250,252,0.34)"></rect>
+      <text x="804" y="132" fill="#f8fafc" font-size="12" font-weight="600"
+        >Identity &amp; policy</text
+      ><text
+        x="804"
+        y="152"
+        fill="#93a1b0"
+        font-size="8"
+        font-family="ui-monospace, monospace">ROLE · DELEGATION</text
+      >
+      <rect
+        x="552"
+        y="240"
+        width="136"
+        height="88"
+        rx="6"
+        fill="rgba(248,250,252,0.04)"
+        stroke="#93a1b0"></rect>
+      <text x="620" y="276" fill="#f8fafc" font-size="12" font-weight="600"
+        >Engagement</text
+      ><text
+        x="620"
+        y="296"
+        fill="#93a1b0"
+        font-size="8"
+        font-family="ui-monospace, monospace">ISOLATED CONTEXT</text
+      >
+      <rect
+        x="736"
+        y="240"
+        width="136"
+        height="88"
+        rx="6"
+        fill="#0b1626"
+        stroke="#38bdf8"></rect>
+      <text x="804" y="276" fill="#f8fafc" font-size="12" font-weight="600"
+        >Tools &amp; skills</text
+      ><text
+        x="804"
+        y="296"
+        fill="#38bdf8"
+        font-size="8"
+        font-family="ui-monospace, monospace">MCP · SIGNED DOCS</text
+      >
+      <rect
+        x="644"
+        y="392"
+        width="136"
+        height="64"
+        rx="6"
+        fill="rgba(248,250,252,0.04)"
+        stroke="#93a1b0"></rect>
+      <text x="712" y="420" fill="#f8fafc" font-size="12" font-weight="600"
+        >Audit record</text
+      ><text
+        x="712"
+        y="440"
+        fill="#93a1b0"
+        font-size="8"
+        font-family="ui-monospace, monospace">HUMAN + AGENT</text
+      >
+    </g>
+
+    <line
+      x1="40"
+      y1="516"
+      x2="920"
+      y2="516"
+      stroke="rgba(255,255,255,0.12)"
+      stroke-width="1"></line>
+    <g font-family="ui-monospace, monospace" font-size="8">
+      <text x="40" y="540" fill="#93a1b0" letter-spacing="0.12em">LEGEND</text>
+      <line
+        x1="120"
+        y1="536"
+        x2="152"
+        y2="536"
+        stroke="#38bdf8"
+        stroke-width="1.2"
+        marker-end="url(#architecture-arrow-link)"></line><text
+        x="164"
+        y="540"
+        fill="#d8e1ec">VERIFIED PATH</text
+      >
+      <line
+        x1="300"
+        y1="536"
+        x2="332"
+        y2="536"
+        stroke="#93a1b0"
+        stroke-width="1"
+        stroke-dasharray="4,3"
+        marker-end="url(#architecture-arrow)"></line><text
+        x="344"
+        y="540"
+        fill="#d8e1ec">AUDIT / RETURN</text
+      >
+      <line
+        x1="508"
+        y1="536"
+        x2="540"
+        y2="536"
+        stroke="#f59e0b"
+        stroke-width="1"
+        stroke-dasharray="5,4"></line><text x="552" y="540" fill="#d8e1ec"
+        >BLOCKED BYPASS</text
+      >
+      <rect
+        x="700"
+        y="528"
+        width="28"
+        height="16"
+        rx="4"
+        fill="rgba(245,158,11,0.12)"
+        stroke="#f59e0b"></rect><text x="740" y="540" fill="#d8e1ec"
+        >PRIVILEGED GATE</text
+      >
+    </g>
+  </svg>
+  <figcaption>
+    The connector is the bounded road between an existing personal agent and a
+    platform-authorized engagement. The platform cannot mutate the agent’s
+    global configuration through that road.
+  </figcaption>
+</figure>

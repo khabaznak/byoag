@@ -1,6 +1,6 @@
 ---
 import Callout from "@/components/Callout.astro";
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import DocsLayout from "@/layouts/DocsLayout.astro";
 
 const helps = [
   "explicit expectations",
@@ -25,7 +25,8 @@ const boundaries = [
 ];
 ---
 
-<BaseLayout
+<DocsLayout
+  pageId="trust"
   title="Trust"
   description="Security, trust, evidence, and agentic contracts in the BYOAg pattern."
 >
@@ -79,7 +80,7 @@ const boundaries = [
         <p class="text-lg leading-8 text-ink/70">
           BYOAg aims to prove value through working implementations while
           preserving the architectural control points needed to deepen security
-          as adoption grows. It is not a finalized security protocol.
+          as implementations and adoption mature.
         </p>
         <ul class="mt-6 grid gap-3 text-ink/76" role="list">
           {
@@ -125,4 +126,4 @@ const boundaries = [
       </div>
     </div>
   </section>
-</BaseLayout>
+</DocsLayout>

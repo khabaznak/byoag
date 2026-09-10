@@ -1,6 +1,6 @@
 ---
 import Callout from "@/components/Callout.astro";
-import BaseLayout from "@/layouts/BaseLayout.astro";
+import DocsLayout from "@/layouts/DocsLayout.astro";
 
 const journey = [
   {
@@ -48,7 +48,8 @@ const journey = [
 ];
 ---
 
-<BaseLayout
+<DocsLayout
+  pageId="relationships"
   title="Personal agents. Trusted service relationships."
   description="How personal agents can form trusted, account-linked and bounded relationships with BYOAg-enabled providers."
   socialImage="/og-relationships.png"
@@ -507,4 +508,4 @@ const journey = [
       </div>
     </div>
   </section>
-</BaseLayout>
+</DocsLayout>

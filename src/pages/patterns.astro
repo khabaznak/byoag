@@ -1,153 +1,212 @@
 ---
-import BaseLayout from "@/layouts/BaseLayout.astro";
-import Callout from "@/components/Callout.astro";
+import DocsLayout from "@/layouts/DocsLayout.astro";
+import StatusBadge from "@/components/StatusBadge.astro";
+import type { PageStatus } from "@/config/navigation";
 
-const patterns = [
+interface Pattern {
+  number: string;
+  title: string;
+  status: PageStatus;
+  problem: string;
+  flow: string[];
+  invariant: string;
+  href: string;
+  linkLabel: string;
+}
+
+const patterns: Pattern[] = [
   {
     number: "01",
-    title: "Agent Docking Bay",
-    text: "An application offers a user-friendly way to connect a personal agent without asking the user to understand APIs, URLs, or HTTP requests.",
-    lead: "A Docking Bay can make the flow visible:",
-    items: [
-      "A ready-to-paste magic prompt starts the connection",
-      "The application shows when it is waiting for and has established a connection",
-      "A short human-entered pairing code confirms presence on both sides",
-      "The project declares a permission contract before remote capabilities are used",
+    title: "Exact-domain docking",
+    status: "implemented",
+    problem:
+      "A person needs a recognizable connection experience without letting brand names, search results, or prompt text become security decisions.",
+    flow: [
+      "The platform displays a pairing action",
+      "The person supplies the exact domain to their agent",
+      "The connector validates signed well-known discovery",
+      "Only then does account pairing begin",
     ],
-    closing:
-      "Conceptually, the flow is Project → Docking Bay → human pairing → permission contract → remote capabilities → operation, audit, and revocation.",
+    invariant:
+      "The user-visible docking surface may simplify the flow, but the exact domain remains the protocol trust anchor.",
+    href: "/protocol/connection",
+    linkLabel: "Discovery and pairing",
   },
   {
     number: "02",
-    title: "Prompt Package",
-    text: "An environment publishes a portable package containing the information an agent needs to participate in an experience.",
-    lead: "A Prompt Package may include:",
-    items: [
-      "Context and objective",
-      "Available resources and constraints",
-      "Allowed actions and expected output",
-      "Evaluation criteria and interaction instructions",
+    title: "Pairwise registration",
+    status: "implemented",
+    problem:
+      "A reusable global agent identifier would make unrelated platforms able to correlate the same agent by default.",
+    flow: [
+      "Generate a platform-pairwise agent key",
+      "Generate a separate installation key",
+      "Prove possession during pairing",
+      "Bind the registration credential to the installation key",
     ],
-    closing:
-      "The package allows the environment to define the experience without requiring the user to abandon their preferred agent.",
+    invariant:
+      "Identity reuse across platforms requires an explicit decision; it is not a side effect of connecting.",
+    href: "/relationships",
+    linkLabel: "Relationship model",
   },
   {
     number: "03",
-    title: "Enriched Submission",
-    text: "An agent submits structured work to the environment. The response may include more than a success or failure status.",
-    lead: "An enriched response may return:",
-    items: [
-      "Validation results and preliminary evaluation",
-      "Corrective feedback or missing information",
-      "Scoring and retry instructions",
-      "The next available action or a continuation of the experience",
+    title: "Scoped engagement",
+    status: "implemented",
+    problem:
+      "One platform relationship may participate in several experiences without leaking authority, credentials, or context between them.",
+    flow: [
+      "Keep one durable registration",
+      "Issue a signed descriptor for each context",
+      "Bind role and delegation to one engagement",
+      "Validate simultaneous engagements independently",
     ],
-    closing:
-      "This turns BYOAg into an interaction model rather than merely a mechanism for distributing prompts.",
+    invariant:
+      "Every future experience-tool invocation names exactly one engagement; ambiguity must be resolved before acting.",
+    href: "/protocol/engagements",
+    linkLabel: "Registrations and engagements",
   },
   {
     number: "04",
-    title: "Continuation Chain",
-    text: "A submission may produce the next entry point in an experience, allowing the environment to reveal the next step only after evaluating the previous interaction.",
-    lead: "Continuation Chains can support:",
-    items: [
-      "Guided workflows and educational exercises",
-      "Simulations and approval processes",
-      "Interactive stories and games",
-      "Multi-stage assessments",
+    title: "Semantic capability resolution",
+    status: "draft",
+    problem:
+      "Portable guidance should not depend on every platform choosing the same MCP tool name or argument schema.",
+    flow: [
+      "A skill declares required capability IDs",
+      "The engagement authorizes semantic contracts",
+      "The platform maps contracts to concrete tools",
+      "The client exposes only compatible authorized actions",
     ],
-    closing:
-      "The environment maintains control of state and progression, while the user continues participating through their own agent.",
+    invariant:
+      "A resolver cannot substitute an action with different effects, data classes, reversibility, or confirmation requirements.",
+    href: "/protocol/capabilities",
+    linkLabel: "Permissions and capabilities",
   },
   {
     number: "05",
-    title: "Agentic Contract and Evidence",
-    text: "An environment cannot assume that every agent will interpret or follow instructions in exactly the same way. Instead of relying on assumed compliance, the environment can declare:",
-    items: [
-      "Expectations, constraints, and acceptance criteria",
-      "Required evidence and permitted refusals",
-      "Partial-completion rules and observable outcomes",
+    title: "Protected consequential action",
+    status: "planned",
+    problem:
+      "A valid engagement may allow an action in principle while the particular purchase, message, transaction, or deletion still needs human approval.",
+    flow: [
+      "The platform re-authorizes the requested action",
+      "Policy returns a structured confirmation request",
+      "The person approves in protected UI",
+      "A single-use reference and idempotency key complete the retry",
     ],
-    closing:
-      "The agent may then report what it attempted, completed, refused, or could not verify.",
+    invariant:
+      "Tool availability is never treated as approval, and skill prose cannot manufacture consent.",
+    href: "/protocol/tools-and-skills",
+    linkLabel: "MCP tools and skills",
   },
   {
     number: "06",
-    title: "Asynchronous Continuation",
-    text: "Some experiences continue after the immediate interaction has ended. An environment may need to contact the user's agent when an external condition changes.",
-    lead: "This may include:",
-    items: [
-      "An approval, cancellation, deadline, result, or status change",
-      "New availability or a request for intervention",
+    title: "Enriched result and continuation",
+    status: "conceptual",
+    problem:
+      "Experiences often need to return validation, evidence, scoring, or the next bounded step—not just success or failure.",
+    flow: [
+      "The agent submits structured work",
+      "The platform validates and evaluates it",
+      "The result includes evidence and allowable next actions",
+      "A later engagement step remains platform-controlled",
     ],
-    closing:
-      "This exploratory pattern considers authorized callbacks, subscriptions, event delivery, agent inboxes, resumable interaction state, stable agent identity, and safe context restoration. Its purpose is to allow event-driven interactions without requiring continuous polling.",
+    invariant:
+      "The platform controls experience state and progression while the person continues through their own agent.",
+    href: "/examples",
+    linkLabel: "Domain examples",
+  },
+  {
+    number: "07",
+    title: "Authorized asynchronous continuation",
+    status: "conceptual",
+    problem:
+      "An approval, deadline, result, or availability change may occur after the immediate interaction ends.",
+    flow: [
+      "The person authorizes a delivery channel and scope",
+      "The platform records a bounded subscription",
+      "An event references resumable context safely",
+      "The client restores only the permitted engagement state",
+    ],
+    invariant:
+      "Stable delivery must not become global tracking, indefinite authority, or silent cross-engagement context reuse.",
+    href: "/about#project-status",
+    linkLabel: "Project status",
+  },
+  {
+    number: "08",
+    title: "Deterministic teardown",
+    status: "draft",
+    problem:
+      "Leaving an experience must remove its authority without breaking the agent or unrelated platform relationships.",
+    flow: [
+      "Revoke the affected engagement or registration",
+      "Fail subsequent protected calls closed",
+      "Remove scoped credentials, tools, skills, and context",
+      "Preserve all unrelated agent state",
+    ],
+    invariant:
+      "The agent after disconnect retains the tools, skills, memory, hooks, and configuration it had before BYOAg.",
+    href: "/protocol/teardown",
+    linkLabel: "Revocation and teardown",
   },
 ];
 ---
 
-<BaseLayout
-  title="BYOAg Patterns"
-  description="Experimental, composable interaction patterns for BYOAg."
+<DocsLayout
+  pageId="patterns"
+  title="Experience Patterns"
+  description="BYOAg interaction patterns aligned with the 0.1 architecture, implementation status, and security boundaries."
 >
   <section class="border-b border-white/10 bg-[#07111f] py-20">
     <div class="page-shell max-w-4xl">
-      <p class="eyebrow">Experimental patterns</p>
+      <p class="eyebrow">Composable experience patterns</p>
       <h1 class="mt-4 text-5xl font-black leading-tight text-paper sm:text-6xl">
-        BYOAg Patterns
+        Recurring shapes, explicit boundaries
       </h1>
-      <div class="prose-lite mt-8 max-w-3xl">
-        <p>
-          BYOAg is being developed through small, composable interaction
-          patterns rather than as a prematurely finalized universal protocol.
-        </p>
-        <p>
-          Each pattern describes a recurring way in which a user-owned agent can
-          participate in an environment-defined experience.
-        </p>
-        <p>
-          These patterns are experimental. Their purpose is to make
-          architectural questions explicit, support working prototypes, and
-          establish a shared vocabulary for implementation and discussion.
-        </p>
-      </div>
+      <p class="mt-7 max-w-3xl text-xl leading-8 text-paper/72">
+        These patterns connect product experiences to the current BYOAg
+        vocabulary. Some are exercised by the 0.1 plugin; others remain draft or
+        conceptual targets for implementation and discussion.
+      </p>
     </div>
   </section>
 
   <section class="bg-[#0b1626] py-20">
-    <div class="page-shell grid max-w-4xl gap-6">
+    <div class="page-shell grid max-w-5xl gap-6">
       {
         patterns.map((pattern) => (
           <article class="rounded-lg border border-white/12 bg-white/[0.04] p-6 sm:p-8">
-            <p class="text-sm font-bold text-accent">
-              Pattern {pattern.number}
-            </p>
+            <div class="flex flex-wrap items-center justify-between gap-4">
+              <p class="font-mono text-sm font-bold text-accent">
+                Pattern {pattern.number}
+              </p>
+              <StatusBadge status={pattern.status} />
+            </div>
             <h2 class="mt-3 text-3xl font-black text-paper">{pattern.title}</h2>
-            <p class="mt-5 text-lg leading-8 text-paper/78">{pattern.text}</p>
-            {pattern.lead && (
-              <p class="mt-5 font-semibold text-paper">{pattern.lead}</p>
-            )}
-            <ul class="mt-4 grid gap-2 text-paper/70" role="list">
-              {pattern.items.map((item) => (
-                <li class="flex gap-3">
-                  <span class="text-cyan" aria-hidden="true">
-                    •
+            <p class="mt-5 text-lg leading-8 text-paper/76">
+              {pattern.problem}
+            </p>
+            <ol class="mt-6 grid gap-3 md:grid-cols-2" role="list">
+              {pattern.flow.map((step, index) => (
+                <li class="flex gap-3 rounded-md border border-white/10 bg-[#07111f]/55 p-4 leading-7 text-paper/68">
+                  <span class="font-mono text-sm font-bold text-cyan">
+                    0{index + 1}
                   </span>
-                  <span>{item}</span>
+                  <span>{step}</span>
                 </li>
               ))}
-            </ul>
-            <p class="mt-5 leading-7 text-paper/70">{pattern.closing}</p>
-            {pattern.number === "05" && (
-              <Callout title="Evidence over assumed compliance.">
-                Make the requested work and its observable outcome explicit.
-              </Callout>
-            )}
-            {pattern.number === "06" && (
-              <p class="mt-5 text-sm font-bold uppercase tracking-wide text-accent">
-                Exploratory — not yet finalized
-              </p>
-            )}
+            </ol>
+            <aside class="mt-6 border-l-4 border-accent bg-accent/[0.06] p-5 text-paper/72">
+              <strong class="text-paper">Invariant:</strong> {pattern.invariant}
+            </aside>
+            <a
+              class="mt-6 inline-flex font-bold text-cyan underline-offset-4 hover:underline"
+              href={pattern.href}
+            >
+              {pattern.linkLabel} →
+            </a>
           </article>
         ))
       }
@@ -156,13 +215,14 @@ const patterns = [
 
   <section class="bg-paper py-20 text-ink">
     <div class="page-shell max-w-4xl">
-      <p class="eyebrow">Status</p>
-      <h2 class="mt-3 text-4xl font-black">Experimental and evolving</h2>
-      <p class="mt-6 max-w-3xl text-lg leading-8 text-ink/72">
-        These patterns are experimental and are expected to evolve through
-        prototypes, implementation experience, security analysis, and public
-        discussion. They are not yet intended to represent a finalized standard.
+      <p class="eyebrow">How to use these patterns</p>
+      <h2 class="mt-3 text-4xl font-black">Prototype one boundary at a time</h2>
+      <p class="mt-6 text-lg leading-8 text-ink/72">
+        A pattern is not automatic protocol support. Treat its status badge and
+        linked implementation chapter as part of the definition. New patterns
+        should name the actors, authority boundary, observable behavior, failure
+        path, and teardown rule before introducing new payloads or interfaces.
       </p>
     </div>
   </section>
-</BaseLayout>
+</DocsLayout>
