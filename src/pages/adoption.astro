@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import SectionHeader from "@/components/SectionHeader.astro";
-import { site } from "@/config/site";
 
 const advisoryAreas = [
   [
@@ -239,25 +238,142 @@ const workingSequence = [
         you hope agent participation could enable. Early conversations can also
         help shape the advisory offering and the open implementation roadmap.
       </p>
-      <div class="mt-8 flex flex-wrap items-center gap-4">
-        <a
-          class="rounded-md bg-ink px-5 py-3 font-bold text-paper transition hover:bg-[#13243a]"
-          href={site.adoptionInterestUrl}
+      <form
+        id="lead-form"
+        class="mt-8 grid gap-5"
+        action="/api/leads"
+        method="post"
+      >
+        <div class="grid gap-5 sm:grid-cols-2">
+          <label class="grid gap-2 font-semibold" for="lead-name">
+            Name <span class="text-red-700" aria-hidden="true">*</span>
+            <input
+              id="lead-name"
+              name="name"
+              autocomplete="name"
+              required
+              maxlength="120"
+              class="rounded-md border border-ink/20 bg-paper px-4 py-3 font-normal"
+            />
+          </label>
+          <label class="grid gap-2 font-semibold" for="lead-email">
+            Work email <span class="text-red-700" aria-hidden="true">*</span>
+            <input
+              id="lead-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+              maxlength="254"
+              class="rounded-md border border-ink/20 bg-paper px-4 py-3 font-normal"
+            />
+          </label>
+        </div>
+        <label class="grid gap-2 font-semibold" for="lead-organization">
+          Organization <span class="font-normal text-ink/55">(optional)</span>
+          <input
+            id="lead-organization"
+            name="organization"
+            autocomplete="organization"
+            maxlength="160"
+            class="rounded-md border border-ink/20 bg-paper px-4 py-3 font-normal"
+          />
+        </label>
+        <label class="grid gap-2 font-semibold" for="lead-interest">
+          What are you exploring? <span class="text-red-700" aria-hidden="true"
+            >*</span
+          >
+          <textarea
+            id="lead-interest"
+            name="interest"
+            rows="5"
+            required
+            maxlength="3000"
+            class="rounded-md border border-ink/20 bg-paper px-4 py-3 font-normal"
+            placeholder="A short description of your platform, use case, or questions."
+          ></textarea>
+        </label>
+        <div class="sr-only" aria-hidden="true">
+          <label for="lead-website">Leave this field empty</label>
+          <input
+            id="lead-website"
+            name="website"
+            tabindex="-1"
+            autocomplete="off"
+          />
+        </div>
+        <label class="flex items-start gap-3 text-sm leading-6 text-ink/70">
+          <input
+            name="consent"
+            type="checkbox"
+            required
+            class="mt-1 size-4 accent-ink"
+          />
+          <span
+            >I agree that BYOAg may use these details to respond to this
+            inquiry. Please don’t include confidential, security-sensitive, or
+            proprietary information.</span
+          >
+        </label>
+        <div class="flex flex-wrap items-center gap-4">
+          <button
+            id="lead-submit"
+            type="submit"
+            class="rounded-md bg-ink px-5 py-3 font-bold text-paper transition hover:bg-[#13243a] disabled:cursor-wait disabled:opacity-60"
+          >
+            Send inquiry
+          </button>
+          <a
+            class="px-2 py-3 font-bold text-ink underline hover:text-cyan"
+            href="/about#project-status">Review current project status</a
+          >
+        </div>
+        <p
+          id="lead-status"
+          class="min-h-6 text-sm"
+          role="status"
+          aria-live="polite"
         >
-          Open an adoption inquiry
-        </a>
-        <a
-          class="px-2 py-3 font-bold text-ink underline hover:text-cyan"
-          href="/about#project-status"
-        >
-          Review current project status
-        </a>
-      </div>
-      <p class="mt-5 text-sm leading-6 text-ink/55">
-        The current inquiry opens a public GitHub issue. Do not include
-        confidential, personal, security-sensitive, or proprietary information.
-        A dedicated private business contact channel will replace it later.
+        </p>
+      </form>
+      <p class="mt-2 text-sm leading-6 text-ink/55">
+        We’ll use your information only to follow up on this inquiry. BYOAg is
+        an open pattern in active development; submitting a form does not imply
+        a commitment or guaranteed interoperability.
       </p>
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>("#lead-form");
+  const status = document.querySelector<HTMLElement>("#lead-status");
+  const submit = document.querySelector<HTMLButtonElement>("#lead-submit");
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!form.reportValidity() || !status || !submit) return;
+
+    submit.disabled = true;
+    status.textContent = "Sending your inquiry…";
+    status.className = "min-h-6 text-sm text-ink/70";
+
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+      });
+      if (!response.ok) throw new Error("Submission failed");
+      form.reset();
+      status.textContent = "Thanks — your inquiry has been received.";
+      status.className = "min-h-6 text-sm font-semibold text-green-800";
+    } catch {
+      status.textContent =
+        "We couldn’t send your inquiry. Please try again later.";
+      status.className = "min-h-6 text-sm font-semibold text-red-700";
+    } finally {
+      submit.disabled = false;
+    }
+  });
+</script>
